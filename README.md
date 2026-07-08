@@ -15,15 +15,19 @@
 
 ## Install
 
-### Step 1 — Add the plugin
+> **Cowork users:** You need the Claude Code CLI installed once to add the plugin. After that, the skills work in Cowork normally. [Install Claude Code →](https://docs.anthropic.com/en/docs/claude-code)
+
+### Step 1 — Add the plugin (terminal, one time)
+
+Open a terminal and run:
 
 ```bash
 claude plugin add github:jeffbrickler/CADTALK-AI-Sales-Team
 ```
 
-### Step 2 — Run setup (one time)
+### Step 2 — Run setup (Cowork or Claude Code, one time)
 
-```bash
+```
 /ct-setup
 ```
 
@@ -31,13 +35,13 @@ Walks you through: who you are → connection checks (Pipedrive, ZoomInfo, Outlo
 
 ### Step 3 — Run training (one time)
 
-```bash
+```
 /ct-train
 ```
 
 20-minute mock deal walkthrough (Acme Fabrication). Covers the full workflow in order. Works even if your MCP connections aren't fully configured yet. Do this before using the plugin on a real deal.
 
-### Update
+### Update (terminal)
 
 ```bash
 claude plugin update cadtalk-sales-team
