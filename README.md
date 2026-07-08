@@ -14,6 +14,50 @@
 
 ---
 
+## For CADTALK Teammates (Chris, Matthew, Lucca)
+
+This is Jeff's Deal Desk — packaged so you can run it too.
+
+### Prerequisites
+
+1. **GitHub collaborator access** — Contact Jeff to be added to this private repo before install.
+2. **Claude Code installed** — [Install Claude Code](https://docs.anthropic.com/en/docs/claude-code) if you haven't.
+3. **MCP connections** — Pipedrive, ZoomInfo, and Outlook. The setup skill walks you through these.
+
+### Install (one command)
+
+```bash
+claude plugin add github:jeffbrickler/CADTALK-AI-Sales-Team
+```
+
+### First Run
+
+```bash
+/cadtalk-setup
+```
+
+This walks you through: who you are → connection checks (Pipedrive, ZoomInfo, Outlook) → smoke test → confirmation. Takes ~10 minutes the first time.
+
+### Update
+
+```bash
+claude plugin update cadtalk-sales-team
+```
+
+### Your Core Commands
+
+```
+/sales prep [Company Name]          Meeting prep brief — run before every call
+/sales prospect [Company URL]       Full prospect analysis (5 agents)
+/sales qualify [Company URL]        BANT + MEDDIC lead scoring
+/sales outreach [Company Name]      Cold outreach email sequence
+/sales report                       Pipedrive pipeline report
+```
+
+Questions → jeff.brickler@cadtalk.com
+
+---
+
 ## What This Does
 
 Type a command in Claude Code and get instant, actionable sales intelligence:

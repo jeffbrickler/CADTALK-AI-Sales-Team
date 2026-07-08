@@ -1,5 +1,28 @@
 #!/bin/bash
 # ============================================================================
+# DEPRECATED — use the RPM plugin instead:
+#
+#   claude plugin add github:jeffbrickler/CADTALK-AI-Sales-Team
+#
+# Then run: /cadtalk-setup
+# ============================================================================
+echo ""
+echo "⚠  install.sh is deprecated."
+echo ""
+echo "Install the CADTALK AI Sales Team as a plugin instead:"
+echo ""
+echo "  claude plugin add github:jeffbrickler/CADTALK-AI-Sales-Team"
+echo ""
+echo "Then run: /cadtalk-setup"
+echo ""
+echo "The plugin installs faster, auto-updates with 'claude plugin update',"
+echo "and includes the CADTALK Deal Desk identity (CLAUDE.md)."
+echo ""
+exit 0
+
+# ============================================================================
+# Legacy installer (kept for reference — not executed)
+# ============================================================================
 # AI Sales Team — Claude Code Skills Installer
 # 14 Skills · 5 Agents · 4 Scripts · PDF
 # ============================================================================
