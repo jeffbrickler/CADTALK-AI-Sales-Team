@@ -42,36 +42,72 @@ If **Yes**: continue.
 
 ---
 
-**Step A3 — Confirm Deal Desk folder access**
+**Step A3 — Create the Deal Desk folder**
 
-The CADTALK Deal Desk CLAUDE.md is the brain of this system — it defines operator identity, connected systems, Pipedrive IDs, pricing logic, and all commands. It lives in your **local Deal Desk Cowork folder**, NOT in the plugin.
+The Deal Desk folder is your local context hub. It holds the CADTALK identity file (CLAUDE.md), your deal subfolders, and all deal memory. This folder ships with the plugin — setup creates it for you now.
 
-The plugin routes commands to skills. The Deal Desk folder is what makes you a CADTALK operator. Both are required.
+**Step A3a — Choose a location**
 
-Ask: "Do you have the CADTALK Deal Desk folder synced to your machine?"
+Ask: "Where do you want the CADTALK Deal Desk folder?"
 
-- **Yes** → Ask for the local path (e.g. `C:\Users\[you]\OneDrive - Solutionsx, LLC\ClaudeCoWork\Deal Desk\`). Confirm `CLAUDE.md` exists there. Print: `✓ Deal Desk folder found at [path]`
-- **No** → Print:
-  ```
-  You need the CADTALK Deal Desk folder synced locally before the identity system works.
+Suggest default: `C:\Users\[username]\Documents\CADTALK-Deal-Desk\`
 
-  Contact Jeff Brickler (jeff.brickler@cadtalk.com) to get access:
-    - OneDrive share to your Microsoft account, OR
-    - Jeff will walk you through the sync setup on a call
+Store as `$DEAL_DESK_PATH`.
 
-  Once synced, open Claude Code with that folder as your working directory
-  (or open a deal subfolder in Cowork). The CLAUDE.md loads automatically.
+**Step A3b — Find the plugin template**
 
-  Re-run /cadtalk-setup after the folder is synced.
-  ```
-  Stop here until the folder is set up.
+Run this PowerShell to locate the deal-desk template in the plugin install:
 
-**How it works once synced:**
-- Open any deal subfolder (`Deal Desk/deals/[CompanyName]/`) in Cowork
-- Claude loads two CLAUDE.md files simultaneously:
-  1. **Plugin CLAUDE.md** (this plugin) — routes skill commands
-  2. **Deal Desk CLAUDE.md** — full operator identity, systems, pipeline context
-- Both are additive. Together they make Claude a fully-loaded CADTALK sales operator.
+```powershell
+# Search for the deal-desk template shipped with the plugin
+$template = Get-ChildItem -Path "$env:APPDATA\Claude" -Recurse -Filter "CLAUDE.md" -ErrorAction SilentlyContinue |
+    Where-Object { $_.FullName -like "*templates*deal-desk*" } |
+    Select-Object -First 1 -ExpandProperty DirectoryName
+
+if ($template) {
+    Write-Host "Plugin template found: $template"
+} else {
+    Write-Host "ERROR: Could not find plugin template. Is the plugin installed?"
+    Write-Host "Run: claude plugin add github:jeffbrickler/CADTALK-AI-Sales-Team"
+}
+```
+
+If not found: stop and re-run `claude plugin add github:jeffbrickler/CADTALK-AI-Sales-Team` first.
+
+**Step A3c — Create the folder**
+
+Run:
+
+```powershell
+$templatePath = "<path from A3b>"
+$destPath = "<$DEAL_DESK_PATH>"
+
+# Copy full template structure
+Copy-Item -Path $templatePath -Destination $destPath -Recurse -Force
+Write-Host "Deal Desk created at: $destPath"
+Write-Host "Contents:"
+Get-ChildItem $destPath -Recurse | Select-Object FullName
+```
+
+**Expected result:**
+```
+CADTALK-Deal-Desk/
+├── CLAUDE.md                  ← Deal Desk identity (the brain)
+├── MEMORY.md                  ← Hub memory (starts empty)
+└── deals/
+    ├── _deal-template/        ← Copy this when starting a new deal
+    │   ├── CLAUDE.md
+    │   └── MEMORY.md
+    └── _archive/
+        ├── won/
+        └── lost/
+```
+
+**How to use it:**
+- Open `CADTALK-Deal-Desk/` (or any deal subfolder) in Claude Code / Cowork
+- The `CLAUDE.md` there loads automatically — Claude is now a CADTALK operator
+- The plugin CLAUDE.md (routing) + the Deal Desk CLAUDE.md (identity) load together
+- Start a new deal: copy `_deal-template/` → rename to `[CompanyName_ERP]/` → fill in the deal CLAUDE.md
 
 ---
 
