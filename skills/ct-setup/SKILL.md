@@ -239,6 +239,8 @@ Your first command:
 Or jump straight to a discovery call:
   /ct-prep [Company Name]
 
+**Next step:** Run `/ct-train` to complete your training (~20 min).
+
 Update this plugin anytime:
   claude plugin update cadtalk-sales-team
 

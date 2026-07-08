@@ -37,3 +37,5 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Pipeline report (Markdown) | `/ct-report` |
 | Pipeline report (PDF) | `/ct-report-pdf` |
 | General sales orchestration | `/ct-sales` |
+| Help with commands, how do I use [skill] | `/ct-help` |
+| Training, new user onboarding, learn the workflow | `/ct-train` |
