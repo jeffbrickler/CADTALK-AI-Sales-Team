@@ -42,48 +42,36 @@ If **Yes**: continue.
 
 ---
 
-**Step A3 — Install CADTALK identity (CLAUDE.md)**
+**Step A3 — Confirm Deal Desk folder access**
 
-The CADTALK Deal Desk CLAUDE.md is the brain of this system. It defines your identity as a CADTALK operator, loads all commands, Pipedrive IDs, pricing logic, and qualification framework.
+The CADTALK Deal Desk CLAUDE.md is the brain of this system — it defines operator identity, connected systems, Pipedrive IDs, pricing logic, and all commands. It lives in your **local Deal Desk Cowork folder**, NOT in the plugin.
 
-Run this PowerShell to find and install it:
+The plugin routes commands to skills. The Deal Desk folder is what makes you a CADTALK operator. Both are required.
 
-```powershell
-# Find the CADTALK CLAUDE.md in the RPM plugin install
-$claudeMd = Get-ChildItem -Path "$env:APPDATA\Claude" -Recurse -Filter "CLAUDE.md" -ErrorAction SilentlyContinue |
-    Where-Object { $_.FullName -notlike "*\.claude\CLAUDE.md" -and $_.FullName -like "*CADTALK*" } |
-    Select-Object -First 1
+Ask: "Do you have the CADTALK Deal Desk folder synced to your machine?"
 
-if (-not $claudeMd) {
-    Write-Host "CLAUDE.md not found in plugin install. Searching broader..."
-    $claudeMd = Get-ChildItem -Path "$env:APPDATA\Claude" -Recurse -Filter "CLAUDE.md" -ErrorAction SilentlyContinue |
-        Where-Object { $_.DirectoryName -notlike "*\.claude" } |
-        Select-Object -First 1
-}
+- **Yes** → Ask for the local path (e.g. `C:\Users\[you]\OneDrive - Solutionsx, LLC\ClaudeCoWork\Deal Desk\`). Confirm `CLAUDE.md` exists there. Print: `✓ Deal Desk folder found at [path]`
+- **No** → Print:
+  ```
+  You need the CADTALK Deal Desk folder synced locally before the identity system works.
 
-if ($claudeMd) {
-    Write-Host "Found: $($claudeMd.FullName)"
+  Contact Jeff Brickler (jeff.brickler@cadtalk.com) to get access:
+    - OneDrive share to your Microsoft account, OR
+    - Jeff will walk you through the sync setup on a call
 
-    $dest = "$env:USERPROFILE\.claude\CLAUDE.md"
-    $backupDate = Get-Date -Format "yyyyMMdd-HHmmss"
-    $backup = "$env:USERPROFILE\.claude\CLAUDE.md.bak-$backupDate"
+  Once synced, open Claude Code with that folder as your working directory
+  (or open a deal subfolder in Cowork). The CLAUDE.md loads automatically.
 
-    if (Test-Path $dest) {
-        Copy-Item $dest $backup
-        Write-Host "Backed up existing CLAUDE.md to: $backup"
-    }
+  Re-run /cadtalk-setup after the folder is synced.
+  ```
+  Stop here until the folder is set up.
 
-    Copy-Item $claudeMd.FullName $dest
-    Write-Host "CLAUDE.md installed to: $dest"
-} else {
-    Write-Host "ERROR: Could not locate CADTALK CLAUDE.md in plugin install."
-    Write-Host "Manual fix: copy CLAUDE.md from the repo root to ~/.claude/CLAUDE.md"
-}
-```
-
-**Expected output:** `CLAUDE.md installed to: C:\Users\[you]\.claude\CLAUDE.md`
-
-If the script fails or can't find it: manually copy `CLAUDE.md` from the cloned repo root to `~/.claude/CLAUDE.md`.
+**How it works once synced:**
+- Open any deal subfolder (`Deal Desk/deals/[CompanyName]/`) in Cowork
+- Claude loads two CLAUDE.md files simultaneously:
+  1. **Plugin CLAUDE.md** (this plugin) — routes skill commands
+  2. **Deal Desk CLAUDE.md** — full operator identity, systems, pipeline context
+- Both are additive. Together they make Claude a fully-loaded CADTALK sales operator.
 
 ---
 
