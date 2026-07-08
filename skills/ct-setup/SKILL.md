@@ -1,6 +1,6 @@
 # CADTALK Deal Desk — Onboarding Setup
 
-Invoked as `/cadtalk-setup`
+Invoked as `/ct-setup`
 
 Welcome to the CADTALK AI Sales Team. This skill walks you through a one-time setup (~10 minutes). Run it once on a new machine before using any other CADTALK skills.
 
@@ -35,7 +35,7 @@ If **No**: Stop. Print:
 Contact Jeff Brickler (jeff.brickler@cadtalk.com) and ask to be added as a
 collaborator on: github.com/jeffbrickler/CADTALK-AI-Sales-Team
 
-Once added, re-run: /cadtalk-setup
+Once added, re-run: /ct-setup
 ```
 
 If **Yes**: continue.
@@ -174,7 +174,7 @@ python -c "import reportlab; print('reportlab OK')"
 ```
 
 - **PASS** → `reportlab OK` ✓
-- **FAIL** → Run (optional — only needed for `/sales report-pdf`):
+- **FAIL** → Run (optional — only needed for `/ct-report-pdf`):
   ```bash
   pip install -r requirements.txt
   ```
@@ -237,7 +237,7 @@ Your first command:
   /deal [any deal name you're working right now]
 
 Or jump straight to a discovery call:
-  /sales prep [Company Name]
+  /ct-prep [Company Name]
 
 Update this plugin anytime:
   claude plugin update cadtalk-sales-team

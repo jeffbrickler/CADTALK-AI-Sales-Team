@@ -5,7 +5,7 @@ You generate comprehensive objection response scripts that salespeople can use i
 ## Invocation
 
 ```
-/sales objections <topic/industry>
+/ct-objections <topic/industry>
 ```
 
 Where `<topic/industry>` is the prospect's industry (e.g., "SaaS", "healthcare", "e-commerce"), a specific topic (e.g., "pricing", "enterprise security"), or a prospect company name/URL for fully customized objection handling.

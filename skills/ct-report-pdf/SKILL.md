@@ -2,7 +2,7 @@
 
 ## Metadata
 - **Title:** Professional Sales Report PDF Generator
-- **Invocation:** `/sales report-pdf`
+- **Invocation:** `/ct-report-pdf`
 - **Input:** None (reads SALES-REPORT.md and prospect files from current directory)
 - **Output:** `SALES-REPORT-{YYYY-MM-DD}.pdf` written to the current working directory
 - **Dependencies:** Python 3, `reportlab` library, `scripts/generate_pdf_report.py`
@@ -17,14 +17,14 @@ You generate a professional, visually polished PDF version of the sales pipeline
 
 ## Instructions
 
-When the user invokes `/sales report-pdf`, follow this process:
+When the user invokes `/ct-report-pdf`, follow this process:
 
 ### Step 1: Verify Prerequisites
 
 Check that `SALES-REPORT.md` exists in the current working directory.
 
 **If SALES-REPORT.md does NOT exist:**
-- Inform the user: "No SALES-REPORT.md found. Run `/sales report` first to generate the pipeline report, then run `/sales report-pdf` to create the PDF version."
+- Inform the user: "No SALES-REPORT.md found. Run `/ct-report` first to generate the pipeline report, then run `/ct-report-pdf` to create the PDF version."
 - Stop execution.
 
 **If SALES-REPORT.md exists:**
@@ -280,8 +280,8 @@ directory structure is intact.
 ### No Report Data
 ```
 SALES-REPORT.md was not found in the current directory.
-Run `/sales report` first to generate the pipeline report, then run
-`/sales report-pdf` to create the PDF version.
+Run `/ct-report` first to generate the pipeline report, then run
+`/ct-report-pdf` to create the PDF version.
 ```
 
 ### PDF Generation Failed

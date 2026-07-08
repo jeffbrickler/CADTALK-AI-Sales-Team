@@ -22,18 +22,18 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 
 | Request | Skill |
 |---------|-------|
-| First-time setup, onboarding, "set me up" | `/cadtalk-setup` |
-| Meeting prep, "prep for [company]" | `/sales prep` |
-| Prospect analysis, full audit | `/sales prospect` |
-| Company research | `/sales research` |
-| Lead qualification, BANT, MEDDIC | `/sales qualify` |
-| Decision maker mapping, contacts | `/sales contacts` |
-| Cold outreach, email sequence | `/sales outreach` |
-| Follow-up sequence | `/sales followup` |
-| Proposal generation | `/sales proposal` |
-| Objection handling | `/sales objections` |
-| ICP builder | `/sales icp` |
-| Competitive intelligence | `/sales competitors` |
-| Pipeline report (Markdown) | `/sales report` |
-| Pipeline report (PDF) | `/sales report-pdf` |
-| General sales orchestration | `/sales` |
+| First-time setup, onboarding, "set me up" | `/ct-setup` |
+| Meeting prep, "prep for [company]" | `/ct-prep` |
+| Prospect analysis, full audit | `/ct-prospect` |
+| Company research | `/ct-research` |
+| Lead qualification, BANT, MEDDIC | `/ct-qualify` |
+| Decision maker mapping, contacts | `/ct-contacts` |
+| Cold outreach, email sequence | `/ct-outreach` |
+| Follow-up sequence | `/ct-followup` |
+| Proposal generation | `/ct-proposal` |
+| Objection handling | `/ct-objections` |
+| ICP builder | `/ct-icp` |
+| Competitive intelligence | `/ct-competitors` |
+| Pipeline report (Markdown) | `/ct-report` |
+| Pipeline report (PDF) | `/ct-report-pdf` |
+| General sales orchestration | `/ct-sales` |

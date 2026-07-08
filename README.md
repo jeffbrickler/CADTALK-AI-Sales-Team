@@ -47,11 +47,11 @@ claude plugin update cadtalk-sales-team
 ### Your Core Commands
 
 ```
-/sales prep [Company Name]          Meeting prep brief — run before every call
-/sales prospect [Company URL]       Full prospect analysis (5 agents)
-/sales qualify [Company URL]        BANT + MEDDIC lead scoring
-/sales outreach [Company Name]      Cold outreach email sequence
-/sales report                       Pipedrive pipeline report
+/ct-prep [Company Name]          Meeting prep brief — run before every call
+/ct-prospect [Company URL]       Full prospect analysis (5 agents)
+/ct-qualify [Company URL]        BANT + MEDDIC lead scoring
+/ct-outreach [Company Name]      Cold outreach email sequence
+/ct-report                       Pipedrive pipeline report
 ```
 
 Questions → jeff.brickler@cadtalk.com

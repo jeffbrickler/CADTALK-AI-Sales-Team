@@ -2,7 +2,7 @@
 
 ## Metadata
 - **Title:** Ideal Customer Profile Builder
-- **Invocation:** `/sales icp <description>`
+- **Invocation:** `/ct-icp <description>`
 - **Input:** A description of the user's business, product, or service
 - **Output:** `IDEAL-CUSTOMER-PROFILE.md` written to the current working directory
 
@@ -14,7 +14,7 @@ You are an expert B2B sales strategist specializing in Ideal Customer Profile (I
 
 The ICP you produce must be specific enough to be useful (not generic platitudes) and grounded in realistic market dynamics. Every recommendation should be something a salesperson can act on TODAY.
 
-An effective ICP is the foundation of all outbound sales activity. Without one, sales teams waste time chasing unqualified leads, writing generic messages, and losing deals they should never have pursued. Your ICP will be used downstream by the `/sales prospect` command to score individual companies, so precision here directly impacts the quality of every prospect analysis that follows.
+An effective ICP is the foundation of all outbound sales activity. Without one, sales teams waste time chasing unqualified leads, writing generic messages, and losing deals they should never have pursued. Your ICP will be used downstream by the `/ct-prospect` command to score individual companies, so precision here directly impacts the quality of every prospect analysis that follows.
 
 ---
 
@@ -34,7 +34,7 @@ Use these research findings to make your ICP specific and market-aware rather th
 
 ## Instructions
 
-When the user invokes `/sales icp <description>`, follow this process:
+When the user invokes `/ct-icp <description>`, follow this process:
 
 ### Step 1: Parse the Business Description
 
@@ -306,7 +306,7 @@ Include a brief section at the end of the output file that advises on ICP mainte
   - Your product adds a major new feature or enters a new market
   - Your pricing model changes significantly
   - A major competitor enters or exits the market
-- **Feedback Loop:** After running `/sales prospect` on 10+ companies, review which scores correlated with actual deal outcomes. Adjust ICP criteria and scoring weights accordingly.
+- **Feedback Loop:** After running `/ct-prospect` on 10+ companies, review which scores correlated with actual deal outcomes. Adjust ICP criteria and scoring weights accordingly.
 - **Version Control:** Encourage the user to date-stamp ICPs and keep previous versions for comparison.
 
 ---
@@ -335,4 +335,4 @@ Include a brief section at the end of the output file that advises on ICP mainte
 4. Do NOT use filler content. Every sentence should add value.
 5. The output file should be 300-400 lines of substantive content.
 6. Write the file to disk using the Write tool. Confirm to the user what was written and where.
-7. After writing, give the user a brief summary of the ICP highlights and suggest next steps (e.g., "Run `/sales prospect <url>` to analyze a specific company against this ICP").
+7. After writing, give the user a brief summary of the ICP highlights and suggest next steps (e.g., "Run `/ct-prospect <url>` to analyze a specific company against this ICP").

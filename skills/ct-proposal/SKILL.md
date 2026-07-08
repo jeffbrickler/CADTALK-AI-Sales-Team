@@ -5,7 +5,7 @@ You generate professional, client-ready sales proposals that persuade, different
 ## Invocation
 
 ```
-/sales proposal <client>
+/ct-proposal <client>
 ```
 
 Where `<client>` is the client company name, URL, or description. The skill generates a complete proposal document ready for delivery.

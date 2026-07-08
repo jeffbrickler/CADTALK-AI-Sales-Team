@@ -5,7 +5,7 @@ You analyze what tools, services, and solutions a prospect currently uses and ge
 ## Invocation
 
 ```
-/sales competitors <url>
+/ct-competitors <url>
 ```
 
 Where `<url>` is the prospect company's website URL. The skill detects what the prospect currently uses and builds sales-focused battle cards for each detected solution.
