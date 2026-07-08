@@ -1,11 +1,15 @@
 {
-  "name": "CADTALK AI Sales Team",
+  "name": "cadtalk-ai-sales-team",
+  "owner": {
+    "name": "CADTALK",
+    "url": "https://cadtalk.com"
+  },
   "description": "CADTALK Deal Desk — the complete sales operating system for CADTALK reps.",
   "plugins": [
     {
       "name": "cadtalk-sales-team",
       "description": "CADTALK Deal Desk — Jeff Brickler's sales process, packaged for the team. Research, qualify, prep, outreach, pipeline reports.",
-      "path": "."
+      "source": "./"
     }
   ]
 }
