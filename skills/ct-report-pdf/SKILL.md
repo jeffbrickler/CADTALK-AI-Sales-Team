@@ -182,12 +182,12 @@ Write a JSON file at `_pdf_input.json` in the current working directory containi
 Check if the PDF generation script exists at `scripts/generate_pdf_report.py` relative to the project root.
 
 **Finding the project root:** Look for the `scripts/` directory in these locations (in order):
-1. The ai-sales-team-claude project directory (where the agents/ and skills/ folders are)
+1. The CADTALK-AI-Sales-Team plugin directory (where the agents/ and skills/ folders are)
 2. The current working directory
 3. One level up from the current working directory
 
 **If the script does NOT exist:**
-- Inform the user: "The PDF generation script was not found at `scripts/generate_pdf_report.py`. This script is part of the AI Sales Team project setup. Please ensure the project is properly installed."
+- Inform the user: "The PDF generation script was not found at `scripts/generate_pdf_report.py`. This script is part of the CADTALK AI Sales Team plugin. Please ensure the plugin is properly installed."
 - Stop execution.
 
 **If the script exists:**

@@ -10,6 +10,8 @@
 
 > **CADTALK's AI-powered deal desk, running inside Claude Code.**
 > Research companies, qualify leads with BANT + MEDDIC, map buying committees, generate personalized outreach, prep for calls, and produce pipeline reports — all from the command line with live Pipedrive, ZoomInfo, and Outlook data.
+>
+> Built and maintained by Jeff Brickler for the CADTALK sales team. This is our sales process — research → qualify → prep → outreach → follow-up → report — packaged as 16 Claude Code skills so every rep runs deals the same way.
 
 ---
 
@@ -22,7 +24,8 @@
 Open a terminal and run:
 
 ```bash
-claude plugin add github:jeffbrickler/CADTALK-AI-Sales-Team
+claude plugin marketplace add jeffbrickler/CADTALK-AI-Sales-Team
+claude plugin install cadtalk-sales-team@cadtalk-ai-sales-team
 ```
 
 ### Step 2 — Run setup (Cowork or Claude Code, one time)

@@ -39,7 +39,7 @@ NC='\033[0m'
 echo ""
 echo -e "${BLUE}╔══════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║                                                              ║${NC}"
-echo -e "${BLUE}║${NC}   ${CYAN}AI Sales Team — Claude Code Skills${NC}                        ${BLUE}║${NC}"
+echo -e "${BLUE}║${NC}   ${CYAN}CADTALK AI Sales Team — Claude Code Skills${NC}${BLUE}║${NC}"
 echo -e "${BLUE}║${NC}   ${GREEN}14 Skills · 5 Agents · 4 Scripts · PDF${NC}                    ${BLUE}║${NC}"
 echo -e "${BLUE}║                                                              ║${NC}"
 echo -e "${BLUE}╚══════════════════════════════════════════════════════════════╝${NC}"
@@ -48,7 +48,7 @@ echo ""
 # ---------------------------------------------------------------------------
 # Detect script directory (handle both local and curl | bash)
 # ---------------------------------------------------------------------------
-GITHUB_REPO="zubair-trabzada/ai-sales-team-claude"
+GITHUB_REPO="jeffbrickler/CADTALK-AI-Sales-Team"
 TEMP_DIR=""
 
 if [ -n "${BASH_SOURCE[0]}" ] && [ "${BASH_SOURCE[0]}" != "bash" ]; then
