@@ -1,0 +1,22 @@
+{
+  "name": "cadtalk-sales-team",
+  "version": "2.0.0",
+  "description": "CADTALK Deal Desk — the complete sales operating system for CADTALK reps. Jeff Brickler's process, packaged for your team.",
+  "author": { "name": "Jeff Brickler / CADTALK", "email": "jeff.brickler@cadtalk.com" },
+  "skills": [
+    "./sales",
+    "./skills/sales-competitors",
+    "./skills/sales-contacts",
+    "./skills/sales-followup",
+    "./skills/sales-icp",
+    "./skills/sales-objections",
+    "./skills/sales-outreach",
+    "./skills/sales-prep",
+    "./skills/sales-proposal",
+    "./skills/sales-prospect",
+    "./skills/sales-qualify",
+    "./skills/sales-report",
+    "./skills/sales-report-pdf",
+    "./skills/sales-research"
+  ]
+}
