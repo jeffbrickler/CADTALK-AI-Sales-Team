@@ -16,7 +16,7 @@ First team-distributable release. Jeff's Deal Desk is now a proper Claude Code p
 - **Teammate Quick Start in README** — Step-by-step install guide for Chris, Matthew, and Lucca.
 
 ### Changed
-- **`install.sh` deprecated** — The shell installer is replaced by the RPM plugin. `install.sh` now prints a deprecation notice and exits. Legacy code is preserved below the exit for reference.
+- **`install.sh` / `uninstall.sh` removed** — The shell installer is replaced by the plugin. Install via `claude plugin marketplace add` + `claude plugin install`; remove via `claude plugin uninstall cadtalk-sales-team`.
 
 ### Skills (unchanged from v1)
 All 13 CADTALK-customized skills are included:
