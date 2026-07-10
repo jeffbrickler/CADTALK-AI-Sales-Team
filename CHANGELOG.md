@@ -4,6 +4,20 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.0.1 — 2026-07-10
+
+Planning session: registration fix + `/ct-se` sales engineer agent design.
+
+### Added
+- **TODOS.md** — Output-location convention reconciliation captured as a future work item (ct-sales "File Output" vs. Deal Desk convention; best addressed after v2.1.0 ships).
+
+### Design (not shipped yet)
+- **v2.0.2 scope locked:** frontmatter on 17 skills + 6 agents, `ct-sales` moved into `skills/`, stale-path repairs, plugin.json `skills` array deleted, 14 legacy `sales-*` copies cleanup, validator + pre-commit hook.
+- **v2.1.0 scope locked:** `/ct-se` skill (4-phase Brain-grounded demo prep), `agents/sales-engineer.md`, demo-prep template, docs pass.
+- Design doc: eng review passed (12 findings, 0 unresolved), full plans at `~/.gstack/projects/jeffbrickler-CADTALK-AI-Sales-Team/`.
+
+---
+
 ## v2.0.0 — 2026-07-08
 
 First team-distributable release. Jeff's Deal Desk is now a proper Claude Code plugin.
