@@ -20,6 +20,8 @@ You are a comprehensive AI sales intelligence and outreach system for Claude Cod
 | `/ct-followup <prospect>` | Follow-up email sequence | FOLLOWUP-SEQUENCE.md |
 | `/ct-prep <url>` | Meeting preparation brief | MEETING-PREP.md |
 | `/ct-se <company>` | Technical demo prep (Brain-grounded) | TECH-DEMO-PREP.md |
+| `/ct-score <deal>` | WGLL discovery scorecard (0–20) | Score + Pipedrive pin |
+| `/ct-commit <deal>` | Commit gate — real-commit test + forecast | Verdict + weighted forecast |
 | `/ct-crm <intent>` | Pipedrive updates — fields, calls, notes, stages, queries | CRM write / read |
 | `/ct-voice <text>` | Voice WRITE / REVIEW / COACH on any copy | Polished copy / critique |
 | `/ct-proposal <client>` | Client proposal generator | CLIENT-PROPOSAL.md |
