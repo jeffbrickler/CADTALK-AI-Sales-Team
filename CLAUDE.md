@@ -26,6 +26,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Meeting prep, "prep for [company]" | `/ct-prep` |
 | Prospect analysis, full audit | `/ct-prospect` |
 | Technical demo prep, sales engineering, "will it work with their stack" | `/ct-se` |
+| Update Pipedrive, log a call, set MEDDPICC, move stage, pipeline query | `/ct-crm` |
 | Company research | `/ct-research` |
 | Lead qualification, BANT, MEDDIC | `/ct-qualify` |
 | Decision maker mapping, contacts | `/ct-contacts` |
@@ -42,3 +43,18 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Training, new user onboarding, learn the workflow | `/ct-train` |
 
 **`/ct-prep` vs `/ct-se`:** `/ct-prep` is AE business-discovery prep (who's meeting, what pain, talk track). `/ct-se` is SE technical demo prep (does our addin work with their CAD×ERP stack, what to demo). Run both for a technical demo — they're complementary, not overlapping.
+
+## CRM hygiene — single writer rule
+
+CADTALK's Pipedrive has exactly one write path: the **sales-crm** contract
+(`agents/sales-crm.md`) plus the field references in `references/`. This is what
+makes every rep's CRM updates identical.
+
+- **No ct-* skill writes Pipedrive directly.** When a skill needs to update the
+  CRM, it follows `agents/sales-crm.md` inline (or dispatches
+  `subagent_type: cadtalk-sales-team:sales-crm`). It never calls a Pipedrive
+  write tool with a hand-built field key.
+- **Field keys and stage IDs come only from `references/pipedrive-custom-fields.md`
+  and `references/pipedrive-stage-ids.md`.** Never fabricate a key.
+- Each pipeline stage leaves the standard update payload defined in the sales-crm
+  per-stage contract, so a deal looks the same no matter which rep worked it.

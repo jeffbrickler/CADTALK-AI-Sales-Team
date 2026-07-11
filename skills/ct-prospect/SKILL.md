@@ -89,6 +89,13 @@ WGLL rating: 16–20 Advance | 12–15 Qualify | 8–11 Nurture | 0–7 DQ
 
 Create Pipedrive records automatically based on Prospect Score grade.
 
+**All CRM writes in this phase go through the sales-crm contract** — do not call
+Pipedrive write tools directly. Follow `agents/sales-crm.md` for the org, person,
+and deal creates: resolve every field key and stage ID from
+`references/pipedrive-custom-fields.md` and `references/pipedrive-stage-ids.md`,
+never fabricate a key, and use the tool mapping the contract defines. For a batch
+create you may dispatch `subagent_type: cadtalk-sales-team:sales-crm`.
+
 **Create records if:** Grade A or B (Score ≥ 55), OR WGLL ≥ 12
 **Skip if:** Grade C or D with WGLL < 8 — save DQ note to file only
 
