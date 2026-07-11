@@ -4,6 +4,21 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.5.0 — 2026-07-10
+
+Coaching + enablement + fulfillment. Phase 4 of packaging Jeff's standalone skills — two folds into existing skills plus one new post-close skill, closing the loop from qualification through order handoff.
+
+### Added
+- **`/ct-qualify` gains Coach Mode** — enterprise deal coaching for a live deal the AE owns: BANTED health check, 9 cycle killers, buying-committee mapping / multi-threading, the Success Plan, coach-without-taking-over, stuck-deal protocols, and a Deal Health Card. Folds in `cro-deal-coach`. Engine in **`references/deal-coach.md`**. Default Qualify Mode (new-prospect flow) is unchanged.
+- **`/ct-train` gains Enablement Mode** — build the team's operating tools: sales playbook, 30/60/90 ramp plan, weekly sales-meeting agenda, competitive battlecard, enablement audit. Folds in `saas-sales-enablement`. Engine in **`references/sales-enablement.md`**, which pulls CADTALK specifics from the content skills rather than restating them. `/ct-se` now draws its demo-script scaffold from Sections 4–5 of the same reference.
+- **`/ct-fulfill`** — new post-close skill. Turns closed-won deals into per-deal order-submission emails to fulfillment@cadtalk.com, built to the New Order Processing SOP (partner rules, PO handling, pod, HOLD conditions) in the CADTALK internal voice. Ported from `cadtalk-fulfillment-order-emails` with **`references/sop-order-rules.md`** and **`references/fulfillment-email-template.md`**. Reads Pipedrive through the sales-crm contract; never writes the CRM or sends email.
+
+### Changed
+- Both folds route any CRM access through the sales-crm contract; their legacy `pipedrive_*` names map via the contract (reads only for `/ct-fulfill`). Descriptions single-lined for the indexer.
+- Routing + orchestrator + help docs updated for Coach Mode, Enablement Mode, and `/ct-fulfill` (CLAUDE.md routing table, `/ct-sales` command reference + cross-skill map, `/ct-help` skill map + detail blocks).
+
+---
+
 ## v2.4.0 — 2026-07-10
 
 Stage gates. Phase 3 of packaging Jeff's standalone skills — two pipeline-stage scorecards plus a decision-gate mode.
