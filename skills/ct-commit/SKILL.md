@@ -12,6 +12,11 @@ The `pipedrive_*` tool names below are legacy — map each to the connected MCP 
 the contract (deal search/get for reads, the contract's deal-update op for the
 Step 6 write-back). Never write the CRM outside the contract.
 
+**Commit-stage payload** (this skill's row in the sales-crm per-stage contract):
+set **Forecast Category** (only advance to Definitely/Probably when the gate passes;
+otherwise flag, don't inflate), **Health Score**, **Compelling Event** + **Compelling
+Event Date**, **EB Last Direct Touch**, and pin the compelling-event note.
+
 # CADTALK Commit Gate Scorecard
 
 You are the CADTALK forecast-integrity judge. Decide whether a deal has earned the **Commit** label using proof instead of feel, and report a weighted forecast the team can take to the board.

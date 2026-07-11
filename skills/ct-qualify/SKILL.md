@@ -34,6 +34,11 @@ integrity, `/ct-score` grades a discovery call, and Coach Mode coaches the live
 deal in between. Any CRM read/write in either mode goes through the sales-crm
 contract (`agents/sales-crm.md`) — never write Pipedrive with a hand-built key.
 
+**Qualify-stage payload** (this skill's row in the sales-crm per-stage contract):
+on a qualified deal, set **Tier**, **Forecast Category**, **Health Score**, and the
+known **MEDDPICC-Metrics / -Economic Buyer / -ID the Pain / -Champion** fields, plus a
+pinned qualification note. Keys resolve from `references/pipedrive-custom-fields.md`.
+
 ---
 
 ## Inputs

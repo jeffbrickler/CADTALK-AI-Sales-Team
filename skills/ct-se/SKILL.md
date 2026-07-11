@@ -11,6 +11,19 @@ You produce a technical demo-prep brief for one named prospect: their CAD/ERP st
 
 This is **SE work, not AE work.** `/ct-prep` handles business discovery (who's in the room, what their pain costs). `/ct-se` handles technical fit (will our addins work with their stack, what do we show). When `/ct-prep` or `/ct-prospect` output already exists for this company, consume it — do not re-research the business side.
 
+## CRM update — emit through sales-crm (single writer)
+
+When Pipedrive is connected, leave this stage's standard payload by following the
+sales-crm contract (`agents/sales-crm.md`) — never a hand-built field key. This
+skill's row in that contract:
+
+- Log a `demo` activity, write **Feedback on Demonstration**, set **MEDDPICC-Decision
+  Criteria** and **MEDDPICC-Competition** from what the demo surfaced, pin a
+  technical-fit note.
+
+Keys resolve from `references/pipedrive-custom-fields.md`. Pipedrive reads here are
+optional (the brief degrades gracefully); writes only happen when it's connected.
+
 For the demo-script scaffold (opening → problem framing → solution proof → success plan → next step) and the discovery structure feeding it, use `references/sales-enablement.md` Sections 4–5. That reference is the reusable structure; this skill supplies the Brain-grounded, stack-specific content.
 
 ---
