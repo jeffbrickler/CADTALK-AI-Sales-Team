@@ -4,6 +4,25 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.2.0 — 2026-07-10
+
+CRM hygiene backbone. Phase 1 of packaging Jeff's standalone skills into the plugin. Establishes a single Pipedrive write path so every rep's CRM updates are identical.
+
+### Added
+- **`agents/sales-crm.md`** — the single CADTALK Pipedrive write engine. Embeds the field-key/stage-ID references, maps operations to the connected Pipedrive MCP tool base names, and defines the machine-to-machine intent interface skills use. Ported from the standalone `pipedrive-update` skill. (No `tools:` restriction — it needs the Pipedrive MCP.)
+- **`references/pipedrive-custom-fields.md`** + **`references/pipedrive-stage-ids.md`** — CADTALK's custom field API keys, option IDs, pipeline/stage IDs, activity key_strings, product IDs. Copied verbatim so keys stay exact.
+- **`/ct-crm` skill** — direct Pipedrive updates for reps (set fields, log calls, notes, stage moves, queries), running the same sales-crm contract as the automated writes.
+
+### Changed
+- **CLAUDE.md single-writer rule** — no ct-* skill writes Pipedrive directly; all CRM writes go through the sales-crm contract, and field keys come only from the references.
+- **`/ct-prospect`** Phase 4 routes its Pipedrive record creation through the sales-crm contract instead of writing directly.
+- **`scripts/validate-plugin.py`** — WARNs when any skill/agent other than sales-crm / ct-crm names a Pipedrive write tool directly (single-writer enforcement).
+
+### Follow-on (needs Jeff's input)
+- Per-stage CRM field contract is DRAFT in `agents/sales-crm.md`. Once Jeff confirms which fields each stage must set, wire the remaining stage skills (ct-qualify, ct-prep, ct-se, ct-proposal, ct-followup) to emit their standard payload through sales-crm.
+
+---
+
 ## v2.1.0 — 2026-07-11
 
 Sales Engineer module. Adds `/ct-se` — Brain-grounded technical demo prep for CADTALK deals.
