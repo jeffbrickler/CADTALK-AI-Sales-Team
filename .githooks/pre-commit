@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# CADTALK plugin pre-commit hook — blocks commits that would drop skills/agents
+# from Claude Code autocomplete (missing/multiline frontmatter, stray skills array).
+#
+# Install once per clone:  git config core.hooksPath .githooks
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+validator="$repo_root/scripts/validate-plugin.py"
+
+if [[ ! -f "$validator" ]]; then
+  echo "pre-commit: validator not found at scripts/validate-plugin.py — skipping" >&2
+  exit 0
+fi
+
+if command -v python >/dev/null 2>&1; then
+  py=python
+elif command -v python3 >/dev/null 2>&1; then
+  py=python3
+else
+  echo "pre-commit: python not found — skipping plugin validation" >&2
+  exit 0
+fi
+
+echo "pre-commit: validating plugin structure..."
+if ! "$py" "$validator"; then
+  echo "pre-commit: plugin validation FAILED — commit blocked. Fix the issues above." >&2
+  exit 1
+fi
