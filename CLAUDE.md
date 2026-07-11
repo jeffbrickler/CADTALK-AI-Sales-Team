@@ -27,6 +27,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Prospect analysis, full audit | `/ct-prospect` |
 | Technical demo prep, sales engineering, "will it work with their stack" | `/ct-se` |
 | Update Pipedrive, log a call, set MEDDPICC, move stage, pipeline query | `/ct-crm` |
+| Voice/tone review, "does this sound on-brand?", write/edit any copy, coaching | `/ct-voice` |
 | Company research | `/ct-research` |
 | Lead qualification, BANT, MEDDIC | `/ct-qualify` |
 | Decision maker mapping, contacts | `/ct-contacts` |
@@ -58,3 +59,11 @@ makes every rep's CRM updates identical.
   and `references/pipedrive-stage-ids.md`.** Never fabricate a key.
 - Each pipeline stage leaves the standard update payload defined in the sales-crm
   per-stage contract, so a deal looks the same no matter which rep worked it.
+
+## Voice — single standard
+
+Every rep-authored output uses one voice standard: `references/cadtalk-voice-reference.md`
+(the `/ct-voice` skill is the standalone WRITE/REVIEW/COACH command). Content skills
+(`/ct-outreach`, `/ct-followup`, `/ct-proposal`, `/ct-prep`, `/ct-se`) apply it
+before returning copy — personal voice, no AI slop, Strunk & White clarity, CADTALK
+brand, in one pass. This is what makes the team sound like one voice.
