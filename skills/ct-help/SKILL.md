@@ -32,6 +32,8 @@ WORKFLOW (run in this order for a new deal)
 -------------------------------------------
 /ct-research [Company]          Research a company before first contact
 /ct-qualify [Company]           BANT + MEDDIC qualification framework
+/ct-score [Deal]                WGLL discovery scorecard (0–20) + Pipedrive pin
+/ct-commit [Deal]               Commit gate — real-commit test + weighted forecast
 /ct-prep [Company + context]    Pre-call brief, agenda, and talk track
 /ct-outreach [Company + info]   Cold email + LinkedIn sequence
 /ct-followup [Company]          Post-meeting follow-up sequence
