@@ -31,7 +31,7 @@ CADTALK AI Sales Team — Skill Map
 WORKFLOW (run in this order for a new deal)
 -------------------------------------------
 /ct-research [Company]          Research a company before first contact
-/ct-qualify [Company]           BANT + MEDDIC qualification framework
+/ct-qualify [Company]           BANT + MEDDIC qualification — or Coach Mode: review/coach a live deal
 /ct-score [Deal]                WGLL discovery scorecard (0–20) + Pipedrive pin
 /ct-commit [Deal]               Commit gate — real-commit test + weighted forecast
 /ct-prep [Company + context]    Pre-call brief, agenda, and talk track
@@ -57,10 +57,11 @@ PIPELINE
 --------
 /ct-report                      Pipeline summary (Markdown)
 /ct-report-pdf                  Pipeline summary (PDF)
+/ct-fulfill                     Order emails for closed-won deals (one per order → fulfillment)
 
-ONBOARDING
-----------
-/ct-train                       Interactive training walkthrough (~20 min)
+ONBOARDING & ENABLEMENT
+-----------------------
+/ct-train                       Training walkthrough (~20 min) — or Enablement Mode: playbooks, ramp plans, battlecards, audits
 /ct-setup                       First-time plugin setup
 
 Type /ct-help [skill] for full detail on any command above.
@@ -101,24 +102,29 @@ COMMON MISTAKES:
 ```
 /ct-qualify [Company Name]
 ---------------------------
-WHAT IT DOES:    Runs BANT (Budget, Authority, Need, Timeline) + MEDDIC
-                 qualification using everything known about the company.
-                 Returns a pursue/hold/disqualify verdict with reasoning.
+WHAT IT DOES:    Two modes. QUALIFY MODE (default): runs BANT + MEDDIC + WGLL
+                 on a new/early prospect, routes the pipeline, creates Pipedrive
+                 records. COACH MODE: reviews a live deal the AE already owns —
+                 BANTED health check, 9 cycle killers, buying-committee mapping,
+                 Success Plan, stuck-deal protocols, and a Deal Health Card.
 
-WHEN TO RUN IT:  After research, before booking a discovery call. Also
-                 useful after a discovery call to update your qualification.
+WHEN TO RUN IT:  Qualify Mode after research, before booking discovery. Coach
+                 Mode when a deal is stuck, dark, single-threaded, or you're not
+                 sure it's real — "review this deal", "coach my AE", "why is it
+                 stuck", "build a success plan".
 
 HOW TO USE IT:   /ct-qualify Acme Fabrication
-                 /ct-qualify "Acme Fabrication — post-discovery, CFO confirmed budget"
+                 /ct-qualify "review the Contoso deal — stuck 40 days, champion went quiet"
 
-WHAT YOU'LL GET: BANT scores (GREEN/YELLOW/RED), MEDDIC breakdown, gaps to
-                 fill, and a verdict with next-step recommendation.
+WHAT YOU'LL GET: Qualify Mode — BANT scores, MEDDIC breakdown, WGLL, verdict.
+                 Coach Mode — Deal Health Card, risk rating, next 48h / 7d
+                 actions, and the coaching question to ask the AE.
 
 COMMON MISTAKES:
 • Treating YELLOW as GREEN — budget and timeline unknown means you still have
   work to do, not that they're qualified.
-• Not re-running after discovery — your qualification should update as you
-  learn more.
+• Running the new-prospect flow on a coaching request — if the deal already
+  exists, that's Coach Mode.
 ```
 
 ---
@@ -477,4 +483,68 @@ WHAT YOU'LL GET: Research summary, BANT/MEDDIC assessment, key contacts,
 COMMON MISTAKES:
 • Using this instead of ct-research for a quick lookup — ct-prospect goes deep
   and takes longer. Use ct-research for speed, ct-prospect for thoroughness.
+```
+
+---
+
+### ct-fulfill
+
+```
+/ct-fulfill
+------------
+WHAT IT DOES:    Turns closed-won deals into per-deal order-submission emails to
+                 fulfillment@cadtalk.com, built to the New Order Processing SOP.
+                 One order = one email (a single batch email gets bounced back).
+                 Applies partner rules (Arena/IFS/Infor/direct), PO handling,
+                 pod, and HOLD conditions, in the CADTALK internal voice.
+
+WHEN TO RUN IT:  When deals close and you need to hand them to order processing —
+                 "send these orders to fulfillment", "process this order".
+
+HOW TO USE IT:   /ct-fulfill
+                 /ct-fulfill "the three deals that closed this week"
+
+WHAT YOU'LL GET: Fulfillment-Order-Emails_v1.md — copy-paste-ready emails, one per
+                 order, each with the Pipedrive link, order summary, partner flags,
+                 pod, and a single clear ask (process or hold + why).
+
+COMMON MISTAKES:
+• Sending one batch email — order processing works one order at a time.
+• Inventing quote-only fields — write "see signed quote"; never guess a PO,
+  license count, or term.
+• Processing a HOLD order — missing contact, PO "to be provided" (non-Arena), or
+  Phase 2 work holds, it doesn't process.
+
+NOTE: ct-fulfill only reads Pipedrive (through the sales-crm contract) and never
+      writes it or sends the email — it produces the copy for you to send.
+```
+
+---
+
+### ct-train
+
+```
+/ct-train
+----------
+WHAT IT DOES:    Two modes. TRAINING (default): interactive 7-stage mock-deal
+                 walkthrough of the full workflow (~20 min, no MCP needed).
+                 ENABLEMENT: builds team tools — sales playbook, 30/60/90 ramp
+                 plan, weekly sales-meeting agenda, competitive battlecard, or an
+                 enablement audit — via references/sales-enablement.md.
+
+WHEN TO RUN IT:  Training on a new rep's first week. Enablement when a manager
+                 needs a playbook, ramp plan, meeting format, battlecard, or audit.
+
+HOW TO USE IT:   /ct-train
+                 /ct-train "build a 30/60/90 ramp plan for a new AE"
+                 /ct-train "run an enablement audit"
+
+WHAT YOU'LL GET: Training — a guided walkthrough with check-ins per stage.
+                 Enablement — the requested deliverable, pulling CADTALK specifics
+                 from /ct-icp, /ct-qualify, /ct-objections, /ct-competitors and
+                 voiced via the voice reference.
+
+COMMON MISTAKES:
+• Reinventing CADTALK facts in an enablement build — pull them from the content
+  skills; the reference is structure, not content.
 ```

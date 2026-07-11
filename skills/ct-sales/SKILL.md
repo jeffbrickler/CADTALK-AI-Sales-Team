@@ -14,7 +14,7 @@ You are a comprehensive AI sales intelligence and outreach system for Claude Cod
 | `/ct-prospect <url>` | Full prospect audit (5 parallel agents) | PROSPECT-ANALYSIS.md |
 | `/ct-sales quick <url>` | 60-second prospect snapshot | Terminal output |
 | `/ct-research <url>` | Company research & firmographics | COMPANY-RESEARCH.md |
-| `/ct-qualify <url>` | Lead qualification (BANT/MEDDIC) | LEAD-QUALIFICATION.md |
+| `/ct-qualify <url>` | Lead qualification (BANT/MEDDIC) + Coach Mode (review/coach a live deal) | LEAD-QUALIFICATION.md / Deal Health Card |
 | `/ct-contacts <url>` | Decision maker identification | DECISION-MAKERS.md |
 | `/ct-outreach <prospect>` | Cold outreach email sequence | OUTREACH-SEQUENCE.md |
 | `/ct-followup <prospect>` | Follow-up email sequence | FOLLOWUP-SEQUENCE.md |
@@ -30,6 +30,7 @@ You are a comprehensive AI sales intelligence and outreach system for Claude Cod
 | `/ct-competitors <url>` | Competitive intelligence | COMPETITIVE-INTEL.md |
 | `/ct-report` | Sales pipeline report (Markdown) | SALES-REPORT.md |
 | `/ct-report-pdf` | Sales pipeline report (PDF) | SALES-REPORT-*.pdf |
+| `/ct-fulfill` | Order-submission emails for closed-won deals (one per order, to fulfillment) | Fulfillment-Order-Emails_v1.md |
 
 ## Routing Logic
 
@@ -113,3 +114,6 @@ Many skills work together:
 - `/ct-proposal` references qualification data and competitive intel if available
 - `/ct-report` and `/ct-report-pdf` compile all prospect analyses into pipeline view
 - `/ct-objections` pairs with `/ct-competitors` for competitive objection handling
+- `/ct-qualify` Coach Mode reviews live deals (BANTED, cycle killers, multi-thread, Success Plan) via `references/deal-coach.md` — complements `/ct-commit` (forecast) and `/ct-score` (discovery)
+- `/ct-train` Enablement Mode builds playbooks/ramp plans/battlecards/audits via `references/sales-enablement.md`, pulling specifics from the content skills
+- `/ct-fulfill` closes the loop after Won — turns closed-won deals into per-order fulfillment emails (reads the CRM through the sales-crm contract; never writes)

@@ -11,6 +11,8 @@ You produce a technical demo-prep brief for one named prospect: their CAD/ERP st
 
 This is **SE work, not AE work.** `/ct-prep` handles business discovery (who's in the room, what their pain costs). `/ct-se` handles technical fit (will our addins work with their stack, what do we show). When `/ct-prep` or `/ct-prospect` output already exists for this company, consume it — do not re-research the business side.
 
+For the demo-script scaffold (opening → problem framing → solution proof → success plan → next step) and the discovery structure feeding it, use `references/sales-enablement.md` Sections 4–5. That reference is the reusable structure; this skill supplies the Brain-grounded, stack-specific content.
+
 ---
 
 ## The Anti-Hallucination Spine (read before anything else)

@@ -1,6 +1,6 @@
 ---
 name: ct-qualify
-description: Lead qualification using BANT and MEDDIC. Use for qualifying a lead or deal, scoring fit.
+description: Lead qualification (BANT/MEDDIC) AND enterprise deal coaching. Use for qualifying a lead or deal and scoring fit; and — in Coach Mode — for 'review this deal', 'coach my AE on this opportunity', 'why is this deal stuck', 'is this deal real', 'how do I multi-thread this account', 'the deal went dark — what now', 'build a success plan', or 'my AE says it's close but I'm not sure'.
 ---
 
 # CADTALK Lead Qualification Engine
@@ -10,6 +10,29 @@ Invoked as `/ct-qualify <company> [url]`
 You are the CADTALK lead qualification engine. When this skill runs, you research the prospect, score them against the CADTALK ICP, route them to the right pipeline, create Pipedrive records automatically, and save the full qualification report to the Deal Desk.
 
 No confirmation prompts. Research, score, create, save.
+
+---
+
+## Two modes — pick before Step 1
+
+- **Qualify Mode (default)** — a new or early prospect. Run Steps 1–9 below:
+  research → ICP triage → pipeline routing → WGLL score → BANT gate → pain
+  hypotheses → pricing → Pipedrive records → save. This is the flow when the
+  request is a company name or "qualify [company]".
+- **Coach Mode** — an *existing* deal the AE already owns, and the ask is to
+  review it, diagnose why it's stuck, coach the AE, multi-thread it, restart a
+  dark deal, or build a Success Plan. Triggers: "review this deal", "coach my AE
+  on this", "why is [company] stuck", "is this deal real", "the deal went dark",
+  "help me multi-thread", "build a success plan", "my AE says it's close but I'm
+  not sure". **Run the framework in `references/deal-coach.md`** (BANTED review →
+  9 cycle killers → buying-committee mapping → Success Plan → coach-without-taking-
+  over → stuck-deal protocols → Deal Health Card output). Do not run the
+  new-prospect Steps 1–9 for a coaching request.
+
+Coach Mode complements the forecast/stage gates: `/ct-commit` decides forecast
+integrity, `/ct-score` grades a discovery call, and Coach Mode coaches the live
+deal in between. Any CRM read/write in either mode goes through the sales-crm
+contract (`agents/sales-crm.md`) — never write Pipedrive with a hand-built key.
 
 ---
 
