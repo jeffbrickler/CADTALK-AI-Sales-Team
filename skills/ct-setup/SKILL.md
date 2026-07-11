@@ -1,3 +1,8 @@
+---
+name: ct-setup
+description: First-time setup and onboarding for the CADTALK sales plugin. Use for initial configuration, connecting systems, 'set me up'.
+---
+
 # CADTALK Deal Desk — Onboarding Setup
 
 Invoked as `/ct-setup`

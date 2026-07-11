@@ -1,3 +1,8 @@
+---
+name: ct-followup
+description: Follow-up sequence generation for an active deal. Use for follow-up emails, nurture cadence.
+---
+
 # CADTALK Follow-Up Sequence Generator
 
 Invoked as `/ct-followup <company> [scenario]`

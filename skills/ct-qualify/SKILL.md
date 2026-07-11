@@ -1,3 +1,8 @@
+---
+name: ct-qualify
+description: Lead qualification using BANT and MEDDIC. Use for qualifying a lead or deal, scoring fit.
+---
+
 # CADTALK Lead Qualification Engine
 
 Invoked as `/ct-qualify <company> [url]`

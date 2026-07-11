@@ -1,3 +1,8 @@
+---
+name: ct-competitors
+description: Competitive intelligence on CADTALK competitors. Use for competitive analysis, battlecards.
+---
+
 # Sales Competitive Intelligence
 
 You analyze what tools, services, and solutions a prospect currently uses and generate actionable battle cards for selling against each detected competitor. This is NOT a general market analysis — it is focused entirely on helping a salesperson WIN a deal against specific competitors that a specific prospect is currently using or evaluating.

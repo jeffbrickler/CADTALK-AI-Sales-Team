@@ -1,3 +1,8 @@
+---
+name: ct-prospect
+description: Full prospect analysis and audit via multi-agent research. Use for prospect deep-dive, full company audit.
+---
+
 # CADTALK Full Prospect Analysis Orchestrator
 
 Invoked as `/ct-prospect <company> [url]`
@@ -20,20 +25,20 @@ Pass this briefing to all subagents as shared context. This prevents redundant f
 
 ## Phase 2: Parallel Subagent Launch
 
-Launch all 5 simultaneously. They are independent — do NOT run sequentially.
+Launch all 5 simultaneously via the Agent tool — pass each one's `subagent_type` below. They are independent — do NOT run sequentially.
 
-| Subagent | Agent File | Weight | What It Returns |
-|----------|-----------|--------|----------------|
-| `sales-company` | `~/.claude/agents/ct-sales-company.md` | 25% | Company Fit Score (0–100) + JSON |
-| `sales-contacts` | `~/.claude/agents/ct-sales-contacts.md` | 20% | Contact Access Score (0–100) + JSON |
-| `sales-opportunity` | `~/.claude/agents/ct-sales-opportunity.md` | 20% | Opportunity Quality Score (0–100) + JSON |
-| `sales-competitive` | `~/.claude/agents/ct-sales-competitive.md` | 15% | Competitive Score (0–100) + JSON |
-| `sales-strategy` | `~/.claude/agents/ct-sales-strategy.md` | 20% | Outreach Score (0–100) + Draft Email |
+| Subagent | subagent_type | Weight | What It Returns |
+|----------|---------------|--------|----------------|
+| `sales-company` | `cadtalk-sales-team:sales-company` | 25% | Company Fit Score (0–100) + JSON |
+| `sales-contacts` | `cadtalk-sales-team:sales-contacts` | 20% | Contact Access Score (0–100) + JSON |
+| `sales-opportunity` | `cadtalk-sales-team:sales-opportunity` | 20% | Opportunity Quality Score (0–100) + JSON |
+| `sales-competitive` | `cadtalk-sales-team:sales-competitive` | 15% | Competitive Score (0–100) + JSON |
+| `sales-strategy` | `cadtalk-sales-team:sales-strategy` | 20% | Outreach Score (0–100) + Draft Email |
 
 Each subagent prompt must include:
 - The full discovery briefing
 - The company name and URL
-- Instruction to follow its agent file instructions exactly
+- Instruction to follow its agent instructions exactly
 - Instruction to return the JSON block + narrative
 
 ---

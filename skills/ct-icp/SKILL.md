@@ -1,3 +1,8 @@
+---
+name: ct-icp
+description: Ideal customer profile builder. Use for building or refining an ICP.
+---
+
 # Ideal Customer Profile Builder
 
 ## Metadata
