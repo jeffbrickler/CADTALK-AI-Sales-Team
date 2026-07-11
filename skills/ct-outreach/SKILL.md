@@ -316,3 +316,9 @@ Price:      $[amount]/yr
 File saved: [full path]
 ====================================
 ```
+
+---
+
+## CADTALK Voice (apply before output)
+
+Before returning any written copy (email, message, recap, script, proposal), apply the CADTALK voice: follow `references/cadtalk-voice-reference.md`, or run `/ct-voice` in REVIEW mode. Personal voice, no AI slop, Strunk & White clarity, CADTALK brand — one pass. Nothing goes out unvoiced.

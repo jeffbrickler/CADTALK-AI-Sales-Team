@@ -629,3 +629,9 @@ CONFIDENTIAL
 10. **If previous analysis files exist**, incorporate all available data. Do not ask the user to repeat information already captured in PROSPECT-ANALYSIS.md, COMPANY-RESEARCH.md, LEAD-QUALIFICATION.md, COMPETITIVE-INTEL.md, or other output files.
 11. **Follow-up emails are part of the proposal output.** Always generate the 6-email follow-up sequence alongside the proposal — proposal delivery without a follow-up plan is incomplete.
 12. **Conservative projections build trust.** In the ROI section, the conservative estimate should be genuinely conservative. Overpromising destroys credibility when results come in.
+
+---
+
+## CADTALK Voice (apply before output)
+
+Before returning any written copy (email, message, recap, script, proposal), apply the CADTALK voice: follow `references/cadtalk-voice-reference.md`, or run `/ct-voice` in REVIEW mode. Personal voice, no AI slop, Strunk & White clarity, CADTALK brand — one pass. Nothing goes out unvoiced.
