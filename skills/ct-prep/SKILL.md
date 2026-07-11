@@ -1,3 +1,8 @@
+---
+name: ct-prep
+description: Generate a CADTALK discovery-call meeting-prep brief for a company. Use for meeting prep, 'prep for [company]'.
+---
+
 # CADTALK Discovery Call Prep
 
 Invoked as `/ct-prep <company> [meeting-date]`

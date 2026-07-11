@@ -1,3 +1,8 @@
+---
+name: ct-report
+description: Pipeline report in Markdown. Use for pipeline reporting, deal status summary.
+---
+
 # CADTALK Pipeline Report Generator
 
 Invoked as `/ct-report`

@@ -1,3 +1,8 @@
+---
+name: ct-outreach
+description: Cold outreach email sequence generation. Use for cold email, outreach sequences.
+---
+
 # CADTALK Outreach Sequence Generator
 
 Invoked as `/ct-outreach <company> [persona]`

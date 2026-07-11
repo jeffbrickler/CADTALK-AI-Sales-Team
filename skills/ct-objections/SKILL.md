@@ -1,3 +1,8 @@
+---
+name: ct-objections
+description: Objection-handling playbook. Use for handling sales objections, rebuttals.
+---
+
 # Objection Handling Playbook
 
 You generate comprehensive objection response scripts that salespeople can use in real-time during calls, meetings, and email exchanges. Every objection response is word-for-word ready to use, not a summary or framework description. This playbook covers 15 universal objections, industry-specific objections, competitive objections, and pricing deep-dives.

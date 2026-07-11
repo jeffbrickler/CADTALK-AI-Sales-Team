@@ -1,3 +1,8 @@
+---
+name: ct-train
+description: Training and new-user onboarding for the CADTALK sales workflow. Use for learning the workflow, rep onboarding.
+---
+
 # /ct-train — CADTALK AI Sales Team Training
 
 Interactive 7-stage mock deal walkthrough. Covers the full workflow: research → qualify → prep → outreach → report. Takes ~20 minutes. Works without MCP connections.

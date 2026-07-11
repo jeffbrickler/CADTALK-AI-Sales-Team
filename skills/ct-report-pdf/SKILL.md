@@ -1,3 +1,8 @@
+---
+name: ct-report-pdf
+description: Pipeline report exported as PDF. Use for pipeline report PDF, printable pipeline summary.
+---
+
 # Professional Sales Report PDF Generator
 
 ## Metadata

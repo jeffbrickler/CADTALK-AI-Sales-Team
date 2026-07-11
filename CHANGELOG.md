@@ -4,6 +4,29 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.0.2 — 2026-07-10
+
+Registration hotfix. Restores the plugin's slash-command surface — all 17 skills were invisible in Claude Code autocomplete because none had YAML frontmatter (the skill indexer requires it).
+
+### Fixed
+- **Frontmatter added to all 17 SKILL.md files** — single-line trigger-rich `name:`/`description:` blocks. This is the core fix; without it no `/ct-*` command registered.
+- **Frontmatter added to all 5 agent files** — `name:`, `description:`, and a built-in `tools:` scope (Read, Grep, Glob, WebSearch, WebFetch), replacing the useless "Agent from cadtalk-sales-team plugin" fallback and unrestricted tools. MCP tools left unscoped (instance-scoped per user, cannot be pinned in frontmatter).
+- **`ct-sales` moved into `skills/`** — was at repo root, where it could not register.
+- **Stale-path repairs** — `ct-sales` sub-skill routing `skills/ct-sales-<command>/` → `skills/ct-<command>/`; `ct-prospect` dead `~/.claude/agents/ct-sales-*.md` references → Agent-tool `subagent_type` strings (`cadtalk-sales-team:sales-*`). Prose/logic otherwise untouched.
+- **Stale command references** in agent files (`/sales prospect` → `/ct-prospect`).
+
+### Changed
+- **`plugin.json` `skills` array deleted** — Claude Code auto-discovers `skills/*/SKILL.md`. The explicit list had already drifted (missing ct-help + ct-train); removing it eliminates the drift class entirely.
+
+### Added
+- **`scripts/validate-plugin.py`** — FAILs on missing/multiline frontmatter or a stray `skills` array; WARNs on a missing CLAUDE.md routing row. Run before every version bump.
+- **`.githooks/pre-commit`** — runs the validator on every commit. Install once per clone: `git config core.hooksPath .githooks`.
+
+### Upgrade note (teammates)
+If you installed an earlier upstream build, remove the 14 legacy pre-rename skill copies at `~/.claude/skills/sales-*` — otherwise every command registers twice (`sales-prep` AND `ct-prep`). Reinstall the plugin after upgrading.
+
+---
+
 ## v2.0.1 — 2026-07-10
 
 Planning session: registration fix + `/ct-se` sales engineer agent design.

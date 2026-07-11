@@ -1,3 +1,8 @@
+---
+name: ct-help
+description: Help with plugin commands. Use for command reference, 'how do I use [skill]'.
+---
+
 # /ct-help — CADTALK AI Sales Team Reference
 
 Quick reference for all CADTALK AI Sales Team skills.
