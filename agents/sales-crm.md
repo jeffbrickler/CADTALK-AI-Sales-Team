@@ -114,33 +114,35 @@ the API call, then returns a one-line confirmation per write.
 1. Find the deal if given by name.
 2. Match the stage name to a `stage_id` in the reference — pipeline matters (same stage name exists in different pipelines).
 3. `updateDeal` with the `stage_id`. Confirm with deal + stage + pipeline.
+4. **Conversion-date stamps (set-once — these drive funnel metrics, never overwrite):**
+   - Moving **into Discovery** (opportunity pipelines 1/2/3 — stage_id 4, 9, or 15): if **SQL Date** (`80d471aaf715fb3bfd6320d1874949a864e0e909`) is empty, set it to today (`YYYY-MM-DD`). If already set, leave it.
+   - Moving **into Prove** (stage_id 5, 10, or 16): if **SQO Date** (`6e75c1b17be487e2b52f2282ac4e06e39c90e3b5`) is empty, set it to today. If already set, leave it.
+   - Read the deal's current SQL/SQO Date first; only write the one that is blank. Backward moves never clear a stamped date. A deal created directly into Discovery gets SQL Date on create.
 
 ### QUERY (read)
-Use `getDeals` / `searchDeals` / `getDeal`, `getStages`, `getActivities`, `getNotes`, `getOrganizations`, `getPersons`. Surface key custom fields (Forecast, Tier, Health Score, Stage, Next Check-In) alongside standard fields (value, expected close, owner). For "stale deals" / "overdue" style asks with no dedicated tool, filter `getDeals`/`getActivities` results.
+Use `getDeals` / `searchDeals` / `getDeal`, `getStages`, `getActivities`, `getNotes`, `getOrganizations`, `getPersons`. Surface key custom fields (Forecast Category, Tier, Health Score, Stage, SQL/SQO Date) alongside standard fields (value, expected close, owner). For "stale deals" / "overdue" style asks with no dedicated tool, filter `getDeals`/`getActivities` results.
 
-## Per-stage CRM update contract (DRAFT — confirm field list with Jeff)
+## Per-stage CRM update contract (CONFIRMED 2026-07-11)
 
-This is the hygiene payload each pipeline stage should leave behind. Skills emit
-these through this agent so every rep's deal looks the same. **DRAFT** — the exact
-fields per stage are Jeff's call; confirm against `references/pipedrive-custom-fields.md`.
+This is the hygiene payload each pipeline stage leaves behind. Skills emit these
+through this agent so every rep's deal looks the same. All keys resolve from
+`references/pipedrive-custom-fields.md`; MEDDPICC + feedback are Large-text (plain
+string), Tier/Forecast Category/Health Score are option IDs, SQL/SQO are dates.
 
-| Stage / skill | Fields to set every time |
-|---------------|--------------------------|
-| Qualify (`/ct-qualify`) | Tier, Forecast, Health Score, MEDDPICC (metrics/EB/champion as known), + pinned qualification note |
-| Discovery prep/run (`/ct-prep`, `/ct-score`) | log discovery activity (done), WGLL score pinned note, Next Check-In date |
-| Demo / SE (`/ct-se`) | log demo activity, technical-fit note, MEDDPICC (decision criteria/competition) |
-| Proposal (`/ct-proposal`) | stage → Propose, value, expected_close_date, MEDDPICC (paper process), proposal note |
-| Commit (`/ct-commit`) | Forecast → Commit only if the gate passes; else flag, Health Score, compelling-event note |
-| Follow-up (`/ct-followup`) | log activity, Next Check-In date, updated Health Score |
+| Stage / skill | Payload emitted every time |
+|---------------|----------------------------|
+| Qualify (`/ct-qualify`) | Tier, Forecast Category, Health Score, MEDDPICC-Metrics / -Economic Buyer / -ID the Pain / -Champion as known, + pinned qualification note |
+| Stage move → **Discovery** (via `/ct-crm`) | **SQL Date set-once** (see STAGE MOVE step 4) |
+| Discovery prep/run (`/ct-prep`, `/ct-score`) | log `discovery` activity (done), WGLL score pinned note, schedule the next follow-up activity |
+| Stage move → **Prove** (via `/ct-crm`) | **SQO Date set-once** (see STAGE MOVE step 4) |
+| Demo / SE (`/ct-se`) | log `demo` activity, Feedback on Demonstration, MEDDPICC-Decision Criteria / -Competition, technical-fit note |
+| Proposal (`/ct-proposal`) | stage → Propose, value, expected_close_date, Feedback on Proposal, MEDDPICC-Decision Process / -Paperwork Process, proposal note |
+| Commit (`/ct-commit`) | Forecast Category (only advance to Definitely/Probably if the gate passes; else flag), Health Score, Compelling Event + Compelling Event Date, EB Last Direct Touch, compelling-event note |
+| Follow-up (`/ct-followup`) | log activity, schedule the next follow-up activity, updated Health Score |
 
 Reps never memorize field keys. The skill states the intent; this agent resolves
-keys and writes.
-
-## Duplicate fields
-
-Some Deal fields exist twice (Single-option and Multiple-options versions: Deal
-Status, CSS, NPS Score, Parent Account, Product Line). Use the **Single-option**
-version unless Jeff says otherwise.
+keys and writes. SQL/SQO dates are stamped by the STAGE MOVE contract (set-once),
+not by the stage skills, so they stay clean for conversion metrics.
 
 ## Extending the reference
 

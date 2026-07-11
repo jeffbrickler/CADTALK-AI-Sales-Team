@@ -4,6 +4,20 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.7.0 — 2026-07-11
+
+CRM stage-wiring. Completes Phase 1 of the packaging plan — every pipeline-stage skill now emits its standard payload through the single sales-crm writer, so two reps working the same deal leave identical Pipedrive state at every stage. Field list confirmed against the live Pipedrive export (2026-07-11) and the internal Sales Process doc.
+
+### Added
+- **SQL Date / SQO Date conversion stamps** — the sales-crm STAGE MOVE contract now stamps **SQL Date** on entry to Discovery (opportunity pipelines 1/2/3) and **SQO Date** on entry to Prove, **set-once** (never overwritten on re-entry, backward moves never clear them) so funnel conversion metrics stay clean.
+- **Per-stage payloads wired** through `agents/sales-crm.md` for `/ct-qualify` (Tier, Forecast Category, Health Score, MEDDPICC), `/ct-prep` (discovery activity, scheduled next follow-up), `/ct-se` (demo activity, Feedback on Demonstration, MEDDPICC decision criteria/competition), `/ct-proposal` (stage→Propose, value, close date, Feedback on Proposal, MEDDPICC decision/paperwork process), `/ct-commit` (Forecast Category gate, Health Score, Compelling Event + Date, EB Last Direct Touch), `/ct-followup` (activity, scheduled next follow-up, Health Score). `/ct-score` already emitted its WGLL pin. Sales cadence is a scheduled Pipedrive activity (due date), not a field write.
+
+### Changed
+- `agents/sales-crm.md` per-stage contract promoted from DRAFT to **CONFIRMED (2026-07-11)** with real field keys; MEDDPICC confirmed as the 8 Large-text Deal fields (write to fields, not notes).
+- **Field reference audited to the sales rep loop.** `references/pipedrive-custom-fields.md` trimmed from ~110 to ~40 fields — removed customer-success, billing, renewal, support, and internal-marketing fields (CSS, NPS, CSP, renewal/quarterly check-ins, FreshDesk/Chargebee/Invoice, license, lifecycle Status, Marketing Status/Assets, web-visitor plumbing), legacy duplicate fields, and per Jeff's scoping: Next Check-In, Last Check-In, Parent Account, Product Line, Org Source, Deal Label, Event, Linked web visitor. Added a scope note; these still exist in Pipedrive, just out of the writer's map. Added **MEDDPICC-Coach** and **EB Last Direct Touch**; documented **Compelling Event / Compelling Event Date** as current names for the old Trigger Type / Trigger Date keys.
+
+---
+
 ## v2.6.0 — 2026-07-10
 
 Leadership module. Phase 5 of packaging Jeff's standalone skills — a leader-facing revenue-advisory layer above the rep loop.

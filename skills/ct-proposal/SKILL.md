@@ -7,6 +7,19 @@ description: Proposal for a CADTALK deal — write the client-ready proposal doc
 
 You generate professional, client-ready sales proposals that persuade, differentiate, and close deals. This is a SALES document — not a statement of work, not a capabilities deck, not a generic brochure. Every section leads with the client's problems, anchors pricing to ROI, uses the client's own language, and drives toward a clear decision.
 
+## CRM update — emit through sales-crm (single writer)
+
+When Pipedrive is connected, leave this stage's standard payload by following the
+sales-crm contract (`agents/sales-crm.md`) — never a hand-built field key. This
+skill's row in that contract:
+
+- Move stage → **Propose**, set **value** and **expected_close_date**, write
+  **Feedback on Proposal**, set **MEDDPICC-Decision Process** and **MEDDPICC-Paperwork
+  Process**, pin the proposal note.
+
+Keys resolve from `references/pipedrive-custom-fields.md`; stage IDs from
+`pipedrive-stage-ids.md`. Pull deal context through the same contract (see below).
+
 ## Two modes
 
 - **Proposal document (default):** `/ct-proposal <client>` writes the full proposal (Steps 1–8 below).

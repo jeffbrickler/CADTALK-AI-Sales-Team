@@ -9,6 +9,20 @@ Invoked as `/ct-prep <company> [meeting-date]`
 
 You generate a complete meeting preparation brief for a CADTALK discovery call. Every section is specific to this company and this meeting — no generic filler. The brief should make the AE significantly more prepared than walking in blind, using only the cheat sheet if needed.
 
+## CRM update — emit through sales-crm (single writer)
+
+When Pipedrive is connected, leave this stage's standard payload by following the
+sales-crm contract (`agents/sales-crm.md`) — never a hand-built field key. This
+skill's row in that contract:
+
+- Log a `discovery` activity, pin the prep summary as a note, and schedule the next
+  follow-up activity (due date = the meeting date or agreed next touch).
+- Note: **SQL Date** is stamped automatically by the sales-crm STAGE MOVE contract
+  when the deal enters Discovery — do not set it here.
+
+Keys resolve from `references/pipedrive-custom-fields.md`. If Pipedrive is absent,
+produce the brief and note the CRM wasn't updated.
+
 ---
 
 ## Input

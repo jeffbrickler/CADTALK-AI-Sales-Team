@@ -9,6 +9,18 @@ Invoked as `/ct-followup <company> [scenario]`
 
 You generate stage-specific follow-up sequences for CADTALK prospects after initial engagement. These are NOT cold outreach — they're follow-ups after a meeting, demo, or proposal. Every email adds new value, references what was discussed, and moves toward a concrete next step.
 
+## CRM update — emit through sales-crm (single writer)
+
+When Pipedrive is connected, leave this stage's standard payload by following the
+sales-crm contract (`agents/sales-crm.md`) — never a hand-built field key. This
+skill's row in that contract:
+
+- Log the follow-up activity and schedule the next follow-up activity (its due date =
+  the next planned touch), update **Health Score** based on responsiveness.
+
+Keys resolve from `references/pipedrive-custom-fields.md`. If Pipedrive is absent,
+produce the sequence and note the CRM wasn't updated.
+
 ---
 
 ## Input
