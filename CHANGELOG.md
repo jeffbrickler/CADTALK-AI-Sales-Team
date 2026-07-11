@@ -4,6 +4,22 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.4.0 — 2026-07-10
+
+Stage gates. Phase 3 of packaging Jeff's standalone skills — two pipeline-stage scorecards plus a decision-gate mode.
+
+### Added
+- **`/ct-score`** — WGLL discovery scorecard (Phase 0 Intake + Discover, 5 dimensions each, 0–4, max 20), outputs a Pipedrive-ready pin + coaching flags. Ported from `discovery-review-scorecard`.
+- **`/ct-commit`** — commit-gate forecast-integrity scorecard (Aftermarket + partner/New-ERP gates, Health Score, weighted forecast, fake-commit finder). Ported from `commit-gate-scorecard`.
+- **`templates/decision-gate/`** — the five decision-meeting templates (brief/presentation/call-script/objections/follow-up + intake schema) from `proposal-decision-gate`.
+
+### Changed
+- **`/ct-proposal` gains a Decision-Gate mode** — post-demo go/no-go meeting kit (decision brief, exec deck, rep call script, decision questions, objection handling, follow-up), folding in `proposal-decision-gate`. Default mode still writes the proposal document.
+- Both scorecards route CRM reads/writes through the sales-crm contract; their legacy `pipedrive_*` tool names map via the contract. Multiline descriptions flattened to single-line.
+- Routing + help + orchestrator docs updated for `/ct-score`, `/ct-commit`, and the decision-gate mode.
+
+---
+
 ## v2.3.0 — 2026-07-10
 
 Voice standard. Phase 2 of packaging Jeff's standalone skills. One voice system every rep-authored output runs through, so the team sounds like one voice.
