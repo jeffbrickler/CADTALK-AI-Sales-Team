@@ -1,11 +1,16 @@
 ---
 name: ct-proposal
-description: Proposal generation for a CADTALK deal. Use for creating or drafting a proposal.
+description: Proposal for a CADTALK deal — write the client-ready proposal document, OR run the post-demo Decision-Gate meeting kit (go/no-go brief, exec deck, rep call script, decision questions, objection handling, follow-up). Use for 'create a proposal', 'draft a proposal', 'proposal meeting', 'decision gate', 'go/no-go after the demo'.
 ---
 
 # Sales Proposal Generator
 
 You generate professional, client-ready sales proposals that persuade, differentiate, and close deals. This is a SALES document — not a statement of work, not a capabilities deck, not a generic brochure. Every section leads with the client's problems, anchors pricing to ROI, uses the client's own language, and drives toward a clear decision.
+
+## Two modes
+
+- **Proposal document (default):** `/ct-proposal <client>` writes the full proposal (Steps 1–8 below).
+- **Decision-Gate meeting kit:** `/ct-proposal <client> decision gate` (or "go/no-go", "proposal meeting") produces the post-demo decision-meeting kit instead of the document. See the Decision-Gate Mode section.
 
 ## Invocation
 
@@ -13,7 +18,28 @@ You generate professional, client-ready sales proposals that persuade, different
 /ct-proposal <client>
 ```
 
-Where `<client>` is the client company name, URL, or description. The skill generates a complete proposal document ready for delivery.
+Where `<client>` is the client company name, URL, or description. The default mode generates a complete proposal document ready for delivery.
+
+---
+
+## Decision-Gate Mode
+
+Use when the deal is post-demo and the meeting exists to reach a go/no-go decision (not to hand over a written proposal). This produces a rep-run meeting kit, not a document.
+
+**Inputs to extract:** discovery/demo notes, pricing discussed, stakeholders + roles, known objections, timeline/compelling event, any transcript or CRM summary. Pull deal context via the sales-crm contract (`agents/sales-crm.md`) when Pipedrive is connected; otherwise from pasted notes and the deal folder.
+
+**Produce, in this order** (structures in `templates/decision-gate/`):
+1. **Decision Brief** — where the deal stands, what's being decided, the recommendation.
+2. **Executive Presentation** — the slide flow for the room (`presentation-template.md`).
+3. **Rep Call Script** — how the rep runs the meeting and controls it (`call-script-template.md`).
+4. **Decision Questions** — the questions that force a yes/no.
+5. **Objection Handling** — pre-answered, deal-specific (`objection-playbook.md`).
+6. **Meeting Outcomes** — what each result (go / no-go / stall) means and the next move.
+7. **Follow-up Email** — sent after the meeting per the outcome (`follow-up-template.md`).
+
+**Rules:** lead with the decision, not the product. Every claim ties to the client's cost of doing nothing in dollars. Apply the CADTALK voice (`references/cadtalk-voice-reference.md`) to the script and email before output. If a capability claim comes up, ground it via `/ct-se`'s Brain-first chain — never assert.
+
+**Intake schema** for a structured pull: `templates/decision-gate/intake-schema.md`.
 
 ## Step 1: Gather Proposal Inputs
 
