@@ -4,6 +4,26 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.1.0 — 2026-07-11
+
+Sales Engineer module. Adds `/ct-se` — Brain-grounded technical demo prep for CADTALK deals.
+
+### Added
+- **`/ct-se <company>` skill** (`skills/ct-se/SKILL.md`) — 4-phase demo-prep workflow: (1) stack intake (Pipedrive → deal folder → user → web), (2) capability mapping via the grounding chain (Brain → CT Outline docs → human) with per-claim evidence status (≤5 grounding calls, scoped to the CAD×ERP pair), (3) demo script against the prospect's stack, (4) technical objection prep. Output: `TECH-DEMO-PREP.md` in the deal folder.
+- **`agents/sales-engineer.md`** — SE subagent definition and grounding contract. Runs inline in `/ct-se` for v1; becomes load-bearing when `/ct-prospect` wires it in (phase 2).
+- **`templates/demo-prep.md`** — structure for `TECH-DEMO-PREP.md`.
+
+### Anti-hallucination design
+Every capability claim is grounded through a chain: the Brain first (source-grounded), the CT Outline document site as backup when the Brain MCP is offline, then human escalation ("verify with a senior SE, engineering, or a senior solution architect") when neither has evidence. Only if both the Brain and Outline are unreachable is the whole brief bannered UNVERIFIED. No "yes it works" claim ships untagged.
+
+### Boundary
+`/ct-prep` is AE business-discovery prep; `/ct-se` is SE technical demo prep. They're complementary — run both for a technical demo. Documented in CLAUDE.md routing, ct-help, ct-train, and the ct-sales cross-skill table.
+
+### Deferred (phase 2 / not in this release)
+`/ct-prospect --se` 6th-agent wiring and `/ct-qualify` technical-fit scoring — the SE agent ships and gets supervised use first.
+
+---
+
 ## v2.0.2 — 2026-07-10
 
 Registration hotfix. Restores the plugin's slash-command surface — all 17 skills were invisible in Claude Code autocomplete because none had YAML frontmatter (the skill indexer requires it).
