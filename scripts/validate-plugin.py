@@ -121,10 +121,44 @@ def validate_claude_md_rows():
             WARNINGS.append(f"CLAUDE.md: no routing row for /{name}")
 
 
+# Pipedrive write-tool base names. Only the sales-crm contract and the /ct-crm
+# skill may name these — every other skill must route CRM writes through
+# agents/sales-crm.md, not call a write tool with a hand-built field key.
+CRM_WRITE_TOOLS = (
+    "addDeal", "updateDeal", "addOrganization", "updateOrganization",
+    "addPerson", "updatePerson", "addActivity", "updateActivity",
+    "addNote", "updateNote", "convertLeadToDeal",
+)
+CRM_WRITE_ALLOWED = {"sales-crm.md", "SKILL.md::ct-crm"}
+
+
+def validate_crm_single_writer():
+    """WARN when a skill/agent other than the sales-crm contract or /ct-crm names a
+    Pipedrive write tool — a sign it writes the CRM outside the single-writer rule."""
+    targets = sorted((ROOT / "skills").glob("*/SKILL.md")) + sorted(
+        (ROOT / "agents").glob("*.md")
+    )
+    for path in targets:
+        rel = path.relative_to(ROOT)
+        # allow the two canonical CRM files
+        if path.name == "sales-crm.md":
+            continue
+        if path.parent.name == "ct-crm":
+            continue
+        text = path.read_text(encoding="utf-8")
+        hits = sorted({t for t in CRM_WRITE_TOOLS if t in text})
+        if hits:
+            WARNINGS.append(
+                f"{rel}: names Pipedrive write tool(s) {hits} directly — route CRM "
+                f"writes through agents/sales-crm.md (single-writer rule)"
+            )
+
+
 def main():
     validate_frontmatter_files()
     validate_plugin_json()
     validate_claude_md_rows()
+    validate_crm_single_writer()
 
     for w in WARNINGS:
         print(f"WARN  {w}")
