@@ -39,6 +39,7 @@ WORKFLOW (run in this order for a new deal)
 DEAL TOOLS
 ----------
 /ct-contacts [Company]          Find decision makers and contact info
+/ct-se [Company]                Technical demo prep — CAD×ERP fit, demo script (Brain-grounded)
 /ct-proposal [Company]          Generate a proposal
 /ct-objections [Objection]      Handle a specific sales objection
 
@@ -211,6 +212,41 @@ WHAT YOU'LL GET: List of contacts with name, title, LinkedIn URL, email
 COMMON MISTAKES:
 • Contacting the first name you find instead of the economic buyer.
 • Not cross-referencing with Pipedrive — the contact may already be in your CRM.
+```
+
+---
+
+### ct-se
+
+```
+/ct-se [Company Name]
+---------------------
+WHAT IT DOES:    Builds a technical demo-prep brief — maps the prospect's CAD
+                 and ERP stack to CADTALK capabilities, writes a demo script for
+                 that stack, and pre-answers technical objections. Every
+                 capability claim is grounded in the CADTALK Brain (or the CT
+                 Outline docs when the Brain is offline) and flagged "verify with
+                 a senior SE / engineering / solution architect" when neither has
+                 evidence.
+
+WHEN TO RUN IT:  Before a technical demo, once you know (or can find) their CAD
+                 and ERP. Pairs with /ct-prep — /ct-prep is the AE meeting plan,
+                 /ct-se is the SE demo plan.
+
+HOW TO USE IT:   /ct-se Acme Fabrication
+                 /ct-se "Lakeside Systems — Inventor + Epicor, demo Thursday"
+
+WHAT YOU'LL GET: TECH-DEMO-PREP.md in the deal folder: stack snapshot, a
+                 capability map with per-claim evidence status, a step-by-step
+                 demo script with talk track, and technical objection prep.
+
+COMMON MISTAKES:
+• Treating it like /ct-prep — it's the technical layer, not business discovery.
+  Run both for a technical demo.
+• Demoing a capability tagged "verify with human" — confirm it with a senior SE,
+  engineering, or a solution architect first.
+• Running it with both the Brain and Outline offline and trusting the claims —
+  the brief banners itself UNVERIFIED for a reason.
 ```
 
 ---

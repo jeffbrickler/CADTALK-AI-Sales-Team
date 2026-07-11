@@ -25,6 +25,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | First-time setup, onboarding, "set me up" | `/ct-setup` |
 | Meeting prep, "prep for [company]" | `/ct-prep` |
 | Prospect analysis, full audit | `/ct-prospect` |
+| Technical demo prep, sales engineering, "will it work with their stack" | `/ct-se` |
 | Company research | `/ct-research` |
 | Lead qualification, BANT, MEDDIC | `/ct-qualify` |
 | Decision maker mapping, contacts | `/ct-contacts` |
@@ -39,3 +40,5 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | General sales orchestration | `/ct-sales` |
 | Help with commands, how do I use [skill] | `/ct-help` |
 | Training, new user onboarding, learn the workflow | `/ct-train` |
+
+**`/ct-prep` vs `/ct-se`:** `/ct-prep` is AE business-discovery prep (who's meeting, what pain, talk track). `/ct-se` is SE technical demo prep (does our addin work with their CAD×ERP stack, what to demo). Run both for a technical demo — they're complementary, not overlapping.
