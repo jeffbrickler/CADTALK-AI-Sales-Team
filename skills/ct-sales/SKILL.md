@@ -19,6 +19,7 @@ You are a comprehensive AI sales intelligence and outreach system for Claude Cod
 | `/ct-outreach <prospect>` | Cold outreach email sequence | OUTREACH-SEQUENCE.md |
 | `/ct-followup <prospect>` | Follow-up email sequence | FOLLOWUP-SEQUENCE.md |
 | `/ct-prep <url>` | Meeting preparation brief | MEETING-PREP.md |
+| `/ct-se <company>` | Technical demo prep (Brain-grounded) | TECH-DEMO-PREP.md |
 | `/ct-proposal <client>` | Client proposal generator | CLIENT-PROPOSAL.md |
 | `/ct-objections <topic>` | Objection handling playbook | OBJECTION-PLAYBOOK.md |
 | `/ct-icp <description>` | Ideal Customer Profile builder | IDEAL-CUSTOMER-PROFILE.md |
@@ -102,6 +103,7 @@ Many skills work together:
 - `/ct-prospect` calls all subagents → produces comprehensive prospect analysis
 - `/ct-outreach` benefits from `/ct-research` and `/ct-contacts` data if available
 - `/ct-prep` incorporates all available analysis for the prospect
+- `/ct-se` consumes `/ct-prep` and `/ct-prospect` output for the business layer, then adds the Brain-grounded technical demo plan (AE prep vs SE prep — complementary)
 - `/ct-proposal` references qualification data and competitive intel if available
 - `/ct-report` and `/ct-report-pdf` compile all prospect analyses into pipeline view
 - `/ct-objections` pairs with `/ct-competitors` for competitive objection handling

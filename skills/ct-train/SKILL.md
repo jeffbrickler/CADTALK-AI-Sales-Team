@@ -300,6 +300,7 @@ Print `[Stage 5/7 complete]`
 >
 > Other skills available:
 > • `/ct-contacts [Company]` — find decision makers and contact info
+> • `/ct-se [Company]` — technical demo prep: CAD×ERP fit, demo script, objection prep (Brain-grounded)
 > • `/ct-followup [Company]` — post-meeting follow-up sequence
 > • `/ct-proposal [Company]` — generate a proposal
 > • `/ct-objections [Objection]` — handle common sales objections
