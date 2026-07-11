@@ -4,6 +4,23 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.9.0 — 2026-07-11
+
+Five more skills externalized to their own source-of-truth repos, same pattern as voice (v2.8.0). Each is now maintained in a private repo and vendored into this plugin, so Jeff can iterate a skill or reference centrally and re-sync the package. Seeded from the current (audited) plugin content — **no v2.7.0 regression**; the round-trip is lossless and idempotent.
+
+### Added
+- **`scripts/sync-skills.sh`** — clones the five externalized repos (`discovery-review-scorecard`, `commit-gate-scorecard`, `cro-deal-coach`, `proposal-decision-gate`, `pipedrive-update`) and regenerates their vendored copies. Separate from `sync-voice.sh` by design.
+- **`scripts/ct-score-frontmatter.md`** / **`scripts/ct-commit-frontmatter.md`** — pin the plugin skill names (`ct-score`, `ct-commit`) and single-line (indexer-safe) descriptions across syncs, independent of how each upstream repo writes its own frontmatter.
+
+### Source-of-truth repos (all private, `jeffbrickler/`)
+- `discovery-review-scorecard` → `skills/ct-score/SKILL.md`
+- `commit-gate-scorecard` → `skills/ct-commit/SKILL.md`
+- `cro-deal-coach` → `references/deal-coach.md` (`/ct-qualify` Coach Mode)
+- `proposal-decision-gate` → `templates/decision-gate/*.md` (`/ct-proposal` decision-gate mode)
+- `pipedrive-update` → `references/pipedrive-custom-fields.md` + `pipedrive-stage-ids.md` (data layer only; the `sales-crm` single-writer agent stays plugin-owned and consumes them)
+
+---
+
 ## v2.8.0 — 2026-07-11
 
 Voice standard externalized. The CADTALK voice/writing system now lives in its own source-of-truth repo (`jeffbrickler/cadtalk-voice`, private) and is vendored into this plugin, so it can be updated centrally and wired into other projects. Ships the upstream **v1.6** voice standard.
