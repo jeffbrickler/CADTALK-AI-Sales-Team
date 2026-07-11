@@ -1,6 +1,8 @@
 # CADTALK Pipedrive Custom Field Reference
 
-Last updated: 2026-06-15 (from data_fields_options + data_fields exports)
+Last updated: 2026-07-11 (from data_fields exports)
+
+**Scope: sales rep loop only.** Customer-success, billing, renewal, support, and internal-marketing fields (CSS, NPS, CSP, renewal/quarterly check-ins, FreshDesk/Chargebee/Invoice, license, lifecycle Status, Marketing Status/Assets, web-visitor plumbing) are intentionally excluded — the sales-crm writer does not touch them. They still exist in Pipedrive; they're just out of scope for this reference.
 
 ## How to use
 - **Single option field** → pass option ID as integer: `field_key: 14`
@@ -45,67 +47,6 @@ Last updated: 2026-06-15 (from data_fields_options + data_fields exports)
   - `375` → Yellow
   - `376` → Green
   - `460` → Unscored
-
-#### Status *(Single option — use this one)*
-- API key: `a07eeeb4ed7b9148ac21d7a7ae2609479ee78a08`
-- Type: Single option
-- Options:
-  - `427` → Implementing
-  - `428` → Active
-  - `429` → Churned
-  - `452` → Partner
-
-#### Status *(Multiple options — legacy)*
-- API key: `387715e1d4095a69745a6e153eec98b6dda27486`
-- Type: Multiple options
-- Options:
-  - `399` → Implementing
-  - `400` → Active
-  - `401` → Churned
-
-#### CSS (Customer Success Score) *(Single option — use this one)*
-- API key: `d71121f7052ff1d92f713749a685c0faffd65f7a`
-- Type: Single option
-- Options:
-  - `430` → Green
-  - `431` → Yellow
-  - `432` → Red
-
-#### CSS *(Multiple options — legacy)*
-- API key: `b1fb1c41d8558dfbcb9bcdd866c85daa2ce93a73`
-- Type: Multiple options
-- Options:
-  - `402` → Green
-  - `403` → Yellow
-  - `404` → Red
-
-#### NPS Score *(Single option — use this one)*
-- API key: `322e09bb48d03e39aefe01ff56ca645f2306b951`
-- Type: Single option
-- Options:
-  - `433` → 10
-  - `434` → 9
-  - `435` → 8
-  - `436` → 7
-  - `437` → 6
-  - `438` → 5
-  - `439` → 4
-  - `440` → 3
-  - `441` → 2
-  - `442` → 1
-
-#### NPS Score *(Multiple options — legacy)*
-- API key: `2213f2b4796193370fe37d894de813175e59cbeb`
-- Type: Multiple options
-- Options: `417`=1 through `426`=10
-
-#### Open Issues
-- API key: `589e6672417d4e17ef49046d93228d979ca824f2`
-- Type: Single option
-- Options:
-  - `457` → Open (Non-Critical)
-  - `458` → Open (Escalated)
-  - `459` → None
 
 #### Source channel
 - API key: `channel`
@@ -152,9 +93,10 @@ Last updated: 2026-06-15 (from data_fields_options + data_fields exports)
   - `275` → Partner lost: Competitor
   - `276` → Partner Lost: NO Decision
 
-#### Trigger Type
+#### Compelling Event *(a.k.a. Trigger Type)*
 - API key: `fc04c8c4f1ec476b52805eeb68e8ee634a7f5854`
 - Type: Single option
+- Note: paired with the **Compelling Event Date** date field (`467d2b…`). Set both together.
 - Options:
   - `336` → ERP change (new selection / major upgrade / cloud move)
   - `337` → PLM change (new rollout / upgrade / PDM→PLM)
@@ -166,91 +108,6 @@ Last updated: 2026-06-15 (from data_fields_options + data_fields exports)
   - `343` → Integration modernization (iPaaS/ESB initiative or replace brittle custom)
   - `344` → M&A / Executive change (post-merger integration or new sponsor)
   - `345` → Other
-
-#### Parent Account *(Single option — use this one)*
-- API key: `9f920971d1ad94bf9feea18e1c30f89eeaf12cd1`
-- Type: Single option
-- Options:
-  - `443` → Arena
-  - `444` → IFS
-  - `445` → ASWi
-  - `446` → Syspro
-  - `447` → NexTec
-  - `448` → SVA Consulting
-  - `449` → Lucid Consulting
-  - `450` → Blytheco
-  - `451` → Phoenix Systems
-  - `465` → Promach
-  - `468` → Cloud 9 ERP Solutions
-
-#### Parent Account *(Multiple options — legacy)*
-- API key: `a94a0ba8719e3ffe851e99b207adf621c3f651e1`
-- Type: Multiple options
-- Options:
-  - `382` → Arena
-  - `383` → IFS
-  - `384` → ASWi
-  - `385` → Syspro
-  - `386` → NexTec
-  - `387` → SVA Consulting
-  - `388` → Lucid Consulting
-  - `389` → Blytheco
-  - `405` → Phoenix Systems
-
-#### Product Line *(Single option — use this one)*
-- API key: `5270e73c11e52bab3c150d9beaffe8ebff34ea12`
-- Type: Single option
-- Options:
-  - `455` → CADTALK
-  - `456` → Agni Link
-
-#### Product Line *(Multiple options — legacy)*
-- API key: `37e1bedbc96aebf6986f3914d4e3c059090157d4`
-- Type: Multiple options
-- Options:
-  - `453` → CADTALK
-  - `454` → Agni Link
-
-#### CSP (Customer Success Plan)
-- API key: `4d7811ac20a5301df301b29cf8440aa5727e927c`
-- Type: Multiple options
-- Options:
-  - `406` → Priority - 1 Data Assist
-  - `407` → Priority - 3 Data Assists
-  - `408` → Priority - 5 Data Assists
-  - `409` → Enterprise
-  - `410` → Enterprise - 3 Data Assists
-  - `411` → Enterprise - 5 Data Assists
-  - `412` → Enterprise - 10 Data Assists
-  - `413` → Bronze
-  - `414` → Silver
-  - `415` → Gold
-  - `416` → Essentials
-
-#### License
-- API key: `86d7d65a2535125c0d7f790063f0959eb23e355c`
-- Type: Single option
-- Options:
-  - `466` → License Spring
-  - `467` → Crypto License
-
-#### Label (Deal labels/tags)
-- API key: `label`
-- Type: Multiple options
-- Options:
-  - `283` → IFS Nordics 2025
-  - `292` → IFS France 2025
-  - `293` → Ready for Demo
-  - `306` → 5+ contacts
-  - `312` → Upgrade2025
-  - `331` → Agnilink Conversion
-  - `371` → Acumatica Summit 2026
-  - `379` → SUN Booth Lead 2026
-  - `380` → SUN Session 2026
-  - `381` → SUN Booth Scan 2026
-  - `397` → SX Webinar March 2026
-  - `398` → SX Webinar March 2026 - No Follow Up
-
 ---
 
 ### Deal Custom Text / Date / Number / Relate Fields
@@ -268,6 +125,7 @@ Pass values directly — no option ID lookup needed.
 | MEDDPICC-ID the Pain | `bc8545bb1ccc96fc858f3ba1c24370c7432ec086` |
 | MEDDPICC-Champion | `15c0da01397abe35f21777a2bde7980eb86fe713` |
 | MEDDPICC-Competition | `a8eaee25ee5d8a845fcd43cd4c09d8af16ecaa08` |
+| MEDDPICC-Coach | `9630a483f8cfed06738edfb6983b7e8f91792b26` |
 
 #### Feedback Fields (Large text — pass as plain string)
 | Field | API Key |
@@ -280,30 +138,9 @@ Pass values directly — no option ID lookup needed.
 |---|---|
 | SQO Date | `6e75c1b17be487e2b52f2282ac4e06e39c90e3b5` |
 | SQL Date | `80d471aaf715fb3bfd6320d1874949a864e0e909` |
-| Trigger Date | `467d2b2404255773f9cb432405321334be7af2ef` |
-| Next Check-In | `2644ecbebc38ba8a13edc97af4f1efb61205d5d3` |
-| Next Renewal Meeting | `0bcfdf46dbfc52ae43170bd3436948476d5fe5a1` |
-| Last Check-In | `b488f2df92f4db8c67ab4c1a9f7fbbf46455dc98` |
-| Renewal Date | `fc40a66a777f38ac3cb40da9e16f6f7d59e5ede1` |
-| Renewal Check-in Requested | `3f6e7578598de2fab253bdc452c8641ec1fa2449` |
-| Renewal Check-in Completed | `8f7af417a861cf5bb7a22b802cb15ba2d924c64b` |
-| Quarterly Check-in Requested | `7d3226ec57fa38b6fa5e916c6452ca83a8ce5b80` |
-| Quarterly Check-in Completed | `7ba045a1febf12e8616722c9a7fabd977ebab41d` |
-| CSP Expiration Date | `53cac22ff4760303840cdd3e131d182045966ed5` |
+| Compelling Event Date *(a.k.a. Trigger Date)* | `467d2b2404255773f9cb432405321334be7af2ef` |
+| EB Last Direct Touch | `41662152f27ebaff54b95a09a1db24947e8e213f` |
 | Latest web visit | `a729373c45a1852300cc3e18b136ebb1982e58ed` |
-| License Spring - Date license checked | `9662943a73fb2006784aa8cf2f1d2705b8b37686` |
-| License Spring - Last date license used | `e6ee05e1dfd3cb473b353f5b5a561512aeeecbc8` |
-
-#### Text / Number Fields
-| Field | Type | API Key |
-|---|---|---|
-| FreshDesk ID | Text | `096ace966d036f3ad7f15f6c70546b7ffe9ef116` |
-| Chargebee Customer ID | Text | `a358053d08dbfad1fcc7157972e577a6587e5ffb` |
-| InvoiceNumber | Text | `dad7ba29ea5edf1d2e34cc576901b41a4e0cfa32` |
-| Event | Text | `76da816824bbc33636ae6981d3d1c2379252f61a` |
-| Linked web visitor | Text | `8afffb5ee6498bf1938f9e2c16dca1169ae3ea8a` |
-| Trade Show Score | Numerical | `7a2f465f47927ac2ae1ca700f7f3183974ca6219` |
-| CSP $ Amt | Monetary | `acbe15b77379c61be49cc492defae1dfbab3ea8e` |
 
 #### Relate Fields (pass the Pipedrive record ID as integer — search first)
 | Field | Type | API Key |
@@ -357,18 +194,6 @@ These use standard Pipedrive API field names — pass values directly, no hash k
   - `25` → Independent Consultant
   - `26` → Friend of CADTALK
   - `221` → News/Publication
-
-#### Status
-- API key: `5821119780fc952b4ca7914a06cc9f9895cf5832`
-- Type: Single option
-- Options:
-  - `27` → CADTALK-Canceled
-  - `28` → CADTALK-Active
-  - `75` → Open
-  - `224` → Elmo-Active
-  - `225` → Elmo-Canceled
-  - `226` → Qbuild-Active
-  - `227` → Qbuild-Canceled
 
 #### Label
 - API key: `label`
@@ -444,43 +269,6 @@ These use standard Pipedrive API field names — pass values directly, no hash k
   - `282` → TBD
   - `294` → ShipConstructor
 
-#### Org Source
-- API key: `32617530a4697fab720a2b63cce8141c59a15e0a`
-- Type: Single option
-- Options:
-  - `272` → AI Agent
-  - `313` → Partner-ERP VAR/GSI
-  - `314` → Partner-ERP Publisher
-  - `315` → Partner-PLM Publisher
-  - `316` → Inbound-Website
-  - `317` → Event (Trade Show / User Conf / Webinar)
-  - `318` → Referral
-  - `319` → Partner-CAD/PLM VAR
-  - `324` → Outbound-SDR
-
-#### Marketing Status
-- API key: `e873b23ec887c074ab56d92d5c80edd9e975d673`
-- Type: Multiple options
-- Options:
-  - `349` → Not Authorized
-  - `350` → Logo
-  - `351` → Quote
-  - `352` → Reference Calls
-  - `353` → Case Study
-  - `354` → NDA
-
-#### Marketing Assets
-- API key: `fd296a8ce86b50aca01119538300ef3d1f716745`
-- Type: Multiple options
-- Options:
-  - `355` → Logo
-  - `356` → Quote
-  - `357` → Testimonial
-  - `358` → Reference Call
-  - `359` → Case Study
-  - `360` → NDA
-  - `361` → Event Sponsor
-
 ### Organization Custom Non-Dropdown Fields
 
 #### Numerical Fields (pass as integer or float)
@@ -508,7 +296,6 @@ These use standard Pipedrive API field names — pass values directly, no hash k
 | Company Descriptions | `64c76bfcdb9bd4f8eeca28238c8b186eafe10679` |
 | SIC Codes | `97623abea6e10c03b19e0358fd55328cf470e05e` |
 | Website (custom) | `bf684efd9c61b4bb8c94144d2cdf9c39127754b4` |
-| Linked web visitor | `0a5d9b7b445430e75d4c7d7ce6e4212b41fc9a8d` |
 
 #### Large Text Fields (pass as plain string)
 
@@ -568,17 +355,6 @@ Standard fields use short names directly — no hash key.
   - `192` → Meeting Booked
   - `193` → Attempted Contact
 
-#### Marketing Status (Person)
-- API key: `4cbf0e5d481bf9f6e33ab88a7f9a6413b4d5d7e9`
-- Type: Multiple options
-- Options:
-  - `195` → Not Authorized
-  - `196` → Logo
-  - `197` → Quote
-  - `198` → Reference Calls
-  - `199` → Case Study
-  - `200` → NDA
-
 #### Role
 - API key: `f5d67b4aa3e4eed83649da00e9c3d5a48f892c01`
 - Type: Multiple options
@@ -592,21 +368,6 @@ Standard fields use short names directly — no hash key.
   - `207` → Influencer
   - `208` → Executive Sponsor
 
-#### NPS Score (Person)
-- API key: `b3e8c21f5a97d04bc68f1e7234a9051678dc3f4a`
-- Type: Single option
-- Options:
-  - `210` → 10
-  - `211` → 9
-  - `212` → 8
-  - `213` → 7
-  - `214` → 6
-  - `215` → 5
-  - `216` → 4
-  - `217` → 3
-  - `218` → 2
-  - `219` → 1
-
 ### Person Custom Non-Dropdown Fields
 
 #### Date Fields (pass as YYYY-MM-DD)
@@ -614,14 +375,12 @@ Standard fields use short names directly — no hash key.
 | Field | API Key |
 |-------|---------|
 | Last Cold Call Date | `1bc3b82f930f4852ee7d3046c7cc3572c7bc2f2a` |
-| Last NPS Survey Sent | `63ab676bbd617a1ff6422a60340463ead5a709a4` |
 
 #### Numerical Fields (pass as integer or float)
 
 | Field | API Key |
 |-------|---------|
 | Lead Score | `03302f440981024b67500e6433f64fa1139a379f` |
-| Last NPS Score | `9fc79984b43b12b3fab9318c9662cbfda7b15f67` |
 
 #### Text Fields (pass as plain string)
 
