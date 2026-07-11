@@ -20,6 +20,8 @@ You are a comprehensive AI sales intelligence and outreach system for Claude Cod
 | `/ct-followup <prospect>` | Follow-up email sequence | FOLLOWUP-SEQUENCE.md |
 | `/ct-prep <url>` | Meeting preparation brief | MEETING-PREP.md |
 | `/ct-se <company>` | Technical demo prep (Brain-grounded) | TECH-DEMO-PREP.md |
+| `/ct-crm <intent>` | Pipedrive updates — fields, calls, notes, stages, queries | CRM write / read |
+| `/ct-voice <text>` | Voice WRITE / REVIEW / COACH on any copy | Polished copy / critique |
 | `/ct-proposal <client>` | Client proposal generator | CLIENT-PROPOSAL.md |
 | `/ct-objections <topic>` | Objection handling playbook | OBJECTION-PLAYBOOK.md |
 | `/ct-icp <description>` | Ideal Customer Profile builder | IDEAL-CUSTOMER-PROFILE.md |
@@ -104,6 +106,8 @@ Many skills work together:
 - `/ct-outreach` benefits from `/ct-research` and `/ct-contacts` data if available
 - `/ct-prep` incorporates all available analysis for the prospect
 - `/ct-se` consumes `/ct-prep` and `/ct-prospect` output for the business layer, then adds the Brain-grounded technical demo plan (AE prep vs SE prep — complementary)
+- `/ct-crm` is the single Pipedrive write path — every skill that updates the CRM routes through it (see `agents/sales-crm.md`)
+- `/ct-voice` is the shared voice standard — content skills (`/ct-outreach`, `/ct-followup`, `/ct-proposal`, `/ct-prep`, `/ct-se`) apply it before returning copy
 - `/ct-proposal` references qualification data and competitive intel if available
 - `/ct-report` and `/ct-report-pdf` compile all prospect analyses into pipeline view
 - `/ct-objections` pairs with `/ct-competitors` for competitive objection handling

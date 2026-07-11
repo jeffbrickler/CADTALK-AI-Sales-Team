@@ -40,6 +40,8 @@ DEAL TOOLS
 ----------
 /ct-contacts [Company]          Find decision makers and contact info
 /ct-se [Company]                Technical demo prep — CAD×ERP fit, demo script (Brain-grounded)
+/ct-crm [what to do]            Update Pipedrive — fields, calls, notes, stage moves, queries
+/ct-voice [text or request]     Write / review / coach any copy in the CADTALK voice
 /ct-proposal [Company]          Generate a proposal
 /ct-objections [Objection]      Handle a specific sales objection
 
@@ -247,6 +249,60 @@ COMMON MISTAKES:
   engineering, or a solution architect first.
 • Running it with both the Brain and Outline offline and trusting the claims —
   the brief banners itself UNVERIFIED for a reason.
+```
+
+---
+
+### ct-crm
+
+```
+/ct-crm [what to do]
+--------------------
+WHAT IT DOES:    Direct Pipedrive updates — set fields (MEDDPICC, Forecast, Tier,
+                 Health), log calls, add notes, move stages, create records, or
+                 query the pipeline. The single CRM write path every skill uses,
+                 so a manual update and an automatic one land identically.
+
+WHEN TO RUN IT:  Any time you need the CRM changed and aren't already inside a
+                 skill that updates it for you.
+
+HOW TO USE IT:   /ct-crm set MEDDPICC champion to Jane Smith on the Acme deal
+                 /ct-crm log a discovery call, done, on Contoso; set Health Green
+                 /ct-crm show me stale deals and overdue activities
+
+WHAT YOU'LL GET: A one-line confirmation per write (record, field, new value), or
+                 a clean pipeline read.
+
+COMMON MISTAKES:
+• Guessing a field key — never do it; the skill resolves keys from the reference.
+• Writing Pipedrive from another skill directly instead of through this contract.
+```
+
+---
+
+### ct-voice
+
+```
+/ct-voice [text or request]
+---------------------------
+WHAT IT DOES:    The one CADTALK voice system. Three modes — WRITE (produce copy),
+                 REVIEW (critique with before/after fixes), COACH (build the habit).
+                 Applies personal voice, anti-AI-slop, Strunk & White clarity, and
+                 CADTALK brand in one pass.
+
+WHEN TO RUN IT:  Any email, follow-up, recap, script, proposal, or post you'll
+                 send — or any "does this sound on-brand?" check.
+
+HOW TO USE IT:   /ct-voice review this cold email: [paste]
+                 /ct-voice write a 3-line follow-up after a discovery no-show
+                 /ct-voice coach me on my recap style
+
+WHAT YOU'LL GET: Polished, brand-compliant, AI-free copy (WRITE), a marked-up
+                 critique with fixes (REVIEW), or a coaching drill (COACH).
+
+COMMON MISTAKES:
+• Sending copy without a voice pass — the content skills apply it automatically;
+  use /ct-voice for anything you wrote by hand.
 ```
 
 ---
