@@ -4,6 +4,21 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.8.0 — 2026-07-11
+
+Voice standard externalized. The CADTALK voice/writing system now lives in its own source-of-truth repo (`jeffbrickler/cadtalk-voice`, private) and is vendored into this plugin, so it can be updated centrally and wired into other projects. Ships the upstream **v1.6** voice standard.
+
+### Added
+- **`scripts/sync-voice.sh`** — pulls the voice standard from `jeffbrickler/cadtalk-voice` and regenerates `references/cadtalk-voice-reference.md` (verbatim) and `skills/ct-voice/SKILL.md` (upstream body + pinned plugin frontmatter). One command to re-sync after an upstream edit.
+- **`scripts/ct-voice-frontmatter.md`** — pins the plugin skill's `name: ct-voice` and its single-line (indexer-safe) description across syncs, independent of how upstream writes its own frontmatter.
+
+### Changed
+- **`skills/ct-voice/SKILL.md`** updated to upstream v1.6 — context-compressed (dropped Quick Start / Team Adoption / Troubleshooting), 80+ AI-fingerprint banned-word list, hard em-dash ban, and an explicit "drive the business case in dollars" engine. All content skills that defer to the reference (`/ct-outreach`, `/ct-followup`, `/ct-proposal`, `/ct-prep`, `/ct-se`) pick up the update for free.
+- **`references/cadtalk-voice-reference.md`** replaced with the upstream unified reference (verbatim copy; do not hand-edit — edit upstream and re-sync).
+- **CLAUDE.md** Voice section documents the source-of-truth repo and the sync workflow.
+
+---
+
 ## v2.7.0 — 2026-07-11
 
 CRM stage-wiring. Completes Phase 1 of the packaging plan — every pipeline-stage skill now emits its standard payload through the single sales-crm writer, so two reps working the same deal leave identical Pipedrive state at every stage. Field list confirmed against the live Pipedrive export (2026-07-11) and the internal Sales Process doc.
