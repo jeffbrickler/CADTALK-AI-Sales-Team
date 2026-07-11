@@ -4,6 +4,23 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.6.0 — 2026-07-10
+
+Leadership module. Phase 5 of packaging Jeff's standalone skills — a leader-facing revenue-advisory layer above the rep loop.
+
+### Added
+- **`/ct-cro`** — CADTALK revenue-leadership advisory: forecasting, sales-model design, pricing, NRR/retention, quota + capacity, board reporting. Diagnostic questions, board-metric targets/red-flags, ARR waterfall, NRR benchmarks, and a Bottom-line → What → Why → How-to-act → Decision output shape with 🟢/🟡/🔴 confidence tags. Ported and CADTALK-scoped from the `cro-advisor` skill.
+- **`references/cro-sales-playbook.md`, `cro-pricing-strategy.md`, `cro-nrr-playbook.md`** — the three universal B2B-SaaS revenue playbooks the skill reads, each headed with a CADTALK note linking back to the rep skills and the voice + sales-crm contracts.
+- **`scripts/cro_revenue_forecast.py`, `cro_churn_analyzer.py`** — CLI models (weighted pipeline forecast with scenarios; NRR/GRR/cohort + at-risk accounts).
+
+### Changed
+- Routing + orchestrator + help docs updated for `/ct-cro` (CLAUDE.md routing table, `/ct-sales` command reference + cross-skill map, `/ct-help` skill map + detail block under a new LEADERSHIP section).
+
+### Guardrails
+- **Advisory and read-only.** `/ct-cro` never writes Pipedrive; any pipeline read runs through the sales-crm contract. Leader-facing, explicitly not the rep loop — reconciles its forecast against `/ct-commit`. Foreign protocol references from the source skill (agent-protocol, company-context, `[INVOKE]`) were stripped; communication defers to `references/cadtalk-voice-reference.md`.
+
+---
+
 ## v2.5.0 — 2026-07-10
 
 Coaching + enablement + fulfillment. Phase 4 of packaging Jeff's standalone skills — two folds into existing skills plus one new post-close skill, closing the loop from qualification through order handoff.
