@@ -4,6 +4,22 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.3.0 — 2026-07-10
+
+Voice standard. Phase 2 of packaging Jeff's standalone skills. One voice system every rep-authored output runs through, so the team sounds like one voice.
+
+### Added
+- **`references/cadtalk-voice-reference.md`** — the unified CADTALK voice system (personal voice + anti-AI-slop + Strunk & White clarity + brand constraints), copied verbatim from the standalone `cadtalk-voice` skill.
+- **`/ct-voice` skill** — standalone WRITE / REVIEW / COACH on any copy (emails, follow-ups, recaps, scripts, proposals, posts, "does this sound on-brand?"). Ported from `cadtalk-voice`; multiline description flattened to single-line for the indexer.
+
+### Changed
+- **Content skills apply the voice before output** — `/ct-outreach`, `/ct-followup`, `/ct-proposal`, `/ct-prep`, `/ct-se` each end with a voice pass against the reference.
+- **CLAUDE.md** — single voice-standard rule + `/ct-voice` routing row.
+- **`/ct-help`** — added `/ct-voice` and `/ct-crm` to the skill map and detail blocks (ct-crm's help entry was missing after v2.2.0).
+- **`/ct-sales`** — command-reference rows + cross-skill references for `/ct-crm` and `/ct-voice`.
+
+---
+
 ## v2.2.0 — 2026-07-10
 
 CRM hygiene backbone. Phase 1 of packaging Jeff's standalone skills into the plugin. Establishes a single Pipedrive write path so every rep's CRM updates are identical.
