@@ -64,10 +64,6 @@ ONBOARDING & ENABLEMENT
 /ct-train                       Training walkthrough (~20 min) — or Enablement Mode: playbooks, ramp plans, battlecards, audits
 /ct-setup                       First-time plugin setup
 
-LEADERSHIP (advisory, read-only)
---------------------------------
-/ct-cro                         Revenue-leadership advisory — forecasting, sales model, pricing, NRR, quota/capacity, board reporting
-
 Type /ct-help [skill] for full detail on any command above.
 ```
 
@@ -553,27 +549,3 @@ COMMON MISTAKES:
   skills; the reference is structure, not content.
 ```
 
-### ct-cro
-
-```
-/ct-cro
---------
-WHAT IT DOES:    Leader-facing revenue advisory. Designs and measures the revenue
-                 engine — forecasting, sales-model design, pricing, NRR/retention,
-                 quota + capacity, board reporting — via references/cro-sales-playbook.md,
-                 cro-pricing-strategy.md, cro-nrr-playbook.md and two CLI models
-                 (cro_revenue_forecast.py, cro_churn_analyzer.py).
-
-WHEN TO RUN IT:  Building the board forecast, setting quotas, modeling NRR, reviewing
-                 pricing, or planning sales-team scale. Leadership layer, not one deal.
-
-HOW TO USE IT:   /ct-cro "forecast next quarter"
-                 /ct-cro "review our pricing"
-                 /ct-cro "scale the sales team to hit plan"
-
-WHAT YOU'LL GET: A confidence-tagged answer (🟢/🟡/🔴) in Bottom line → What → Why →
-                 How to act → Your decision shape, plus any model output.
-
-NOTE: Advisory and READ-ONLY. Never writes Pipedrive — pipeline reads run through
-      the sales-crm contract. Reconcile its forecast against /ct-commit reality.
-```

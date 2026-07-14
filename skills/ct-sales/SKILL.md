@@ -31,7 +31,6 @@ You are a comprehensive AI sales intelligence and outreach system for Claude Cod
 | `/ct-report` | Sales pipeline report (Markdown) | SALES-REPORT.md |
 | `/ct-report-pdf` | Sales pipeline report (PDF) | SALES-REPORT-*.pdf |
 | `/ct-fulfill` | Order-submission emails for closed-won deals (one per order, to fulfillment) | Fulfillment-Order-Emails_v1.md |
-| `/ct-cro` | Revenue-leadership advisory — forecasting, sales model, pricing, NRR, quota/capacity, board (read-only) | Forecast / analysis / capacity model |
 
 ## Routing Logic
 
@@ -118,4 +117,3 @@ Many skills work together:
 - `/ct-qualify` Coach Mode reviews live deals (BANTED, cycle killers, multi-thread, Success Plan) via `references/deal-coach.md` — complements `/ct-commit` (forecast) and `/ct-score` (discovery)
 - `/ct-train` Enablement Mode builds playbooks/ramp plans/battlecards/audits via `references/sales-enablement.md`, pulling specifics from the content skills
 - `/ct-fulfill` closes the loop after Won — turns closed-won deals into per-order fulfillment emails (reads the CRM through the sales-crm contract; never writes)
-- `/ct-cro` is the leadership layer above the rep loop — revenue-engine design and board metrics (forecast, sales model, pricing, NRR, capacity) via `references/cro-*.md`; advisory and read-only, reconciles against `/ct-commit`

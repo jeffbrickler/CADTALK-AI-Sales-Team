@@ -48,7 +48,6 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Training, new user onboarding, learn the workflow | `/ct-train` |
 | Build a playbook, ramp plan, weekly meeting, battlecard, enablement audit | `/ct-train` (Enablement Mode) |
 | Hand won deals to fulfillment, order emails, "process this order", billing/onboarding kickoff | `/ct-fulfill` |
-| Revenue leadership — forecasting, sales-model design, pricing, NRR, quota/capacity, board reporting, "CRO", "revenue strategy" | `/ct-cro` |
 
 **`/ct-prep` vs `/ct-se`:** `/ct-prep` is AE business-discovery prep (who's meeting, what pain, talk track). `/ct-se` is SE technical demo prep (does our addin work with their CAD×ERP stack, what to demo). Run both for a technical demo — they're complementary, not overlapping.
 
