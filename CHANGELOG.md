@@ -4,6 +4,22 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.10.0 — 2026-07-14
+
+The plugin is for people who sell. The v2.6.0 leadership module was CRO-task tooling (forecasting, sales-model design, pricing, NRR, quota/capacity, board reporting) — the wrong audience for a rep-facing sales team, so it's gone. Deal coaching is unaffected and stays clearly labeled as coaching.
+
+### Removed
+- **`/ct-cro`** revenue-leadership module (`skills/ct-cro/SKILL.md`)
+- **CRO references** — `references/cro-sales-playbook.md`, `references/cro-pricing-strategy.md`, `references/cro-nrr-playbook.md`
+- **CRO CLI models** — `scripts/cro_revenue_forecast.py`, `scripts/cro_churn_analyzer.py`
+- Routing/help entries for `/ct-cro` in `CLAUDE.md`, `skills/ct-sales/SKILL.md`, `skills/ct-help/SKILL.md` (including the LEADERSHIP section of the help index)
+
+### Unchanged (coaching stays)
+- `/ct-qualify` Coach Mode via `references/deal-coach.md` (vendored from `jeffbrickler/cro-deal-coach` — upstream repo name only; plugin-side it is deal coaching)
+- `/ct-score`, `/ct-commit`, `/ct-proposal` decision-gate mode
+
+---
+
 ## v2.9.0 — 2026-07-11
 
 Five more skills externalized to their own source-of-truth repos, same pattern as voice (v2.8.0). Each is now maintained in a private repo and vendored into this plugin, so Jeff can iterate a skill or reference centrally and re-sync the package. Seeded from the current (audited) plugin content — **no v2.7.0 regression**; the round-trip is lossless and idempotent.
