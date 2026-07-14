@@ -1,5 +1,19 @@
 # TODOS
 
+## Approach C: CRM reconciliation sweep (v2 layer after Guided Create Flow)
+**What:** Post-create / end-of-conversation CRM sweep that grades records against `scripts/create-contract.json`, auto-fills what conversation context knows, asks the rep for the rest — the ct-score gate pattern applied to data hygiene.
+**Why:** Catches misses from ANY path (manual web creates, skills bypassing the flow) and retro-cleans existing dirty deals. This is the deferred half of Jeff's "doesn't always write" complaint — v1 covers creates + stage moves only.
+**Pros:** Completes the enforcement story; familiar WGLL gate pattern; pairs with the Pipedrive-native required-fields floor.
+**Cons:** Sweep-fatigue risk if it nags every conversation; ~2 CC sessions of build.
+**Context:** Staged explicitly as the v2 layer in the approved Guided Create Flow design (2026-07-14, `~/.gstack/projects/jeffbrickler-CADTALK-AI-Sales-Team/AzureAD+JeffBrickler-remove-ct-cro-design-20260714-164928.md`, Approach C section). Premise 3's full per-skill write-moment enumeration lands here. Start at `skills/ct-score` gate pattern + `create-contract.json`.
+**Depends on:** Guided Create Flow v1 shipped and piloted.
+
+## SDR lead-conversion motion (postponed — not in use)
+**What:** Wire SDR lead pipelines (6/8/11/12/13) → opportunity-pipeline conversion through the Guided Create Flow.
+**Why:** SDRs are named target users of the plugin, but per Jeff (2026-07-14) the SDR motion is not in use right now — postponed until it is.
+**Context:** Blocker when revived: which lead pipeline converts into which opportunity pipeline per persona. Start at the Motions table in the Guided Create Flow design doc + `convertLeadToDeal` in the sales-crm tool mapping. Pre-build SDR observation (design doc Assignment) feeds this.
+**Depends on:** SDR motion becoming active; Jeff's lead→opp mapping decision; Guided Create Flow v1 shipped.
+
 ## New skill addition checklist (3 files to update)
 **What:** When a new ct-* workflow skill is added to the plugin, update all three registration points.
 **Why:** ct-help will silently miss the new skill if only the skills/ directory is updated.
