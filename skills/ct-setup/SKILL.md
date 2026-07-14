@@ -9,6 +9,8 @@ Invoked as `/ct-setup`
 
 Welcome to the CADTALK AI Sales Team. This skill walks you through a one-time setup (~10 minutes). Run it once on a new machine before using any other CADTALK skills.
 
+**Partial re-runs:** `/ct-setup pipelines` re-runs ONLY Section E (CRM profile — pipeline scope + Owner ID) and rewrites `crm-profile.md`. Use it whenever your pipelines change.
+
 ---
 
 ## Section A: Identity + CLAUDE.md
@@ -171,19 +173,28 @@ Call the CT Document site MCP tool to list or search documents (use a structured
 
 ---
 
-**B5 — Python / PDF Reports (optional)**
+**B5 — Python (REQUIRED — CRM create validator)**
+
+Python is a required dependency: the CRM create guard (`scripts/validate_create_payload.py`) runs before every opportunity create. Setup is NOT complete until the validator self-test passes on this machine.
 
 Run:
 ```bash
-python -c "import reportlab; print('reportlab OK')"
+python --version
 ```
 
-- **PASS** → `reportlab OK` ✓
-- **FAIL** → Run (optional — only needed for `/ct-report-pdf`):
+- **FAIL (not found)** → guide the install, then re-check:
+  - Windows: `winget install Python.Python.3.12`
+  - macOS: `brew install python`
+- **PASS** → run the validator self-test (deliberately incomplete payload — a working validator must REJECT it):
   ```bash
-  pip install -r requirements.txt
+  echo {"motion":"new_erp","deal":{"Title":"self-test"},"organization":{},"person":{}} > "%TEMP%\ct-selftest.json"
+  python "<plugin path>/scripts/validate_create_payload.py" "%TEMP%\ct-selftest.json"
   ```
-  If you don't need PDF reports, skip this. All other skills work without it.
+  (On macOS/Linux use a temp file path accordingly.)
+  - **Exit code 1 with a violations list** → validator works. ✓
+  - **Exit code 0, 2, or a crash** → the guard is broken on this machine; do not proceed — report the output to Jeff.
+
+**B5b — PDF reports (optional):** `python -c "import reportlab"` — on failure, `pip install -r requirements.txt`. Only needed for `/ct-report-pdf`; skip freely.
 
 ---
 
@@ -194,10 +205,11 @@ Connection Status:
   [✓/✗] ZoomInfo
   [✓/✗] Outlook / ms365
   [✓/✗] CT Document site
-  [✓/✗] Python / PDF (optional)
+  [✓/✗] Python + create-validator self-test (REQUIRED)
+  [✓/✗] PDF / reportlab (optional)
 ```
 
-If any required connection (B1-B4) failed: stop here and fix before running Section C.
+If any required check (B1-B5) failed: stop here and fix before running Section C.
 
 ---
 
@@ -223,6 +235,47 @@ Both Pipedrive and Outlook passed. Now confirm live data is flowing.
 
 ---
 
+## Section E: CRM Profile — your pipelines + Owner ID
+
+This writes `crm-profile.md` at your Deal Desk root — the per-user config the
+Guided Create Flow (`/ct-crm new`) reads. **One schema, per-user scope:** field
+definitions are global (the sales-crm contract); only WHICH pipelines you work
+varies per person. Re-run anytime with `/ct-setup pipelines`.
+
+**E1 — Pipeline scope.**
+Query live pipelines (`getStages`, group by pipeline), cross-check names/IDs
+against `references/pipedrive-stage-ids.md` (flag any drift to Jeff — the
+vendored reference is the source of truth for IDs). Present the list and ask:
+
+> "Which pipelines do you work? Everyone typically has **Aftermarket, New
+> ERP/PLM Prospects, and Expansions**; partner managers add **Partners**;
+> pick exactly the ones that are yours."
+
+**E2 — Your Pipedrive Owner ID** (two first-class paths — new reps have zero deals):
+- **Path 1 (have deals):** "Name any deal you own" → `searchDeals` → `getDeal` → read `user_id`.
+- **Path 2 (new rep, no deals):** guided manual copy — in Pipedrive:
+  avatar (top-right) → **Settings** → **Personal preferences** → your user ID
+  shows in the profile URL (`.../users/details/<ID>`). Paste the number.
+
+**E3 — Write the profile.** Create `crm-profile.md` at the **Deal Desk root**
+(never inside a deal subfolder — the Guided Create Flow finds it by walking up
+from any subfolder):
+
+```markdown
+# CRM Profile — [Name]
+<!-- Written by /ct-setup on [date]. Change with: /ct-setup pipelines -->
+- **Pipedrive Owner ID:** [user_id]
+- **Role:** [AE | Partner manager | SDR]
+- **My pipelines:**
+  - Aftermarket (1)
+  - New ERP/PLM Prospects (2)
+  - Expansions (4)
+```
+
+Confirm the written file back to the rep in one line.
+
+---
+
 ## Section D: Confirmation
 
 Setup complete. Print:
@@ -237,6 +290,9 @@ You're running as: [Name] on the CADTALK Deal Desk.
 Your CLAUDE.md is installed. Claude now knows it's operating
 as a CADTALK sales operator with your Pipedrive pipeline,
 pricing framework, and qualification process loaded.
+
+Your CRM profile (crm-profile.md) is written: pipelines + Owner ID.
+Change it anytime: /ct-setup pipelines
 
 Your first command:
   /deal [any deal name you're working right now]

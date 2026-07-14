@@ -33,6 +33,9 @@ Coach Mode complements the forecast/stage gates: `/ct-commit` decides forecast
 integrity, `/ct-score` grades a discovery call, and Coach Mode coaches the live
 deal in between. Any CRM read/write in either mode goes through the sales-crm
 contract (`agents/sales-crm.md`) — never write Pipedrive with a hand-built key.
+**New-opportunity creates run the contract's Guided Create Flow** (v2.11.0):
+three-record payload per `scripts/create-contract.json`, validator gate,
+Draft → rep Confirm before any write — qualification facts seed the payload.
 
 **Qualify-stage payload** (this skill's row in the sales-crm per-stage contract):
 on a qualified deal, set **Tier**, **Forecast Category**, **Health Score**, and the

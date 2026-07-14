@@ -27,6 +27,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Prospect analysis, full audit | `/ct-prospect` |
 | Technical demo prep, sales engineering, "will it work with their stack" | `/ct-se` |
 | Update Pipedrive, log a call, set MEDDPICC, move stage, pipeline query | `/ct-crm` |
+| Create a new opportunity/deal — guided, all fields, no blanks | `/ct-crm new` |
 | Voice/tone review, "does this sound on-brand?", write/edit any copy, coaching | `/ct-voice` |
 | Company research | `/ct-research` |
 | Lead qualification, BANT, MEDDIC | `/ct-qualify` |

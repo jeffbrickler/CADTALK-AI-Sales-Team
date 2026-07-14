@@ -95,11 +95,59 @@ the API call, then returns a one-line confirmation per write.
 5. Execute `updateDeal` / `updateOrganization` / `updatePerson`.
 6. Confirm: what changed, to what, on which record.
 
-### CREATE
-- Deal: title + pipeline_id + stage_id (from stage-ids ref); optional value, currency=USD, org_id, person_id, expected_close_date → `addDeal`.
-- Organization: name → `addOrganization`.
-- Person: name; optional email, phone, org_id, job_title → `addPerson`.
-- Resolve any org/person given by name to an ID first. Confirm the new record ID.
+### CREATE — the three-record opportunity contract (v2.11.0)
+
+Every opportunity create stamps THREE records: Organization, Person, Deal.
+The required-field spec lives ONCE, machine-readable, in
+**`scripts/create-contract.json`** — read it; never restate or hardcode the
+list. It uses logical field NAMES; resolve every name to its API key/option ID
+from the vendored references as usual. Changing the JSON requires updating the
+Pipedrive-side native required-fields configuration to match (sync rule).
+
+```
+resolve records → assemble payload (ask-missing loop) → VALIDATE → Draft → Confirm → ordered write
+```
+
+1. **Record resolution (search before create — no duplicates).** Organization:
+   `searchOrganization` by name and email/website domain. Person: `searchPersons`
+   by email first, then name within the matched org. Exactly one match → update
+   that record. Multiple/fuzzy matches → show candidates in the Draft; the rep
+   picks (or chooses "new"). No match → create new.
+   **A search API error is NOT "no match"** — on error, STOP and report; never
+   create a record because a search failed. Motions with
+   `requires_existing_org: true` (Aftermarket, Expansion) need a resolved
+   existing org — if none is found, flag the motion contradiction in the Draft
+   before writing anything.
+2. **Payload assembly.** Fill every required field for the motion from
+   conversation context. Anything missing → ask the rep one question
+   (ask-don't-skip). The rep may answer "unknown" for non-hard-required fields —
+   record it in that record's `_unknown` list; the Draft shows it as `⚠ unknown`.
+   Hard-required fields (see JSON) cannot be unknown. A deal created directly
+   into Discovery on pipelines 1/2/3 carries **SQL Date inside the same
+   `addDeal` call** (set-once; atomic — never a follow-up write). ACV: use the
+   custom field via `custom_fields` if `addDeal` lacks a standard param.
+3. **Validate.** Write the assembled payload to a temp JSON file and run
+   `python scripts/validate_create_payload.py <file>`. Exit 0 → proceed.
+   Exit ≠ 0 → return to the ask-missing loop for the listed fields; **never call
+   a create tool on a nonzero exit, and never show the rep a dead-end rejection**
+   (a legacy minimal request like "create a deal for Siemens in New ERP/PLM at
+   Discovery" enters the ask-missing loop — it does not error out).
+   *Fail-closed fallback:* if Python is missing or the script won't run
+   (post-setup breakage only — `/ct-setup` gates on a working validator), walk
+   the JSON checklist manually and tag the confirmation `unvalidated-by-script`.
+4. **Draft → Confirm.** Show the rep: inferred motion (correctable), all three
+   records with values, resolution choices, and every `⚠ unknown`. No write
+   before an explicit confirm; a declined Draft writes nothing.
+5. **Ordered write:** `addOrganization` → `addPerson` → `addDeal` (links need
+   prior IDs). On a failed call: retry once; if it still fails, report exactly
+   which records were written with their Pipedrive IDs and which write is
+   outstanding, and leave a note on the written Org/Person flagging the
+   incomplete create for reconciliation.
+6. **Confirm:** record IDs, fields set, `⚠ unknown` fields listed.
+
+Pipeline choice comes from the rep's per-user profile (`crm-profile.md`,
+walk-up lookup from cwd through parents; see `/ct-setup`) plus the motion —
+candidates are limited to the rep's profile scope.
 
 ### ACTIVITY
 - Past (log): `addActivity` with `type` (key_string from ref, e.g. `discovery`, `demo`, `cold_call`), `subject`, `due_date` (today if unspecified), linked `deal_id`/`person_id`/`org_id`, `done:1`.
@@ -117,7 +165,7 @@ the API call, then returns a one-line confirmation per write.
 4. **Conversion-date stamps (set-once — these drive funnel metrics, never overwrite):**
    - Moving **into Discovery** (opportunity pipelines 1/2/3 — stage_id 4, 9, or 15): if **SQL Date** (`80d471aaf715fb3bfd6320d1874949a864e0e909`) is empty, set it to today (`YYYY-MM-DD`). If already set, leave it.
    - Moving **into Prove** (stage_id 5, 10, or 16): if **SQO Date** (`6e75c1b17be487e2b52f2282ac4e06e39c90e3b5`) is empty, set it to today. If already set, leave it.
-   - Read the deal's current SQL/SQO Date first; only write the one that is blank. Backward moves never clear a stamped date. A deal created directly into Discovery gets SQL Date on create.
+   - Read the deal's current SQL/SQO Date first; only write the one that is blank. Backward moves never clear a stamped date. (A deal created directly into Discovery gets SQL Date **inside the create call** — the CREATE contract owns that rule; this section owns move-time stamps only.)
 
 ### QUERY (read)
 Use `getDeals` / `searchDeals` / `getDeal`, `getStages`, `getActivities`, `getNotes`, `getOrganizations`, `getPersons`. Surface key custom fields (Forecast Category, Tier, Health Score, Stage, SQL/SQO Date) alongside standard fields (value, expected close, owner). For "stale deals" / "overdue" style asks with no dedicated tool, filter `getDeals`/`getActivities` results.
