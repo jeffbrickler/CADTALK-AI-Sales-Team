@@ -43,6 +43,7 @@ DEAL TOOLS
 /ct-contacts [Company]          Find decision makers and contact info
 /ct-se [Company]                Technical demo prep — CAD×ERP fit, demo script (Brain-grounded)
 /ct-crm [what to do]            Update Pipedrive — fields, calls, notes, stage moves, queries
+/ct-crm new                     Guided opportunity create — all fields, Draft→Confirm, no blanks
 /ct-voice [text or request]     Write / review / coach any copy in the CADTALK voice
 /ct-proposal [Company]          Generate a proposal
 /ct-objections [Objection]      Handle a specific sales objection
@@ -270,20 +271,32 @@ WHAT IT DOES:    Direct Pipedrive updates — set fields (MEDDPICC, Forecast, Ti
                  Health), log calls, add notes, move stages, create records, or
                  query the pipeline. The single CRM write path every skill uses,
                  so a manual update and an automatic one land identically.
+                 NEW (v2.11.0): /ct-crm new — the Guided Create Flow. Creates an
+                 opportunity with all three records stamped (Deal + Organization
+                 incl. CAD/ERP systems + Person incl. Role), motion-aware from
+                 your crm-profile.md pipelines, validated against
+                 scripts/create-contract.json, with a Draft you confirm before
+                 anything is written. No more blank-field deals.
 
 WHEN TO RUN IT:  Any time you need the CRM changed and aren't already inside a
-                 skill that updates it for you.
+                 skill that updates it for you. Use /ct-crm new for every new
+                 opportunity.
 
-HOW TO USE IT:   /ct-crm set MEDDPICC champion to Jane Smith on the Acme deal
+HOW TO USE IT:   /ct-crm new
+                 /ct-crm create a deal for Siemens in New ERP/PLM at Discovery
+                 /ct-crm set MEDDPICC champion to Jane Smith on the Acme deal
                  /ct-crm log a discovery call, done, on Contoso; set Health Green
                  /ct-crm show me stale deals and overdue activities
 
 WHAT YOU'LL GET: A one-line confirmation per write (record, field, new value), or
-                 a clean pipeline read.
+                 a clean pipeline read. Creates: a Draft to confirm, then record
+                 IDs with any ⚠ unknown fields listed.
 
 COMMON MISTAKES:
 • Guessing a field key — never do it; the skill resolves keys from the reference.
 • Writing Pipedrive from another skill directly instead of through this contract.
+• Answering "unknown" to every create question — the blank is recorded, but the
+  point of the flow is fields FILLED; unknown is for genuinely unknowable facts.
 ```
 
 ---

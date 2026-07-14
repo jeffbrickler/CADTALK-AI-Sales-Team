@@ -4,6 +4,27 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.11.0 — 2026-07-14
+
+The Guided Create Flow: every new opportunity stamps three records (Deal + Organization incl. CAD/ERP systems + Person incl. Role) with zero silent blanks. Per-user pipeline profiles make the flow motion-aware for each rep. Design doc: `AzureAD+JeffBrickler-remove-ct-cro-design-20260714-164928.md` (office-hours + eng review, ENG CLEARED).
+
+### Added
+- **`scripts/create-contract.json`** — the single machine-readable source of truth for required-at-create fields (logical names only; hash keys stay in the vendored references). Sync rule: changes here must be mirrored in Pipedrive's native required-fields config.
+- **`scripts/validate_create_payload.py`** — deterministic guard the sales-crm writer runs before any create; rejects incomplete payloads listing ALL missing fields; `⚠ unknown` escape for non-hard fields; fail-closed prose fallback if Python breaks post-setup.
+- **`scripts/test_validate_create_payload.py`** — 24 pytest cases covering every validator path (pytest is now the repo's test convention; dev dependency).
+- **`/ct-crm new`** — guided opportunity create: profile walk-up, motion detection within the rep's pipeline scope, search-before-create dedup (search error ≠ no match), ask-missing loop, Draft → Confirm, ordered `addOrganization` → `addPerson` → `addDeal` with partial-failure retry + reconcile notes. Legacy minimal phrasings enter the flow instead of erroring.
+- **`crm-profile.md` per-user profile** — `/ct-setup` Section E interviews pipelines (live `getStages` cross-checked against the vendored stage-ids ref) + Pipedrive Owner ID (own-deal lookup, or guided Settings→ID copy for new reps with zero deals); written at the Deal Desk root; `/ct-setup pipelines` re-runs it. Config varies scope, never schema.
+
+### Changed
+- **`agents/sales-crm.md` CREATE section** rewritten to the three-record contract; SQL Date now stamps INSIDE the `addDeal` call for deals created directly into Discovery (pipelines 1/2/3) — atomic, no two-call gap.
+- **`/ct-setup`** — Python promoted from optional to REQUIRED (validator self-test gates setup completion); PDF/reportlab stays optional.
+- **ct-prospect / ct-qualify** — opportunity creates route through the Guided Create Flow; research/qualification facts seed the payload.
+
+### Ops (Jeff, one-time)
+- Configure Pipedrive-native required fields per stage/pipeline to mirror `create-contract.json` (zero-code enforcement floor covering manual web-UI creates). Verify plan-tier support.
+
+---
+
 ## v2.10.0 — 2026-07-14
 
 The plugin is for people who sell. The v2.6.0 leadership module was CRO-task tooling (forecasting, sales-model design, pricing, NRR, quota/capacity, board reporting) — the wrong audience for a rep-facing sales team, so it's gone. Deal coaching is unaffected and stays clearly labeled as coaching.

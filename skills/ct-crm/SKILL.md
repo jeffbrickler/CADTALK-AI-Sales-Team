@@ -29,13 +29,39 @@ For a large or parallel batch of CRM operations, dispatch the sales-crm agent
 (`subagent_type: cadtalk-sales-team:sales-crm`) with a structured intent instead
 of running inline.
 
+## Guided Create — `/ct-crm new` (v2.11.0)
+
+**Every opportunity create runs this flow** — including legacy minimal phrasings
+like "create a deal for Siemens in New ERP/PLM at Discovery". A minimal request
+is never rejected; the flow asks for what's missing and completes.
+
+1. **Profile.** Find `crm-profile.md` by walking up from the current folder
+   through parents (stop at the home directory) — the git-config pattern, so it
+   resolves from inside any deal subfolder. Not found anywhere → run the
+   `/ct-setup` Section E interview and write the profile at the Deal Desk root.
+2. **Motion.** Candidates are limited to the rep's profile pipelines. Infer
+   from deal facts: partner involvement → Partner-sourced; existing customer
+   org → Expansion or Aftermarket; net-new org evaluating ERP/PLM → New ERP/PLM.
+   If the facts point outside the profile scope (e.g., an AE on a partner deal),
+   offer to add that pipeline to `crm-profile.md` in-line. The inferred motion
+   always appears in the Draft for correction.
+3. **Assemble + validate + Draft + write** — follow the CREATE section of
+   `agents/sales-crm.md` exactly: search-before-create record resolution
+   (a search API error is never "no match"), ask-missing loop with the
+   `⚠ unknown` escape, `python scripts/validate_create_payload.py` gate
+   (required-field spec: `scripts/create-contract.json`), Draft → explicit
+   Confirm, then `addOrganization` → `addPerson` → `addDeal` with SQL Date
+   inside the create call when landing directly in Discovery (pipelines 1/2/3).
+4. **Confirm** with record IDs and any `⚠ unknown` fields listed.
+
 ## Examples
 
+- `/ct-crm new` — guided opportunity create (motion, all three records, zero silent blanks)
+- `/ct-crm create a deal for Siemens in New ERP/PLM Prospects at Discovery` — same flow, seeded from the phrase
 - `/ct-crm set MEDDPICC champion to Jane Smith (confirmed EB) on the Acme deal`
 - `/ct-crm log a discovery call, done, on Contoso and set Health to Green`
 - `/ct-crm move the Rockwell deal to Prove`
 - `/ct-crm show me stale deals and overdue activities`
-- `/ct-crm create a deal for Siemens in New ERP/PLM Prospects at Discovery`
 
 ## Guardrail
 

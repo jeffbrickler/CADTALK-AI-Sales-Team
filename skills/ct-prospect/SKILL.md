@@ -96,6 +96,12 @@ and deal creates: resolve every field key and stage ID from
 never fabricate a key, and use the tool mapping the contract defines. For a batch
 create you may dispatch `subagent_type: cadtalk-sales-team:sales-crm`.
 
+**Opportunity creates run the Guided Create Flow** (v2.11.0 — the contract's
+CREATE section): three-record payload per `scripts/create-contract.json`,
+validator gate, Draft → rep Confirm before any write. Facts this skill already
+researched (org, contacts, CAD/ERP stack, tier) seed the payload so the rep is
+asked only for what research couldn't determine.
+
 **Create records if:** Grade A or B (Score ≥ 55), OR WGLL ≥ 12
 **Skip if:** Grade C or D with WGLL < 8 — save DQ note to file only
 
