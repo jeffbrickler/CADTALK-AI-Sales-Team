@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "_comment": "Single source of truth for the opportunity CREATE contract (design doc 2026-07-14, eng review 3A). Logical field NAMES only — hash API keys and option IDs live exclusively in the vendored references (references/pipedrive-custom-fields.md, pipedrive-stage-ids.md; upstream repo jeffbrickler/pipedrive-update). agents/sales-crm.md and skills/ct-crm point here instead of restating the list. Changing this file requires updating the Pipedrive-side native required-fields configuration to match (eng review T1-A sync rule).",
+
+  "hard_required": {
+    "_comment": "Create blocks without these — no unknown-flag escape.",
+    "deal": ["Title", "Pipeline", "Stage", "Organization", "Person", "Owner"]
+  },
+
+  "records": {
+    "deal": {
+      "required": [
+        "Title", "Pipeline", "Stage", "Value", "Currency",
+        "Expected close date", "Owner", "Organization", "Person", "ACV",
+        "Forecast Category", "Tier", "Health Score", "Source channel",
+        "Compelling Event"
+      ],
+      "conditional": [
+        {
+          "field": "Compelling Event Date",
+          "when": "compelling_event_named",
+          "_comment": "Required only when a compelling event was identified in conversation."
+        },
+        {
+          "field": "SQL Date",
+          "when": "stage_is_discovery_on_opportunity_pipeline",
+          "pipelines": ["Aftermarket", "New ERP/PLM Prospects", "Partners"],
+          "_comment": "Eng review 4A: stamped INSIDE the same addDeal call (custom_fields) when the deal is created directly into Discovery on pipelines 1/2/3. Set-once; STAGE MOVE contract owns move-time stamps."
+        }
+      ],
+      "excluded_at_create": [
+        "MEDDPICC-Metrics", "MEDDPICC-Economic Buyer", "MEDDPICC-Decision Criteria",
+        "MEDDPICC-Decision Process", "MEDDPICC-Paperwork Process", "MEDDPICC-ID the Pain",
+        "MEDDPICC-Champion", "MEDDPICC-Competition", "MEDDPICC-Coach",
+        "Feedback on Proposal", "Feedback on Demonstration", "SQO Date",
+        "EB Last Direct Touch", "Latest web visit", "Lost reason",
+        "Probability", "ARR", "MRR", "Status", "Visible to", "Score"
+      ]
+    },
+    "organization": {
+      "required": ["Name", "Organization Type", "Label", "Source System", "Target System", "Owner"]
+    },
+    "person": {
+      "required": ["Name", "Organization", "Email", "Phone", "Role"]
+    }
+  },
+
+  "motions": {
+    "aftermarket": {
+      "pipeline": "Aftermarket",
+      "pipeline_id": 1,
+      "requires_existing_org": true
+    },
+    "new_erp": {
+      "pipeline": "New ERP/PLM Prospects",
+      "pipeline_id": 2,
+      "requires_existing_org": false
+    },
+    "partner_sourced": {
+      "pipeline": "Partners",
+      "pipeline_id": 3,
+      "requires_existing_org": false,
+      "extra_required": {
+        "deal": ["Partner", "Partner Organization", "Partner Contact", "Partner Rep"]
+      }
+    },
+    "expansion": {
+      "pipeline": "Expansions",
+      "pipeline_id": 4,
+      "requires_existing_org": true,
+      "_comment": "SQL/SQO stamp policy for pipeline 4 is an open question in the design doc; no SQL Date conditional applies here yet."
+    }
+  },
+
+  "unknown_flag": {
+    "_comment": "Ask-don't-skip fallback: a rep may answer 'unknown' for any required field EXCEPT hard_required ones. The payload lists such fields per record under '_unknown'; they validate as satisfied but the Draft shows them as ⚠ unknown so the blank is a recorded decision, never a silent miss."
+  }
+}
