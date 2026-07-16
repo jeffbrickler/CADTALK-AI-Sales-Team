@@ -1,30 +1,19 @@
 ---
 name: ct-train
-description: Training, onboarding, and sales enablement for CADTALK. Use for learning the workflow and rep onboarding (interactive walkthrough); and — in Enablement Mode — for 'build a sales playbook', 'build a rep training program', 'onboard our new sales hire', 'create a 30/60/90 ramp plan', 'run a weekly sales meeting', 'build a battlecard', 'improve ramp time', or 'run an enablement audit'.
+description: Training and onboarding for CADTALK reps. Use for learning the workflow and rep onboarding — an interactive 7-stage mock-deal walkthrough (~20 min).
 ---
 
-# /ct-train — CADTALK AI Sales Team Training & Enablement
+# /ct-train — CADTALK AI Sales Team Training
 
-Two modes:
-
-- **Training Mode (default)** — the interactive 7-stage mock-deal walkthrough
-  below. Covers the full workflow: research → qualify → prep → outreach → report.
-  ~20 minutes. Works without MCP connections. This is what `/ct-train` with no
-  further ask runs, and what a new rep runs in Week 1.
-- **Enablement Mode** — build the team's operating tools: sales playbook,
-  new-hire 30/60/90 ramp plan, weekly sales-meeting agenda, competitive
-  battlecard, or an enablement audit. Triggers: "build a playbook", "onboard our
-  new hire", "ramp plan", "run a weekly sales meeting", "build a battlecard",
-  "enablement audit", "improve ramp time". **Run the engine in
-  `references/sales-enablement.md`** — it is the structure; pull CADTALK specifics
-  from `/ct-icp`, `/ct-qualify`, `/ct-objections`, `/ct-competitors`, and voice
-  from `references/cadtalk-voice-reference.md` rather than inventing them.
+The interactive 7-stage mock-deal walkthrough below. Covers the full workflow:
+research → qualify → prep → outreach → report. ~20 minutes. Works without MCP
+connections. This is what a new rep runs in Week 1.
 
 ---
 
 ## How to run
 
-Say `/ct-train` to start the walkthrough. If resuming a previous session, tell Claude which stage you reached and it will jump there. For an enablement build ("build a playbook", "ramp plan for a new AE", etc.), run Enablement Mode via `references/sales-enablement.md` instead of the stage flow.
+Say `/ct-train` to start the walkthrough. If resuming a previous session, tell Claude which stage you reached and it will jump there.
 
 ---
 

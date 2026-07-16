@@ -60,9 +60,9 @@ PIPELINE
 /ct-report-pdf                  Pipeline summary (PDF)
 /ct-fulfill                     Order emails for closed-won deals (one per order → fulfillment)
 
-ONBOARDING & ENABLEMENT
------------------------
-/ct-train                       Training walkthrough (~20 min) — or Enablement Mode: playbooks, ramp plans, battlecards, audits
+ONBOARDING & TRAINING
+---------------------
+/ct-train                       Training walkthrough (~20 min) — interactive mock-deal onboarding
 /ct-setup                       First-time plugin setup
 
 Type /ct-help [skill] for full detail on any command above.
@@ -539,26 +539,19 @@ NOTE: ct-fulfill only reads Pipedrive (through the sales-crm contract) and never
 ```
 /ct-train
 ----------
-WHAT IT DOES:    Two modes. TRAINING (default): interactive 7-stage mock-deal
-                 walkthrough of the full workflow (~20 min, no MCP needed).
-                 ENABLEMENT: builds team tools — sales playbook, 30/60/90 ramp
-                 plan, weekly sales-meeting agenda, competitive battlecard, or an
-                 enablement audit — via references/sales-enablement.md.
+WHAT IT DOES:    Interactive 7-stage mock-deal walkthrough of the full workflow
+                 (~20 min, no MCP needed).
 
-WHEN TO RUN IT:  Training on a new rep's first week. Enablement when a manager
-                 needs a playbook, ramp plan, meeting format, battlecard, or audit.
+WHEN TO RUN IT:  A new rep's first week, or any time you want a refresher on
+                 the end-to-end workflow.
 
 HOW TO USE IT:   /ct-train
-                 /ct-train "build a 30/60/90 ramp plan for a new AE"
-                 /ct-train "run an enablement audit"
+                 /ct-train "resume at stage 4"
 
-WHAT YOU'LL GET: Training — a guided walkthrough with check-ins per stage.
-                 Enablement — the requested deliverable, pulling CADTALK specifics
-                 from /ct-icp, /ct-qualify, /ct-objections, /ct-competitors and
-                 voiced via the voice reference.
+WHAT YOU'LL GET: A guided walkthrough with check-ins per stage.
 
 COMMON MISTAKES:
-• Reinventing CADTALK facts in an enablement build — pull them from the content
-  skills; the reference is structure, not content.
+• Using a real prospect for the walkthrough — the training runs on the mock
+  deal (Acme Fabrication) so nothing touches your live pipeline.
 ```
 

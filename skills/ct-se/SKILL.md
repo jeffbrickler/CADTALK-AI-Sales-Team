@@ -24,7 +24,7 @@ skill's row in that contract:
 Keys resolve from `references/pipedrive-custom-fields.md`. Pipedrive reads here are
 optional (the brief degrades gracefully); writes only happen when it's connected.
 
-For the demo-script scaffold (opening → problem framing → solution proof → success plan → next step) and the discovery structure feeding it, use `references/sales-enablement.md` Sections 4–5. That reference is the reusable structure; this skill supplies the Brain-grounded, stack-specific content.
+For the demo-script scaffold (opening → problem framing → solution proof → success plan → next step) and the discovery structure feeding it, use `references/discovery-demo-structure.md`. That reference is the reusable structure; this skill supplies the Brain-grounded, stack-specific content.
 
 ---
 
