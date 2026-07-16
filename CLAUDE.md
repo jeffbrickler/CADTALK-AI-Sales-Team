@@ -32,7 +32,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Voice/tone review, "does this sound on-brand?", write/edit any copy, coaching | `/ct-voice` |
 | Company research | `/ct-research` |
 | Lead qualification, BANT, MEDDIC | `/ct-qualify` |
-| Coach a deal, "review this deal", "why is it stuck", multi-thread, dark deal, success plan | `/ct-qualify` (Coach Mode) |
+| Self-coach a deal, "review my deal", "why is it stuck", multi-thread, dark deal, success plan | `/ct-qualify` (Coach Mode) |
 | Score a discovery call, WGLL, "grade this call" | `/ct-score` |
 | Commit gate, "is this a real commit", forecast integrity, find fake commits | `/ct-commit` |
 | Post-demo go/no-go, proposal/decision meeting kit | `/ct-proposal` (decision-gate mode) |

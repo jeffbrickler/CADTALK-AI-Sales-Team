@@ -1,6 +1,6 @@
 ---
 name: ct-qualify
-description: Lead qualification (BANT/MEDDIC) AND enterprise deal coaching. Use for qualifying a lead or deal and scoring fit; and — in Coach Mode — for 'review this deal', 'coach my AE on this opportunity', 'why is this deal stuck', 'is this deal real', 'how do I multi-thread this account', 'the deal went dark — what now', 'build a success plan', or 'my AE says it's close but I'm not sure'.
+description: Lead qualification (BANT/MEDDIC) AND enterprise deal self-coaching. Use for qualifying a lead or deal and scoring fit; and — in Coach Mode — for 'review my deal', 'why is this deal stuck', 'is this deal real', 'how do I multi-thread this account', 'the deal went dark — what now', or 'build a success plan'.
 ---
 
 # CADTALK Lead Qualification Engine
@@ -19,15 +19,14 @@ No confirmation prompts. Research, score, create, save.
   research → ICP triage → pipeline routing → WGLL score → BANT gate → pain
   hypotheses → pricing → Pipedrive records → save. This is the flow when the
   request is a company name or "qualify [company]".
-- **Coach Mode** — an *existing* deal the AE already owns, and the ask is to
-  review it, diagnose why it's stuck, coach the AE, multi-thread it, restart a
-  dark deal, or build a Success Plan. Triggers: "review this deal", "coach my AE
-  on this", "why is [company] stuck", "is this deal real", "the deal went dark",
-  "help me multi-thread", "build a success plan", "my AE says it's close but I'm
-  not sure". **Run the framework in `references/deal-coach.md`** (BANTED review →
-  9 cycle killers → buying-committee mapping → Success Plan → coach-without-taking-
-  over → stuck-deal protocols → Deal Health Card output). Do not run the
-  new-prospect Steps 1–9 for a coaching request.
+- **Coach Mode** — an *existing* deal the rep already owns, and the ask is to
+  review it, diagnose why it's stuck, multi-thread it, restart a dark deal, or
+  build a Success Plan. Triggers: "review my deal", "why is [company] stuck",
+  "is this deal real", "the deal went dark", "help me multi-thread", "build a
+  success plan". **Run the framework in `references/deal-coach.md`** (BANTED
+  review → 9 cycle killers → buying-committee mapping → Success Plan →
+  coaching modes → stuck-deal protocols → Deal Health Card output). Do not run
+  the new-prospect Steps 1–9 for a coaching request.
 
 Coach Mode complements the forecast/stage gates: `/ct-commit` decides forecast
 integrity, `/ct-score` grades a discovery call, and Coach Mode coaches the live
