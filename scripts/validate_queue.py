@@ -24,7 +24,7 @@ from pathlib import Path
 TYPES = {"hygiene-fill", "forecast-demote", "activity-create",
          "followup-draft", "flag-only"}
 ITEM_REQUIRED = ("id", "deal", "deal_id", "type", "evidence", "risk_note")
-HASH_KEY = re.compile(r"^[0-9a-f]{40}$")
+HASH_KEY = re.compile(r"^[0-9a-f]{40}$", re.IGNORECASE)
 
 
 def validate(queue: dict) -> list:
@@ -38,6 +38,9 @@ def validate(queue: dict) -> list:
         return problems
     seen = set()
     for i, item in enumerate(items):
+        if not isinstance(item, dict):
+            problems.append(f"item[{i}]: must be an object")
+            continue
         where = f"item[{i}] ({item.get('id', '?')})"
         for key in ITEM_REQUIRED:
             if key not in item:
@@ -46,11 +49,17 @@ def validate(queue: dict) -> list:
         if itype not in TYPES:
             problems.append(f"{where}: unknown type: {itype!r}")
         iid = item.get("id")
-        if iid in seen:
-            problems.append(f"{where}: duplicate id")
-        seen.add(iid)
+        if iid is not None:
+            if iid in seen:
+                problems.append(f"{where}: duplicate id")
+            seen.add(iid)
         payload = item.get("proposed_payload")
-        if itype in TYPES - {"flag-only"} and not payload:
+        if payload is not None and not isinstance(payload, dict):
+            problems.append(
+                f"{where}: proposed_payload must be an object of logical "
+                "field names")
+            payload = None
+        elif itype in TYPES - {"flag-only"} and not payload:
             problems.append(f"{where}: proposed_payload required for type {itype}")
         for pkey in (payload or {}):
             if HASH_KEY.match(str(pkey)):
@@ -70,6 +79,9 @@ def main(argv=None) -> None:
         queue = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         print(f"SPEC ERROR: cannot read queue: {exc}", file=sys.stderr)
+        sys.exit(2)
+    if not isinstance(queue, dict):
+        print("SPEC ERROR: queue must be a JSON object", file=sys.stderr)
         sys.exit(2)
     problems = validate(queue)
     if problems:

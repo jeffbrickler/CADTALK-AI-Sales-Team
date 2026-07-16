@@ -65,6 +65,30 @@ class TestSchema:
     def test_carried_from_optional_and_valid(self):
         assert check(mkqueue([mkitem(carried_from="2026-07-16")])) == []
 
+    def test_string_payload_rejected(self):
+        probs = check(mkqueue([mkitem(proposed_payload="raw")]))
+        assert any("proposed_payload must be an object" in p for p in probs)
+
+    def test_list_payload_rejected(self):
+        probs = check(mkqueue([mkitem(proposed_payload=["MEDDPICC-Champion"])]))
+        assert any("proposed_payload must be an object" in p for p in probs)
+
+    def test_non_dict_item_rejected_cleanly(self):
+        probs = check(mkqueue([42]))
+        assert any("must be an object" in p for p in probs)
+
+    def test_uppercase_hash_key_rejected(self):
+        bad = mkitem(proposed_payload={
+            "1A706BAE5B0046828AE5A1B573C722BD96068058": 15})
+        probs = check(mkqueue([bad]))
+        assert any("hash" in p.lower() for p in probs)
+
+    def test_two_items_missing_id_not_flagged_duplicate(self):
+        a = mkitem(); del a["id"]
+        b = mkitem(deal="Beta Corp"); del b["id"]
+        probs = check(mkqueue([a, b]))
+        assert not any("duplicate" in p for p in probs)
+
 
 class TestCli:
     def test_cli_exit_0_on_valid(self, tmp_path):
@@ -85,3 +109,17 @@ class TestCli:
         with pytest.raises(SystemExit) as e:
             vq.main([str(tmp_path / "missing.json")])
         assert e.value.code == 2
+
+    def test_cli_exit_2_on_non_object_json(self, tmp_path):
+        f = tmp_path / "q.json"
+        f.write_text(json.dumps([mkitem()]), encoding="utf-8")
+        with pytest.raises(SystemExit) as e:
+            vq.main([str(f)])
+        assert e.value.code == 2
+
+    def test_cli_exit_1_on_non_dict_item(self, tmp_path):
+        f = tmp_path / "q.json"
+        f.write_text(json.dumps(mkqueue([42])), encoding="utf-8")
+        with pytest.raises(SystemExit) as e:
+            vq.main([str(f)])
+        assert e.value.code == 1
