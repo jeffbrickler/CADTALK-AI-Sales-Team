@@ -199,9 +199,9 @@ string), Forecast Category is an option ID, SQL/SQO are dates.
 | Stage / skill | Payload emitted every time |
 |---------------|----------------------------|
 | Qualify (`/ct-qualify`) | Forecast Category, MEDDPICC-Metrics / -Economic Buyer / -ID the Pain / -Champion as known, + pinned qualification note |
-| Stage move → **Discovery** (via `/ct-crm`) | **SQL Date set-once** (see STAGE MOVE step 4) |
+| Stage move → **Discovery** (via `/ct-crm`) | **SQL Date set-once** (see STAGE MOVE step 5) |
 | Discovery prep/run (`/ct-prep`, `/ct-score`) | log `discovery` activity (done), WGLL score pinned note, schedule the next follow-up activity |
-| Stage move → **Prove** (via `/ct-crm`) | **SQO Date set-once** (see STAGE MOVE step 4) |
+| Stage move → **Prove** (via `/ct-crm`) | **SQO Date set-once** (see STAGE MOVE step 5) |
 | Demo / SE (`/ct-se`) | log `demo` activity, Feedback on Demonstration, MEDDPICC-Decision Criteria / -Competition, technical-fit note |
 | Proposal (`/ct-proposal`) | stage → Propose, value, expected_close_date, Feedback on Proposal, MEDDPICC-Decision Process / -Paperwork Process, proposal note |
 | Commit (`/ct-commit`) | Forecast Category (only advance to Definitely/Probably if the gate passes; else flag), Compelling Event + Compelling Event Date, EB Last Direct Touch, compelling-event note |

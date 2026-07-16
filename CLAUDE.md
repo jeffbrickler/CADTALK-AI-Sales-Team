@@ -68,6 +68,8 @@ makes every rep's CRM updates identical.
 - Each pipeline stage leaves the standard update payload defined in the sales-crm
   per-stage contract, so a deal looks the same no matter which rep worked it.
 
+**One sanctioned exception:** deal participants are impossible via the connected MCP, so `scripts/pipedrive_participants.py` (invoked by `/ct-hygiene`) calls the Pipedrive REST API directly — participants only, nothing else; every other write stays in the sales-crm contract.
+
 ## Voice — single standard
 
 Every rep-authored output uses one voice standard: `references/cadtalk-voice-reference.md`
