@@ -3,6 +3,13 @@ name: ct-outreach
 description: Cold outreach email sequence generation. Use for cold email, outreach sequences.
 ---
 
+## Grounding — Brain index
+
+Sales-process, enablement, and asset doc IDs live in `references/brain-index.md`.
+Load it when you need to pull a playbook, script, battlecard, or template by ID —
+pull by ID directly; search is the fallback. If an ID 404s, search by title and
+flag the stale ID.
+
 # CADTALK Outreach Sequence Generator
 
 Invoked as `/ct-outreach <company> [persona]`

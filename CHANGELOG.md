@@ -4,6 +4,21 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.15.0 — 2026-07-16
+
+Dedupe core: the Deal Desk `CLAUDE.md` drops from 948 lines to an ~80-line router. The data it carried now lives closer to the work — a per-user facts file, a plugin grounding index, and the skills themselves — so a fresh install produces a working, token-lean Deal Desk. Spec: `docs/superpowers/specs/2026-07-16-self-contained-plugin-design.md`.
+
+### Added
+- **`/ct-deal`** — deal-folder lifecycle: `new` (folder + Pipedrive record + enrich), `open` (sync state, refresh deal CLAUDE.md), `archive` (win/loss summary, CSM handoff on won, move to `_archive`). All Pipedrive writes route through the sales-crm single-writer contract.
+- **`references/brain-index.md`** — the Outline doc-ID grounding map (sales process, enablement, assets, per-persona email sequences), loaded on demand by ct-prep, ct-se, ct-proposal, ct-qualify, ct-competitors, and ct-outreach.
+- **`templates/deal-desk/deal-desk.local.template.md`** — template for the per-user facts file (autonomy phase, pipelines, metrics baseline, team, pricing doc IDs, brand kit). `/ct-setup` copies it to the Deal Desk root as `deal-desk.local.md`; never overwritten on upgrade.
+
+### Changed
+- **Deal Desk `CLAUDE.md` slimmed 948 → ~80 lines** — now a router: identity, skill-routing table, autonomy pointer, operating rules. Commands, Pipedrive reference, qualification framework, competitive positioning, writing standards, and doc-ID maps all moved to the owning skill, `references/brain-index.md`, or `deal-desk.local.md`.
+- **`/ct-setup`** now writes `deal-desk.local.md` and migrates a legacy fat `CLAUDE.md` (backs it up to `CLAUDE.md.pre-v2.15.bak`, never deletes) then installs the router.
+
+---
+
 ## v2.14.0 — 2026-07-16
 
 Overnight Sweep + Inbox: the first autonomous loop. A nightly headless sweep stages CRM findings and proposed writes into a review queue; the rep approves in `/ct-inbox` and only then do writes flow through the sales-crm contract. Spec: `docs/superpowers/specs/2026-07-16-autonomous-sweep-inbox-design.md`.

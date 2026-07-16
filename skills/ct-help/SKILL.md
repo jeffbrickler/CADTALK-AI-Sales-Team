@@ -40,6 +40,7 @@ WORKFLOW (run in this order for a new deal)
 
 DEAL TOOLS
 ----------
+/ct-deal [new|open|archive]     Create, open/sync, or archive a deal folder
 /ct-contacts [Company]          Find decision makers and contact info
 /ct-se [Company]                Technical demo prep — CAD×ERP fit, demo script (Brain-grounded)
 /ct-crm [what to do]            Update Pipedrive — fields, calls, notes, stage moves, queries
@@ -73,6 +74,39 @@ Type /ct-help [skill] for full detail on any command above.
 ---
 
 ## Detail Blocks
+
+### ct-deal
+
+```
+/ct-deal [new|open|archive] [Company]
+--------------------------------------
+WHAT IT DOES:    Manages the deal folder — the local context hub for a deal — and
+                 keeps it synced with Pipedrive. NEW creates the folder + Pipedrive
+                 record and enriches it; OPEN pulls current state and refreshes the
+                 deal's CLAUDE.md; ARCHIVE writes a win/loss summary, generates the
+                 CSM handoff on a win, and moves the folder to _archive.
+
+WHEN TO RUN IT:  NEW when you start working a company. OPEN at the top of a session
+                 on an existing deal. ARCHIVE when a deal closes won or lost.
+
+HOW TO USE IT:   /ct-deal new Acme Fabrication new-erp
+                 /ct-deal open Acme
+                 /ct-deal archive Acme won
+
+WHAT YOU'LL GET: NEW — a deals/<Company_ERP>/ folder with a filled deal CLAUDE.md,
+                 the Pipedrive deal URL, and your first recommended action.
+                 OPEN — current stage/value/activity + what changed since last time.
+                 ARCHIVE — a deal summary in MEMORY.md, a handoff.md on wins, and
+                 the folder moved to _archive/won|lost/.
+
+COMMON MISTAKES:
+• Creating the Pipedrive deal by hand instead of through /ct-deal — the skill routes
+  the write through the sales-crm contract so the record matches every other rep's.
+• Running it outside a Deal Desk folder — it needs the root (deal-desk.local.md or
+  crm-profile.md) to find deals/. Run /ct-setup first.
+```
+
+---
 
 ### ct-research
 

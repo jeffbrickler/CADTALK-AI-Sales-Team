@@ -3,6 +3,13 @@ name: ct-qualify
 description: Lead qualification (BANT/MEDDIC) AND enterprise deal self-coaching. Use for qualifying a lead or deal and scoring fit; and — in Coach Mode — for 'review my deal', 'why is this deal stuck', 'is this deal real', 'how do I multi-thread this account', 'the deal went dark — what now', or 'build a success plan'.
 ---
 
+## Grounding — Brain index
+
+Sales-process, enablement, and asset doc IDs live in `references/brain-index.md`.
+Load it when you need to pull a playbook, script, battlecard, or template by ID —
+pull by ID directly; search is the fallback. If an ID 404s, search by title and
+flag the stale ID.
+
 # CADTALK Lead Qualification Engine
 
 Invoked as `/ct-qualify <company> [url]`

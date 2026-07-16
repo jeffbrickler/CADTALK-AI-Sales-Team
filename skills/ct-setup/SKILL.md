@@ -329,6 +329,50 @@ items approved unedited, zero unapproved writes.
 
 ---
 
+## Section H: Deal Desk facts + migration
+
+After the Deal Desk folder exists (Section A), populate the per-user facts file
+`deal-desk.local.md` at the Deal Desk root. This holds your autonomy phase,
+pipeline reference, metrics baseline, team, pricing doc IDs, and brand kit — the
+data that used to bloat CLAUDE.md.
+
+**H1 — Detect a legacy fat CLAUDE.md.**
+Read the Deal Desk root `CLAUDE.md`. If it is **> 300 lines** OR contains the string
+`Pipedrive Action Reference`, it is a pre-v2.15 fat file — run the migration (H2).
+Otherwise it is already the router — skip to H3 (fresh facts).
+
+**H2 — Migrate (legacy fat file found).**
+1. Extract facts from the fat CLAUDE.md into memory: current autonomy phase + any
+   "go semi-auto" unlocks, metrics block, team roster, pricing doc IDs, Canva brand
+   kit ID. (Pipeline IDs and stage table are standard — take them from the template.)
+2. Back up the original: copy the root `CLAUDE.md` to `CLAUDE.md.pre-v2.15.bak`.
+   **Never delete the original.**
+3. Copy the plugin's router `templates/deal-desk/CLAUDE.md` over the root `CLAUDE.md`.
+4. Copy the plugin's `templates/deal-desk/deal-desk.local.template.md` to the root as
+   `deal-desk.local.md`, then fill it with the facts extracted in step 1.
+5. **Present the extraction for approval** before writing (Phase 1 applies to file
+   surgery too): show the rep the facts you pulled and the phase you detected; write
+   only after they confirm.
+
+**H3 — Fresh facts (no legacy file).**
+1. Copy `templates/deal-desk/deal-desk.local.template.md` to the Deal Desk root as
+   `deal-desk.local.md` if it doesn't already exist. If it exists, leave it untouched
+   and tell the rep (idempotent re-run).
+2. Interview for the fill-in values — every question skippable, blanks allowed:
+   - Autonomy phase (default **1** — draft only).
+   - Metrics baseline: ARR, MRR, active customers, ACV, annual target, win rates,
+     deal floor, cycle lengths. Stamp today's date as "As of".
+   - Team roster (names for each role).
+   - Confirm the pricing doc IDs and brand kit ID from the template are current
+     (they ship pre-filled; the rep only changes them if they've drifted).
+3. Write the filled `deal-desk.local.md` and confirm it back in one line.
+
+**H4 — Idempotent router refresh.**
+On every `/ct-setup` run, re-copy the plugin router `templates/deal-desk/CLAUDE.md`
+over the root `CLAUDE.md` **only if** the root file is already the router (not a fat
+file — that path is H2). If the copy changes the file, show a one-line diff summary.
+This keeps the router current across plugin upgrades without touching `deal-desk.local.md`.
+
 ## Section D: Confirmation
 
 Setup complete. Print:
@@ -345,6 +389,8 @@ as a CADTALK sales operator with your Pipedrive pipeline,
 pricing framework, and qualification process loaded.
 
 Your CRM profile (crm-profile.md) is written: pipelines + Owner ID.
+Your workspace facts (deal-desk.local.md) are written: autonomy phase,
+metrics, team, pricing, brand kit.
 Change it anytime: /ct-setup pipelines
 
 Your first command:

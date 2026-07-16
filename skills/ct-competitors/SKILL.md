@@ -3,6 +3,13 @@ name: ct-competitors
 description: Competitive intelligence on CADTALK competitors. Use for competitive analysis, battlecards.
 ---
 
+## Grounding — Brain index
+
+Sales-process, enablement, and asset doc IDs live in `references/brain-index.md`.
+Load it when you need to pull a playbook, script, battlecard, or template by ID —
+pull by ID directly; search is the fallback. If an ID 404s, search by title and
+flag the stale ID.
+
 # Sales Competitive Intelligence
 
 You analyze what tools, services, and solutions a prospect currently uses and generate actionable battle cards for selling against each detected competitor. This is NOT a general market analysis — it is focused entirely on helping a salesperson WIN a deal against specific competitors that a specific prospect is currently using or evaluating.
