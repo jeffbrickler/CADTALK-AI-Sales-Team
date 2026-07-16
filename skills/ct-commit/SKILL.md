@@ -179,3 +179,12 @@ Never write silently. Offer: "Want me to update the forecast category and pin th
 - Commit-relevant Aftermarket stages: Propose (43), Contracts (6)
 - Forecast Category values: Definitely (13), Probably (14), Maybe (15), Probably Not (284), No (285)
 - Field keys: authoritative list in `references/pipedrive-custom-fields.md` (the table in Step 1 is the commit-gate subset)
+
+## Hygiene sweep (final step)
+
+After this skill's output is delivered, run the CRM hygiene sweep
+(`skills/ct-hygiene/SKILL.md`, Sweep mode) with this run's artifacts as the
+source — it pushes what this run learned (fields, contacts, participants) into
+Pipedrive through the sales-crm contract. Batch review table first; writes only
+after the rep confirms. If the deal/org can't be resolved in Pipedrive, skip
+silently.

@@ -4,10 +4,26 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
-## v2.11.1 — 2026-07-16
+## v2.12.1 — 2026-07-16
 
 ### Fixed
-- **`skills/ct-commit/SKILL.md`** — the final "## Reference" section had been truncated mid-line ("- Pipelines: Afterma") since the skill first shipped in v2.4.0, and the truncation was carried into the `commit-gate-scorecard` source repo when it was seeded from plugin v2.8.0. Reconstructed upstream (commit-gate-scorecard v1.0.1) — pipelines with IDs, commit-relevant Aftermarket stages, Forecast Category values, field-key pointer — then re-vendored via `scripts/sync-skills.sh`.
+- **`skills/ct-commit/SKILL.md`** — the final "## Reference" section had been truncated mid-line ("- Pipelines: Afterma") since the skill first shipped in v2.4.0, and the truncation was carried into the `commit-gate-scorecard` source repo when it was seeded from plugin v2.8.0. Reconstructed upstream (commit-gate-scorecard v1.0.1) — pipelines with IDs, commit-relevant Aftermarket stages, Forecast Category values, field-key pointer — then re-vendored via `scripts/sync-skills.sh`. The v2.12.0 hygiene-sweep section is preserved and queued for upstreaming (commit-gate-scorecard v1.0.2) so the next sync won't clobber it.
+
+---
+
+## v2.12.0 — 2026-07-15
+
+CRM Hygiene. Guarantees the required-by-close field set and participant attachment across every deal, closing the gap between a field existing in Pipedrive and it actually being filled in before close.
+
+### Added
+- **`/ct-hygiene`** skill — intake / sweep / audit / gate modes; guarantees the required-by-close field set and participant attachment. `/ct-crm` fronts hygiene-shaped requests.
+- **`sales-hygiene` agent** — read-only gatherer (Pipedrive state, Deal Desk files, Fireflies transcripts, live web) producing sourced fill proposals.
+- **`scripts/hygiene-contract.json`** + **`scripts/validate_hygiene.py`** (+tests) — machine-readable required-by-close spec and stage-dueness gap computer.
+- **`scripts/pipedrive_participants.py`** (+tests) — deal participants via REST (the connected MCP has no participant tools); idempotent, dry-run, checklist-note fallback when no token. `/ct-setup` Section F sets it up.
+
+### Changed
+- **`agents/sales-crm.md`** — STAGE MOVE now runs the hygiene gate (warn + confirm, never hard-block); PARTICIPANTS operation documented; Tier + Health Score moved to CS ownership (removed from the per-stage rep contract).
+- 8 producing skills (research/contacts/se/prep/proposal/commit/followup/qualify) end with a hygiene sweep so run intel lands in Pipedrive.
 
 ---
 

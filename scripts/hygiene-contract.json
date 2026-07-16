@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "_comment": "Single source of truth for the CRM hygiene / required-by-close contract (design doc 2026-07-15). Logical field NAMES only — hash API keys and option IDs live exclusively in references/pipedrive-custom-fields.md. skills/ct-hygiene, agents/sales-hygiene.md and scripts/validate_hygiene.py point here; never restate this list elsewhere. Tier and Health Score are CS-owned: excluded below, never gated, never written by hygiene.",
+
+  "stage_order": ["create", "discovery", "prove", "propose", "contracts", "close"],
+  "_stage_comment": "'create' = due at record creation (the create contract already enforces most of these). 'close' = final gate before Won. Dueness: a field with due_by_stage S is required once the deal is AT stage S (audit check 'at') and must be complete BEFORE entering any stage after S (gate check 'entering').",
+
+  "deal": [
+    {"field": "Forecast Category",          "due_by_stage": "create",    "applies_when": "always"},
+    {"field": "Compelling Event",           "due_by_stage": "create",    "applies_when": "always"},
+    {"field": "Compelling Event Date",      "due_by_stage": "create",    "applies_when": "compelling_event_named"},
+    {"field": "Partner",                    "due_by_stage": "create",    "applies_when": "partner_sourced"},
+    {"field": "Partner Organization",       "due_by_stage": "create",    "applies_when": "partner_sourced"},
+    {"field": "Partner Contact",            "due_by_stage": "create",    "applies_when": "partner_sourced"},
+    {"field": "Partner Rep",                "due_by_stage": "create",    "applies_when": "partner_sourced"},
+    {"field": "SQL Date",                   "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "MEDDPICC-Metrics",           "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "MEDDPICC-Economic Buyer",    "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "MEDDPICC-ID the Pain",       "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "MEDDPICC-Champion",          "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "SQO Date",                   "due_by_stage": "prove",     "applies_when": "always"},
+    {"field": "MEDDPICC-Decision Criteria", "due_by_stage": "prove",     "applies_when": "always"},
+    {"field": "MEDDPICC-Competition",       "due_by_stage": "prove",     "applies_when": "always"},
+    {"field": "Feedback on Demonstration",  "due_by_stage": "prove",     "applies_when": "demo_completed"},
+    {"field": "MEDDPICC-Decision Process",  "due_by_stage": "propose",   "applies_when": "always"},
+    {"field": "MEDDPICC-Paperwork Process", "due_by_stage": "propose",   "applies_when": "always"},
+    {"field": "MEDDPICC-Coach",             "due_by_stage": "propose",   "applies_when": "always"},
+    {"field": "Feedback on Proposal",       "due_by_stage": "contracts", "applies_when": "proposal_sent"},
+    {"field": "EB Last Direct Touch",       "due_by_stage": "contracts", "applies_when": "always"}
+  ],
+
+  "organization": [
+    {"field": "Organization Type", "due_by_stage": "create",    "applies_when": "always"},
+    {"field": "Label",             "due_by_stage": "create",    "applies_when": "always"},
+    {"field": "Owner",             "due_by_stage": "create",    "applies_when": "always"},
+    {"field": "Source System",     "due_by_stage": "create",    "applies_when": "always"},
+    {"field": "Target System",     "due_by_stage": "create",    "applies_when": "always"},
+    {"field": "Revenue Range",     "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "Employee Count",    "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "Industry",          "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "Website",           "due_by_stage": "discovery", "applies_when": "always"},
+    {"field": "LinkedIn",          "due_by_stage": "discovery", "applies_when": "always"}
+  ],
+
+  "person": {
+    "_comment": "Tiered enrichment (Jeff, 2026-07-15): key contacts get the full set; everyone else name+email+role. A person is KEY if is_primary is true OR their Role list intersects key_roles.",
+    "due_by_stage": "prove",
+    "key_roles": ["Economic Buyer", "Champion"],
+    "key_required": ["Name", "Email", "Phone", "Job Title", "Role", "LinkedIn Profile"],
+    "other_required": ["Name", "Email", "Role"]
+  },
+
+  "participants": {
+    "_comment": "Everyone surfaced by calls or research is attached; partner reps too. min is the multi-threading floor (matches ct-score WGLL signal).",
+    "due_by_stage": "propose",
+    "min": 4,
+    "include_partner": true
+  },
+
+  "excluded": ["Tier", "Health Score"]
+}
