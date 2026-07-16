@@ -4,6 +4,21 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.16.0 — 2026-07-16
+
+Ports: the last CLAUDE.md-only capabilities become plugin skills. Spec: `docs/superpowers/specs/2026-07-16-self-contained-plugin-design.md`.
+
+### Added
+- **`/ct-automate`** — scheduled-automation backbone. One skill owns every scheduled job (morning brief, stale alert, pre-meeting prep, weekly council, deal health check, nightly sweep) via the scheduled-tasks MCP. Read/draft jobs stage into `/ct-inbox`; nothing writes the CRM unattended.
+- **`/ct-assets`** — deal collateral: pitch/proposal decks (Gamma/Canva), one-pagers and battlecards (Canva + brand kit from `deal-desk.local.md`), ROI calculators (xlsx). Grounds on `references/brain-index.md`; degrades to pptx/docx when a connector is absent; writes to the deal folder's `artifacts/`.
+- **`/ct-contract`** — NDA triage, redline review, risk assessment, package assembly. Wraps the `legal:*` skills; always a draft for legal review, never sent or signed.
+- **`/ct-report council`** — 35-minute weekly revenue-council agenda (coverage, win-rate trend, stage conversion, partner attach, SDR productivity, contact capture, channel health).
+
+### Changed
+- `/ct-setup` Section G now delegates the nightly sweep to `/ct-automate nightly-sweep` — one skill owns all schedules.
+
+---
+
 ## v2.15.0 — 2026-07-16
 
 Dedupe core: the Deal Desk `CLAUDE.md` drops from 948 lines to an ~80-line router. The data it carried now lives closer to the work — a per-user facts file, a plugin grounding index, and the skills themselves — so a fresh install produces a working, token-lean Deal Desk. Spec: `docs/superpowers/specs/2026-07-16-self-contained-plugin-design.md`.
