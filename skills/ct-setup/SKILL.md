@@ -312,10 +312,9 @@ The sweep (`/ct-sweep`) can run nightly so the review queue is ready each
 morning. Requires Section F (API token env vars) to be complete first —
 verify with: `python scripts/pipedrive_read.py snapshot --owner-id <id> --pipelines <ids> --out %TEMP%\sweep-test.json` (expect a one-line success).
 
-**Primary — Claude Code scheduled task:** create a schedule that runs the
-prompt `/ct-sweep` weeknights at 5:00am local, working directory = the rep's
-Deal Desk folder. (In a Claude session: "schedule /ct-sweep weeknights 5am in
-this folder".)
+**Primary — one command:** run `/ct-automate nightly-sweep` from the rep's Deal Desk
+folder. `/ct-automate` owns all scheduled jobs; it creates the weeknight-5am sweep
+task with the correct working directory. (Requires Section F env vars — verified below.)
 
 **Fallback — Windows Task Scheduler:**
 ```powershell
