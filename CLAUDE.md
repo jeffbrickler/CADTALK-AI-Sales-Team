@@ -49,6 +49,8 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Help with commands, how do I use [skill] | `/ct-help` |
 | Training, new user onboarding, learn the workflow | `/ct-train` |
 | Hand won deals to fulfillment, order emails, "process this order", billing/onboarding kickoff | `/ct-fulfill` |
+| Overnight sweep, "run my sweep", stage my review queue | `/ct-sweep` |
+| Morning review, "inbox", approve sweep findings | `/ct-inbox` |
 
 **`/ct-prep` vs `/ct-se`:** `/ct-prep` is AE business-discovery prep (who's meeting, what pain, talk track). `/ct-se` is SE technical demo prep (does our addin work with their CAD×ERP stack, what to demo). Run both for a technical demo — they're complementary, not overlapping.
 
@@ -67,7 +69,7 @@ makes every rep's CRM updates identical.
 - Each pipeline stage leaves the standard update payload defined in the sales-crm
   per-stage contract, so a deal looks the same no matter which rep worked it.
 
-**One sanctioned exception:** deal participants are impossible via the connected MCP, so `scripts/pipedrive_participants.py` (invoked by `/ct-hygiene`) calls the Pipedrive REST API directly — participants only, nothing else; every other write stays in the sales-crm contract.
+**One sanctioned exception:** deal participants are impossible via the connected MCP, so `scripts/pipedrive_participants.py` (invoked by `/ct-hygiene`) calls the Pipedrive REST API directly — participants only, nothing else; every other write stays in the sales-crm contract. `scripts/pipedrive_read.py` is the sanctioned READ path for headless sweep runs (the interactive MCP may be absent in scheduled sessions) — read-only, so the single-writer rule is unaffected.
 
 ## Voice — single standard
 

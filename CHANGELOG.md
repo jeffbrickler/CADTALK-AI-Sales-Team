@@ -4,6 +4,20 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.14.0 — 2026-07-16
+
+Overnight Sweep + Inbox: the first autonomous loop. A nightly headless sweep stages CRM findings and proposed writes into a review queue; the rep approves in `/ct-inbox` and only then do writes flow through the sales-crm contract. Spec: `docs/superpowers/specs/2026-07-16-autonomous-sweep-inbox-design.md`.
+
+### Added
+- **`/ct-sweep`** — overnight pipeline sweep (hygiene gaps, commit-gate integrity, stuck >30d / dark >14d with deal-coach protocol steps, today's due activities). Files only: never writes the CRM, never sends, never assumes interactive MCP.
+- **`/ct-inbox`** — morning approval queue: approve all / per-item / edit-then-approve / reject-with-reason; approved writes via the sales-crm contract (batch-review-once); processed queues archived.
+- **`scripts/pipedrive_read.py`** (+tests) — second sanctioned direct-REST script, READ-ONLY (headless runs can't use the interactive MCP); snapshot with stuck/dark/commit annotations.
+- **`scripts/validate_queue.py`** (+tests) — review-queue sidecar schema guard; payloads carry logical field names only (hash keys resolve in the sales-crm contract).
+- **Feedback instrumentation** — `inbox/feedback-log.jsonl` records approve/edit/reject per item (fuel for the v2.16 `/ct-improve` learning loop).
+- **`/ct-setup` Section G** — schedule the nightly sweep (Claude scheduled task; Task Scheduler fallback).
+
+---
+
 ## v2.13.0 — 2026-07-16
 
 Rep-focus release. The plugin serves reps, not the manager seat — every skill that carried CRO/manager framing is reframed to rep self-coaching or removed.
