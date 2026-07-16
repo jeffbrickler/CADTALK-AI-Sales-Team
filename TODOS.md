@@ -32,6 +32,13 @@
 **Context:** Flagged during /plan-eng-review of the registration-fix + /ct-se design (2026-07-10). ct-sales prose predates the Deal Desk system. Start at ct-sales/SKILL.md "File Output" section; check each skill's output instruction against Deal Desk conventions.
 **Depends on:** nothing; best done after v2.1.0 ships so /ct-se's convention is the reference.
 
+## v2.14 pilot (Jeff, one week — spec Section 7 metrics)
+- [ ] /ct-setup Section G: schedule nightly sweep (env vars already set)
+- [ ] Manual first run: `/ct-sweep` in Deal Desk, inspect queue MD + JSON
+- [ ] Daily: /ct-inbox review — track review time (<5 min target)
+- [ ] End of week: % items approved unedited (>70% target); zero unapproved writes (hard)
+- [ ] Feed verdict into v2.15 (meeting lifecycle) go/no-go
+
 ## Completed
 
 ## Wire stage skills to the sales-crm per-stage field contract
