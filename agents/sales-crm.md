@@ -1,6 +1,6 @@
 ---
 name: sales-crm
-description: The single CADTALK Pipedrive write engine. Every CRM read/write in the plugin routes through this contract — field updates (MEDDPICC, Forecast, Tier, Health Score), record creation, activity logging, notes, stage moves, and queries. Embeds CADTALK's field keys and stage IDs so no lookup calls are needed.
+description: The single CADTALK Pipedrive write engine. Every CRM read/write in the plugin routes through this contract — field updates (MEDDPICC, Forecast Category, dates), record creation, activity logging, notes, stage moves, and queries. Embeds CADTALK's field keys and stage IDs so no lookup calls are needed.
 ---
 
 <!--
@@ -161,11 +161,30 @@ candidates are limited to the rep's profile scope.
 ### STAGE MOVE
 1. Find the deal if given by name.
 2. Match the stage name to a `stage_id` in the reference — pipeline matters (same stage name exists in different pipelines).
-3. `updateDeal` with the `stage_id`. Confirm with deal + stage + pipeline.
-4. **Conversion-date stamps (set-once — these drive funnel metrics, never overwrite):**
+3. **Hygiene gate (warn + confirm — never hard-block).** Before the move, run
+   the ct-hygiene gate (`skills/ct-hygiene/SKILL.md`, Gate mode) with
+   `check: "entering"` and the target stage ("close" when marking won). No
+   gaps → proceed. Gaps → show the list, offer to fill now, then ask "move
+   anyway?". An override proceeds and is recorded in the deal's hygiene note.
+4. `updateDeal` with the `stage_id`. Confirm with deal + stage + pipeline.
+5. **Conversion-date stamps (set-once — these drive funnel metrics, never overwrite):**
    - Moving **into Discovery** (opportunity pipelines 1/2/3 — stage_id 4, 9, or 15): if **SQL Date** (`80d471aaf715fb3bfd6320d1874949a864e0e909`) is empty, set it to today (`YYYY-MM-DD`). If already set, leave it.
    - Moving **into Prove** (stage_id 5, 10, or 16): if **SQO Date** (`6e75c1b17be487e2b52f2282ac4e06e39c90e3b5`) is empty, set it to today. If already set, leave it.
    - Read the deal's current SQL/SQO Date first; only write the one that is blank. Backward moves never clear a stamped date. (A deal created directly into Discovery gets SQL Date **inside the create call** — the CREATE contract owns that rule; this section owns move-time stamps only.)
+
+### PARTICIPANTS (via script — the one non-MCP write)
+
+The connected Pipedrive MCP has no participant tools. Deal participants are
+handled by `scripts/pipedrive_participants.py` (requires `PIPEDRIVE_API_TOKEN`
++ `PIPEDRIVE_DOMAIN`; see `/ct-setup` Section F):
+
+    python scripts/pipedrive_participants.py list <deal_id>
+    python scripts/pipedrive_participants.py add <deal_id> <person_id...> [--dry-run]
+
+Idempotent — already-attached persons are skipped. Token unset → fall back to a
+pinned "Participants checklist" note on the deal (NOTE operation) so nothing is
+lost; `/ct-hygiene` owns that fallback flow. This script is the ONLY sanctioned
+direct-API call in the plugin; every other write stays in this contract.
 
 ### QUERY (read)
 Use `getDeals` / `searchDeals` / `getDeal`, `getStages`, `getActivities`, `getNotes`, `getOrganizations`, `getPersons`. Surface key custom fields (Forecast Category, Tier, Health Score, Stage, SQL/SQO Date) alongside standard fields (value, expected close, owner). For "stale deals" / "overdue" style asks with no dedicated tool, filter `getDeals`/`getActivities` results.
@@ -175,18 +194,23 @@ Use `getDeals` / `searchDeals` / `getDeal`, `getStages`, `getActivities`, `getNo
 This is the hygiene payload each pipeline stage leaves behind. Skills emit these
 through this agent so every rep's deal looks the same. All keys resolve from
 `references/pipedrive-custom-fields.md`; MEDDPICC + feedback are Large-text (plain
-string), Tier/Forecast Category/Health Score are option IDs, SQL/SQO are dates.
+string), Forecast Category is an option ID, SQL/SQO are dates.
 
 | Stage / skill | Payload emitted every time |
 |---------------|----------------------------|
-| Qualify (`/ct-qualify`) | Tier, Forecast Category, Health Score, MEDDPICC-Metrics / -Economic Buyer / -ID the Pain / -Champion as known, + pinned qualification note |
+| Qualify (`/ct-qualify`) | Forecast Category, MEDDPICC-Metrics / -Economic Buyer / -ID the Pain / -Champion as known, + pinned qualification note |
 | Stage move → **Discovery** (via `/ct-crm`) | **SQL Date set-once** (see STAGE MOVE step 4) |
 | Discovery prep/run (`/ct-prep`, `/ct-score`) | log `discovery` activity (done), WGLL score pinned note, schedule the next follow-up activity |
 | Stage move → **Prove** (via `/ct-crm`) | **SQO Date set-once** (see STAGE MOVE step 4) |
 | Demo / SE (`/ct-se`) | log `demo` activity, Feedback on Demonstration, MEDDPICC-Decision Criteria / -Competition, technical-fit note |
 | Proposal (`/ct-proposal`) | stage → Propose, value, expected_close_date, Feedback on Proposal, MEDDPICC-Decision Process / -Paperwork Process, proposal note |
-| Commit (`/ct-commit`) | Forecast Category (only advance to Definitely/Probably if the gate passes; else flag), Health Score, Compelling Event + Compelling Event Date, EB Last Direct Touch, compelling-event note |
-| Follow-up (`/ct-followup`) | log activity, schedule the next follow-up activity, updated Health Score |
+| Commit (`/ct-commit`) | Forecast Category (only advance to Definitely/Probably if the gate passes; else flag), Compelling Event + Compelling Event Date, EB Last Direct Touch, compelling-event note |
+| Follow-up (`/ct-followup`) | log activity, schedule the next follow-up activity |
+
+**Tier and Health Score are CS-owned (confirmed 2026-07-15):** rep-loop skills
+and `/ct-hygiene` never gate on them and never write them. They remain in the
+field reference and the CREATE contract for now (changing the create set
+requires the Pipedrive-side required-fields sync); post-create they belong to CS.
 
 Reps never memorize field keys. The skill states the intent; this agent resolves
 keys and writes. SQL/SQO dates are stamped by the STAGE MOVE contract (set-once),
