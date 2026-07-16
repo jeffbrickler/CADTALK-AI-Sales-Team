@@ -53,6 +53,25 @@ For every deal in the snapshot:
   <= today (local machine date) → one `flag-only` item (id, evidence,
   risk_note; no payload). These go into the queue JSON like all other items.
 
+### Step 3b: Reconciliation grade (Approach C)
+
+Grade each open deal against the CREATE contract — the required fields every deal
+should carry — using `scripts/create-contract.json` (`records.deal.required`, plus
+the `conditional` fields when their `when` condition holds for the deal's stage/
+pipeline). This catches records that skipped the Guided Create Flow (manual web
+creates, older deals) — the retro-clean half of CRM enforcement.
+
+For each open deal:
+- Compare its populated fields to the contract's required list (map logical names to
+  values via the snapshot; never hand-build hash keys).
+- A missing required field → a candidate `reconcile-fill` item. If conversation or
+  snapshot context already knows the value, pre-fill it in the item; otherwise mark it
+  ask-the-rep.
+- Skip `excluded_at_create` fields — those are not expected at create time.
+
+These candidates feed the queue as a new section ⑤ (below). Writes still happen only
+on approval in `/ct-inbox`, through the sales-crm contract.
+
 ## Step 4: Agent judgment (grounded in vendored references — no new methodology)
 
 - **Commit integrity:** run the `/ct-commit` gate criteria (skills/ct-commit) on
@@ -94,7 +113,10 @@ so a crash mid-run never loses queued items:**
    exit 0 required; on failure, fix and re-validate before writing the MD.
 4. Write `inbox/REVIEW-QUEUE-{YYYY-MM-DD}.md` — the human brief, Jeff-voice
    Register 4 (direct, numbered, short), sectioned:
-   ① Hygiene gaps ② Commit integrity ③ Stuck & dark ④ Today (due activities).
+   ① Hygiene gaps ② Commit integrity ③ Stuck & dark ④ Today (due activities)
+   ⑤ Reconcile (CREATE-contract gaps — `reconcile-fill` items from Step 3b,
+   pre-filled where context knew the value, ask-the-rep otherwise; approving
+   writes the field through the sales-crm contract).
    Each item shows: deal, finding, proposed action, evidence, item id.
    Header line: item counts per section + "open /ct-inbox to review".
 5. ONLY NOW move the older queue pairs (`.json` + `.md`) to `inbox/processed/`

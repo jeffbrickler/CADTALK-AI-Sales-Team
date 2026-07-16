@@ -26,6 +26,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Schedule automations — morning brief, stale alert, nightly sweep, council | `/ct-automate` |
 | Generate a deck, one-pager, battlecard, or ROI calculator | `/ct-assets` |
 | Contract prep — NDA triage, redline review, risk, package | `/ct-contract` |
+| End-of-session retro, capture a correction, check the plugin for drift | `/ct-retro` |
 | First-time setup, onboarding, "set me up" | `/ct-setup` |
 | Meeting prep, "prep for [company]" | `/ct-prep` |
 | Prospect analysis, full audit | `/ct-prospect` |
@@ -74,6 +75,14 @@ makes every rep's CRM updates identical.
   per-stage contract, so a deal looks the same no matter which rep worked it.
 
 **One sanctioned exception:** deal participants are impossible via the connected MCP, so `scripts/pipedrive_participants.py` (invoked by `/ct-hygiene`) calls the Pipedrive REST API directly — participants only, nothing else; every other write stays in the sales-crm contract. `scripts/pipedrive_read.py` is the sanctioned READ path for headless sweep runs (the interactive MCP may be absent in scheduled sessions) — read-only, so the single-writer rule is unaffected.
+
+## Learnings — apply before running
+
+Before running a `ct-*` skill, check the plugin `LEARNINGS.md`. If it has any open
+entries tagged for that skill (or tagged `plugin`), apply them — they are corrections
+harvested from real sessions by `/ct-retro` that have not yet been folded into the
+skill's own file. This is the plugin's self-improvement loop: learnings ride in
+`LEARNINGS.md` until a release folds them in.
 
 ## Voice — single standard
 
