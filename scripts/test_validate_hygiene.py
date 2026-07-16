@@ -183,3 +183,110 @@ def test_malformed_payload_is_spec_error(tmp_path):
         capture_output=True, text=True,
     )
     assert r.returncode == 2
+
+
+# ------------------------------------------------------- applies_when
+
+def test_flag_off_field_not_required(tmp_path):
+    # Feedback on Demonstration due at prove but only when demo_completed.
+    p = full_payload(stage="prove")
+    p["flags"]["demo_completed"] = False
+    assert "Feedback on Demonstration" not in p["deal"]
+    r = run(p, tmp_path)
+    assert r.returncode == 0, r.stderr
+
+
+def test_flag_on_field_required(tmp_path):
+    p = full_payload(stage="prove")
+    p["flags"]["demo_completed"] = True
+    r = run(p, tmp_path)
+    assert r.returncode == 1
+    assert "deal.Feedback on Demonstration" in r.stderr
+
+
+def test_partner_sourced_requires_partner_relates(tmp_path):
+    p = full_payload(stage="discovery")
+    p["flags"]["partner_sourced"] = True
+    r = run(p, tmp_path)
+    assert r.returncode == 1
+    for f in ("Partner", "Partner Organization", "Partner Contact", "Partner Rep"):
+        assert f"deal.{f}" in r.stderr
+
+
+def test_compelling_event_date_required_when_named(tmp_path):
+    p = full_payload(stage="discovery")
+    p["flags"]["compelling_event_named"] = True
+    assert "Compelling Event Date" not in p["deal"]
+    r = run(p, tmp_path)
+    assert r.returncode == 1
+    assert "deal.Compelling Event Date" in r.stderr
+
+
+# ---------------------------------------------------- person tiering
+
+def test_key_person_missing_linkedin_is_gap(tmp_path):
+    p = full_payload(stage="prove")
+    del p["persons"][0]["LinkedIn Profile"]  # the primary/key person
+    r = run(p, tmp_path)
+    assert r.returncode == 1
+    assert "LinkedIn Profile" in r.stderr
+
+
+def test_other_person_missing_linkedin_is_fine(tmp_path):
+    p = full_payload(stage="prove")
+    # other_person() has no LinkedIn Profile and no Phone — both fine.
+    r = run(p, tmp_path)
+    assert r.returncode == 0, r.stderr
+
+
+def test_other_person_missing_role_is_gap(tmp_path):
+    p = full_payload(stage="prove")
+    p["persons"][1]["Role"] = []
+    r = run(p, tmp_path)
+    assert r.returncode == 1
+    assert "person.Role" in r.stderr
+
+
+def test_role_makes_person_key_without_primary(tmp_path):
+    # Champion role (key_roles) => key tier even when not primary.
+    p = full_payload(stage="prove")
+    champ = other_person("Chris Champ")
+    champ["Role"] = ["Champion"]
+    p["persons"].append(champ)  # lacks Phone/Job Title/LinkedIn
+    r = run(p, tmp_path)
+    assert r.returncode == 1
+    assert "Chris Champ" in r.stderr
+
+
+def test_person_rules_not_due_before_prove(tmp_path):
+    p = full_payload(stage="discovery")
+    p["persons"][1]["Role"] = []  # would be a gap at prove
+    r = run(p, tmp_path)
+    assert r.returncode == 0, r.stderr
+
+
+# ---------------------------------------------------- participants
+
+def test_participants_below_min_is_gap(tmp_path):
+    p = full_payload(stage="propose")
+    p["participants_count"] = 2
+    r = run(p, tmp_path)
+    assert r.returncode == 1
+    assert "participants: 2 attached, minimum 4" in r.stderr
+
+
+def test_participants_not_due_before_propose(tmp_path):
+    p = full_payload(stage="prove")
+    p["participants_count"] = 1
+    r = run(p, tmp_path)
+    assert r.returncode == 0, r.stderr
+
+
+# ---------------------------------------------------- exclusions
+
+def test_excluded_fields_never_flagged(tmp_path):
+    # Tier / Health Score are CS-owned: absent everywhere, never a gap.
+    r = run(full_payload(stage="close"), tmp_path)
+    assert r.returncode == 0
+    assert "Tier" not in r.stderr
+    assert "Health Score" not in r.stderr
