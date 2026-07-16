@@ -32,7 +32,10 @@ empty — write BOTH:
 1. A minimal VALID queue JSON (`inbox/REVIEW-QUEUE-{YYYY-MM-DD}.json`) containing
    a single `flag-only` item: id `{run_date}-0-flag-only-1`, deal `SWEEP`,
    evidence = the exact error, risk_note = what to fix (exit 2 → point at
-   /ct-setup Section F; exit 1 → retry note). No payload.
+   /ct-setup Section F; exit 1 → retry note). No payload. It must include
+   `run_date` + `generated_at` and pass
+   `python ${CLAUDE_PLUGIN_ROOT}/scripts/validate_queue.py` before writing the
+   MD — same bar as normal queues.
 2. The matching MD note (`inbox/REVIEW-QUEUE-{YYYY-MM-DD}.md`).
 
 That way `/ct-inbox` surfaces the failure instead of showing "empty". Then stop.
@@ -78,10 +81,13 @@ For every deal in the snapshot:
 so a crash mid-run never loses queued items:**
 
 1. Carry forward: read carry-forward candidates from ALL unprocessed
-   `inbox/REVIEW-QUEUE-*.json` files (not just the newest). Dedup by
-   (deal_id, type), keeping the item with the oldest `carried_from`. Items not
-   superseded by today's findings are copied into today's queue with
-   `carried_from` set to their original run_date. Do NOT move anything yet.
+   `inbox/REVIEW-QUEUE-*.json` files (not just the newest). Items with
+   deal_id 0 / deal `SWEEP` (failure notices) are NEVER carried forward.
+   Dedup by (deal_id, type), keeping the item with the oldest `carried_from`;
+   items without `carried_from` use the run_date prefix of their id as their
+   age. Items not superseded by today's findings are copied into today's
+   queue with `carried_from` set to their original run_date. Do NOT move
+   anything yet.
 2. Write `inbox/REVIEW-QUEUE-{YYYY-MM-DD}.json` — schema per
    `scripts/validate_queue.py` docstring. Payloads use LOGICAL field names only.
 3. Run: `python ${CLAUDE_PLUGIN_ROOT}/scripts/validate_queue.py <queue.json>` —

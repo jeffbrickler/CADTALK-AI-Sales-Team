@@ -24,8 +24,9 @@ The approval surface for `/ct-sweep`. Target: full review in under 5 minutes.
 
 ## Step 2: Brief
 
-Present the MD brief sectioned ① Hygiene ② Commit integrity ③ Stuck & dark
-④ Today. Show carried-forward items with their age ("from 07-15, 2 days old").
+Render the brief FROM THE JSON (the MD is a snapshot for humans; the JSON is
+truth), sectioned ① Hygiene ② Commit integrity ③ Stuck & dark ④ Today.
+Show carried-forward items with their age ("from 07-15, 2 days old").
 End with: "approve all · approve <ids> · edit <id> · reject <id> <reason> · skip".
 
 ## Step 3: Approvals
@@ -56,10 +57,13 @@ Append one JSON line per decided item to `inbox/feedback-log.jsonl`:
 ```json
 {"ts": "<iso>", "run_date": "<queue run_date>", "item_id": "...",
  "deal": "...", "type": "...",
- "action": "approved|approved-edited|rejected",
+ "action": "approved|approved-edited|rejected|write-failed",
  "edit_summary": "<what the rep changed, empty if none>",
  "reason": "<rejection reason, empty otherwise>"}
 ```
+
+Write-failed items log action `"write-failed"` (not `"approved"`) so
+re-approval tomorrow doesn't duplicate an "approved" line.
 
 No analysis here — `/ct-improve` (v2.16) digests this file.
 
@@ -68,8 +72,9 @@ No analysis here — `/ct-improve` (v2.16) digests this file.
 Remove DECIDED items (approved, approved-edited, rejected) from the queue JSON.
 Then:
 - **Unresolved items remain** (skipped or write-failed): rewrite the queue file
-  in place — still valid per `validate_queue.py` — and LEAVE it in `inbox/`;
-  the next sweep carries them forward.
+  in place — still valid per `validate_queue.py` — and regenerate the MD
+  alongside it so the pair stays consistent; LEAVE both in `inbox/`; the next
+  sweep carries them forward.
 - **No unresolved items remain:** move the queue pair (`.json` + `.md`) to
   `inbox/processed/`.
 
