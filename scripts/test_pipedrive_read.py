@@ -89,6 +89,27 @@ def test_fetch_all_deals_paginates(monkeypatch):
     assert [d["id"] for d in deals] == [1, 2]
 
 
+def test_fetch_non_json_body_exits_1(monkeypatch):
+    class HtmlResp:
+        status_code = 502
+        def json(self):
+            raise ValueError("not JSON")
+    monkeypatch.setattr(pr.requests, "request", lambda *a, **k: HtmlResp())
+    with pytest.raises(SystemExit) as e:
+        pr.fetch_all_deals("https://x/api/v1", "tok", owner_id=9)
+    assert e.value.code == 1
+
+
+def test_pagination_stall_exits_1(monkeypatch):
+    stalled = {"success": True, "data": [mkdeal(id=1)],
+               "additional_data": {"pagination":
+                   {"more_items_in_collection": True, "next_start": 0}}}
+    monkeypatch.setattr(pr.requests, "request", lambda *a, **k: FakeResp(stalled))
+    with pytest.raises(SystemExit) as e:
+        pr.fetch_all_deals("https://x/api/v1", "tok", owner_id=9)
+    assert e.value.code == 1
+
+
 def test_fetch_api_failure_exits_1(monkeypatch):
     monkeypatch.setattr(pr.requests, "request",
                         lambda *a, **k: FakeResp({"success": False, "error": "bad"}, 401))

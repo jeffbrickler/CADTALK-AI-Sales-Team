@@ -36,6 +36,7 @@ from datetime import date, datetime
 import requests
 
 TIMEOUT = 30
+PAGE_LIMIT = 500
 STUCK_DAYS = 30
 DARK_DAYS = 14
 # Forecast Category field key + commit-relevant values (13=Definitely, 14=Probably).
@@ -83,7 +84,15 @@ def _get(url: str, params: dict):
         print(f"API ERROR: network failure ({type(exc).__name__}) — check the "
               "connection and PIPEDRIVE_DOMAIN, then retry.", file=sys.stderr)
         sys.exit(1)
-    body = resp.json() if resp.status_code != 204 else {}
+    if resp.status_code != 204:
+        try:
+            body = resp.json()
+        except ValueError:  # covers json.JSONDecodeError (its subclass)
+            print(f"API ERROR: non-JSON response (HTTP {resp.status_code}) — "
+                  "Pipedrive may be down; retry later.", file=sys.stderr)
+            sys.exit(1)
+    else:
+        body = {}
     if resp.status_code >= 400 or not body.get("success", False):
         print(f"API ERROR: HTTP {resp.status_code} — check the token and IDs.",
               file=sys.stderr)
@@ -94,12 +103,18 @@ def _get(url: str, params: dict):
 def _paginate(url: str, token: str, extra: dict) -> list:
     items, start = [], 0
     while True:
-        body = _get(url, {"api_token": token, "limit": 500, "start": start, **extra})
+        body = _get(url, {"api_token": token, "limit": PAGE_LIMIT, "start": start,
+                          **extra})
         items.extend(body.get("data") or [])
         page = (body.get("additional_data") or {}).get("pagination") or {}
         if not page.get("more_items_in_collection"):
             return items
-        start = page.get("next_start", start + 500)
+        prev = start
+        start = page.get("next_start", start + PAGE_LIMIT)
+        if start <= prev:
+            print("API ERROR: pagination did not advance — aborting.",
+                  file=sys.stderr)
+            sys.exit(1)
 
 
 def fetch_all_deals(base: str, token: str, owner_id: int) -> list:
