@@ -290,3 +290,25 @@ def test_excluded_fields_never_flagged(tmp_path):
     assert r.returncode == 0
     assert "Tier" not in r.stderr
     assert "Health Score" not in r.stderr
+
+
+def test_exclusion_guard_filters_contract_listed_field(tmp_path):
+    # Prove the excluded-fields guard works even if an excluded field is
+    # (mistakenly or later) listed in the contract's deal array.
+    import shutil
+    shutil.copy(SCRIPT, tmp_path / "validate_hygiene.py")
+    contract = json.loads((SCRIPTS / "hygiene-contract.json").read_text(encoding="utf-8"))
+    contract["deal"].append(
+        {"field": "Tier", "due_by_stage": "create", "applies_when": "always"}
+    )
+    (tmp_path / "hygiene-contract.json").write_text(json.dumps(contract), encoding="utf-8")
+    payload = full_payload(stage="close")
+    assert "Tier" not in payload["deal"]  # blank — would be a gap without the guard
+    p = tmp_path / "payload.json"
+    p.write_text(json.dumps(payload), encoding="utf-8")
+    r = subprocess.run(
+        [sys.executable, str(tmp_path / "validate_hygiene.py"), str(p)],
+        capture_output=True, text=True,
+    )
+    assert r.returncode == 0, r.stderr
+    assert "Tier" not in r.stderr
