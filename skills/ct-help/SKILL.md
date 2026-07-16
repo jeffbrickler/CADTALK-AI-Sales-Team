@@ -41,6 +41,8 @@ WORKFLOW (run in this order for a new deal)
 DEAL TOOLS
 ----------
 /ct-deal [new|open|archive]     Create, open/sync, or archive a deal folder
+/ct-assets [deck|one-pager|roi]  Generate deal collateral (deck, one-pager, ROI)
+/ct-contract [triage|review]    Contract prep — NDA triage, redline, risk, package
 /ct-contacts [Company]          Find decision makers and contact info
 /ct-se [Company]                Technical demo prep — CAD×ERP fit, demo script (Brain-grounded)
 /ct-crm [what to do]            Update Pipedrive — fields, calls, notes, stage moves, queries
@@ -62,6 +64,7 @@ PIPELINE
 /ct-fulfill                     Order emails for closed-won deals (one per order → fulfillment)
 /ct-sweep                       Overnight pipeline sweep — stages the review queue (files only, no writes)
 /ct-inbox                       Morning review — approve/reject the sweep's staged findings
+/ct-automate [mode]             Schedule automations (briefs, sweep, council)
 
 ONBOARDING & TRAINING
 ---------------------
@@ -74,6 +77,87 @@ Type /ct-help [skill] for full detail on any command above.
 ---
 
 ## Detail Blocks
+
+### ct-automate
+
+```
+/ct-automate [mode]
+--------------------
+WHAT IT DOES:    Owns every scheduled CADTALK job. Creates, lists, and removes
+                 scheduled tasks that run /ct-* commands headlessly from your Deal
+                 Desk folder — morning brief, stale alert, pre-meeting prep, weekly
+                 council, deal health check, and the nightly sweep.
+
+WHEN TO RUN IT:  Once, to set up each automation. /ct-automate list to see them all.
+
+HOW TO USE IT:   /ct-automate nightly-sweep
+                 /ct-automate morning-brief
+                 /ct-automate list
+                 /ct-automate remove "CADTALK Sweep"
+
+WHAT YOU'LL GET: A scheduled task confirmed with its name, schedule, and next run.
+                 Read/draft jobs stage into /ct-inbox for approval — nothing writes
+                 the CRM unattended.
+
+COMMON MISTAKES:
+• Scheduling the nightly sweep before Section F env vars exist — it exits 2 nightly.
+• Expecting a job to write Pipedrive on its own — approvals happen in /ct-inbox.
+```
+
+---
+
+### ct-assets
+
+```
+/ct-assets [deck|collateral|roi] [Company]
+-------------------------------------------
+WHAT IT DOES:    Generates deal-specific collateral — pitch/proposal decks (Gamma or
+                 Canva), one-pagers and battlecards (Canva, brand kit), and ROI
+                 calculators (xlsx). Writes to the deal folder's artifacts/.
+
+WHEN TO RUN IT:  When you need a leave-behind, a deck for a meeting, or an ROI sheet
+                 for the economic buyer. SOWs/pricing stay in /ct-proposal.
+
+HOW TO USE IT:   /ct-assets deck Acme proposal
+                 /ct-assets collateral Acme battlecard
+                 /ct-assets roi Acme
+
+WHAT YOU'LL GET: A branded asset in deals/<Company>/artifacts/. If a connector is
+                 missing it falls back (Gamma→pptx, Canva→docx) and says so.
+
+COMMON MISTAKES:
+• Generic ROI numbers — anchor to the deal's real headcount and pain.
+• Forgetting the brand kit — /ct-assets pulls it from deal-desk.local.md.
+```
+
+---
+
+### ct-contract
+
+```
+/ct-contract [triage|review|risk|package] [Company]
+----------------------------------------------------
+WHAT IT DOES:    Contract prep — NDA triage (GREEN/YELLOW/RED), redline review against
+                 the CADTALK policy, severity×likelihood risk assessment, and package
+                 assembly (agreement + SOW + order form). Wraps the legal skills.
+
+WHEN TO RUN IT:  When a contract or NDA comes in, or when you're assembling the
+                 signing package. Always triage an incoming NDA first.
+
+HOW TO USE IT:   /ct-contract triage
+                 /ct-contract review
+                 /ct-contract package Acme
+
+WHAT YOU'LL GET: A draft for your legal review — classification, redlines with policy
+                 citations, a risk table, or an assembled package in artifacts/.
+                 Never sent or signed.
+
+COMMON MISTAKES:
+• Doing contract work before triaging an incoming NDA.
+• Treating the output as final — it is always a draft for legal review.
+```
+
+---
 
 ### ct-deal
 

@@ -23,6 +23,9 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Request | Skill |
 |---------|-------|
 | New deal folder + Pipedrive record; open or archive a deal, CSM handoff | `/ct-deal` |
+| Schedule automations — morning brief, stale alert, nightly sweep, council | `/ct-automate` |
+| Generate a deck, one-pager, battlecard, or ROI calculator | `/ct-assets` |
+| Contract prep — NDA triage, redline review, risk, package | `/ct-contract` |
 | First-time setup, onboarding, "set me up" | `/ct-setup` |
 | Meeting prep, "prep for [company]" | `/ct-prep` |
 | Prospect analysis, full audit | `/ct-prospect` |
