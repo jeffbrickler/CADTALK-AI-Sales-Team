@@ -26,7 +26,6 @@ Rep-focus release. The plugin serves reps, not the manager seat — every skill 
 
 ### Fixed
 - **`skills/ct-commit/SKILL.md`** — the final "## Reference" section had been truncated mid-line ("- Pipelines: Afterma") since the skill first shipped in v2.4.0, and the truncation was carried into the `commit-gate-scorecard` source repo when it was seeded from plugin v2.8.0. Reconstructed upstream (commit-gate-scorecard v1.0.1) — pipelines with IDs, commit-relevant Aftermarket stages, Forecast Category values, field-key pointer — then re-vendored via `scripts/sync-skills.sh`. The v2.12.0 hygiene-sweep section is preserved and queued for upstreaming (commit-gate-scorecard v1.0.2) so the next sync won't clobber it.
->>>>>>> origin/main
 
 ---
 
