@@ -4,6 +4,20 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.17.0 — 2026-07-16
+
+Self-improving loop: the plugin now learns from its own use and heals its own CRM data. Spec: `docs/superpowers/specs/2026-07-16-self-contained-plugin-design.md`.
+
+### Added
+- **`/ct-retro`** — end-of-session retro. Harvests session corrections into a shipped `LEARNINGS.md` (plugin-wide) or the workspace `MEMORY.md` (rep/deal-specific), promotes recurring learnings to `TODOS.md`, and runs a registration/grounding drift check (missing routing rows, missing ct-help blocks, stale brain-index IDs).
+- **`LEARNINGS.md`** — the shipped learnings log. Skills apply any open entries tagged for them before running; releases fold learnings into the skills and mark them `folded`.
+- **`/ct-sweep` Approach C reconciliation** — grades every open deal against the CREATE contract (`scripts/create-contract.json`) and stages `reconcile-fill` items into the `/ct-inbox` queue, pre-filled where context knows the value. Retro-cleans deals that skipped the Guided Create Flow. Writes still flow through the sales-crm contract on approval; runs on schedule or explicit invocation only.
+
+### Changed
+- Root `CLAUDE.md` gains a "Learnings — apply before running" rule so every skill consults `LEARNINGS.md` first.
+
+---
+
 ## v2.16.0 — 2026-07-16
 
 Ports: the last CLAUDE.md-only capabilities become plugin skills. Spec: `docs/superpowers/specs/2026-07-16-self-contained-plugin-design.md`.
