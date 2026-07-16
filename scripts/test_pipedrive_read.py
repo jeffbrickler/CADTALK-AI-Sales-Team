@@ -63,3 +63,63 @@ class TestFilterPipelines:
                  mkdeal(id=3, pipeline_id=4)]
         out = pr.filter_pipelines(deals, [1, 2])
         assert [d["id"] for d in out] == [1, 2]
+
+
+class FakeResp:
+    def __init__(self, payload, status=200):
+        self._payload, self.status_code = payload, status
+    def json(self):
+        return self._payload
+
+
+def test_fetch_all_deals_paginates(monkeypatch):
+    pages = {
+        0: {"success": True, "data": [mkdeal(id=1)],
+            "additional_data": {"pagination":
+                {"more_items_in_collection": True, "next_start": 1}}},
+        1: {"success": True, "data": [mkdeal(id=2)],
+            "additional_data": {"pagination":
+                {"more_items_in_collection": False}}},
+    }
+    def fake(method, url, timeout, params):
+        assert method == "GET" and "/deals" in url
+        return FakeResp(pages[params["start"]])
+    monkeypatch.setattr(pr.requests, "request", fake)
+    deals = pr.fetch_all_deals("https://x/api/v1", "tok", owner_id=9)
+    assert [d["id"] for d in deals] == [1, 2]
+
+
+def test_fetch_api_failure_exits_1(monkeypatch):
+    monkeypatch.setattr(pr.requests, "request",
+                        lambda *a, **k: FakeResp({"success": False, "error": "bad"}, 401))
+    with pytest.raises(SystemExit) as e:
+        pr.fetch_all_deals("https://x/api/v1", "tok", owner_id=9)
+    assert e.value.code == 1
+
+
+def test_main_missing_env_exits_2(monkeypatch, capsys):
+    monkeypatch.delenv("PIPEDRIVE_API_TOKEN", raising=False)
+    monkeypatch.delenv("PIPEDRIVE_DOMAIN", raising=False)
+    with pytest.raises(SystemExit) as e:
+        pr.main(["snapshot", "--owner-id", "9", "--pipelines", "1,2", "--out", "x.json"])
+    assert e.value.code == 2
+
+
+def test_main_writes_snapshot(monkeypatch, tmp_path):
+    monkeypatch.setenv("PIPEDRIVE_API_TOKEN", "tok")
+    monkeypatch.setenv("PIPEDRIVE_DOMAIN", "cadtalk.pipedrive.com")
+    deals_page = {"success": True,
+                  "data": [mkdeal(id=1, pipeline_id=1), mkdeal(id=2, pipeline_id=4)],
+                  "additional_data": {"pagination": {"more_items_in_collection": False}}}
+    acts_page = {"success": True, "data": [{"id": 7, "subject": "call", "done": False}],
+                 "additional_data": {"pagination": {"more_items_in_collection": False}}}
+    def fake(method, url, timeout, params):
+        return FakeResp(deals_page if "/deals" in url else acts_page)
+    monkeypatch.setattr(pr.requests, "request", fake)
+    out = tmp_path / "snap.json"
+    pr.main(["snapshot", "--owner-id", "9", "--pipelines", "1,2", "--out", str(out)])
+    snap = json.loads(out.read_text(encoding="utf-8"))
+    assert [d["id"] for d in snap["deals"]] == [1]          # pipeline 4 filtered out
+    assert "_annotations" in snap["deals"][0]
+    assert snap["activities_due"][0]["id"] == 7
+    assert snap["owner_id"] == 9 and snap["pipelines"] == [1, 2]

@@ -72,3 +72,88 @@ def annotate_deal(deal: dict, today: date) -> dict:
 def filter_pipelines(deals: list, pipelines: list) -> list:
     keep = set(pipelines)
     return [d for d in deals if d.get("pipeline_id") in keep]
+
+
+def _get(url: str, params: dict):
+    """GET wrapper: clean exit on network/API failure; never echo the URL
+    (api_token rides in the query string — a traceback would leak it)."""
+    try:
+        resp = requests.request("GET", url, timeout=TIMEOUT, params=params)
+    except requests.exceptions.RequestException as exc:
+        print(f"API ERROR: network failure ({type(exc).__name__}) — check the "
+              "connection and PIPEDRIVE_DOMAIN, then retry.", file=sys.stderr)
+        sys.exit(1)
+    body = resp.json() if resp.status_code != 204 else {}
+    if resp.status_code >= 400 or not body.get("success", False):
+        print(f"API ERROR: HTTP {resp.status_code} — check the token and IDs.",
+              file=sys.stderr)
+        sys.exit(1)
+    return body
+
+
+def _paginate(url: str, token: str, extra: dict) -> list:
+    items, start = [], 0
+    while True:
+        body = _get(url, {"api_token": token, "limit": 500, "start": start, **extra})
+        items.extend(body.get("data") or [])
+        page = (body.get("additional_data") or {}).get("pagination") or {}
+        if not page.get("more_items_in_collection"):
+            return items
+        start = page.get("next_start", start + 500)
+
+
+def fetch_all_deals(base: str, token: str, owner_id: int) -> list:
+    return _paginate(f"{base}/deals", token, {"status": "open", "user_id": owner_id})
+
+
+def fetch_open_activities(base: str, token: str, owner_id: int) -> list:
+    return _paginate(f"{base}/activities", token, {"user_id": owner_id, "done": 0})
+
+
+def base_url(domain: str) -> str:
+    domain = domain.strip().rstrip("/")
+    for prefix in ("https://", "http://"):
+        if domain.startswith(prefix):
+            domain = domain[len(prefix):]
+    return f"https://{domain}/api/v1"
+
+
+def main(argv=None) -> None:
+    parser = argparse.ArgumentParser(prog="pipedrive_read.py",
+                                     description="Read-only Pipedrive snapshot.")
+    sub = parser.add_subparsers(dest="command", required=True)
+    snap = sub.add_parser("snapshot", help="write a snapshot JSON")
+    snap.add_argument("--owner-id", type=int, required=True)
+    snap.add_argument("--pipelines", required=True,
+                      help="comma-separated pipeline ids, e.g. 1,2")
+    snap.add_argument("--out", required=True, help="output JSON path")
+    args = parser.parse_args(argv)
+
+    token = os.environ.get("PIPEDRIVE_API_TOKEN")
+    domain = os.environ.get("PIPEDRIVE_DOMAIN")
+    if not token or not domain:
+        print("CONFIG ERROR: set PIPEDRIVE_API_TOKEN and PIPEDRIVE_DOMAIN "
+              "(see /ct-setup Section F).", file=sys.stderr)
+        sys.exit(2)
+
+    base = base_url(domain)
+    pipelines = [int(p) for p in args.pipelines.split(",") if p.strip()]
+    today = date.today()
+    deals = filter_pipelines(fetch_all_deals(base, token, args.owner_id), pipelines)
+    for d in deals:
+        d["_annotations"] = annotate_deal(d, today)
+    snapshot = {
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "owner_id": args.owner_id,
+        "pipelines": pipelines,
+        "deals": deals,
+        "activities_due": fetch_open_activities(base, token, args.owner_id),
+    }
+    with open(args.out, "w", encoding="utf-8") as fh:
+        json.dump(snapshot, fh, ensure_ascii=False, indent=1)
+    print(f"snapshot: {len(deals)} deals, "
+          f"{len(snapshot['activities_due'])} open activities -> {args.out}")
+
+
+if __name__ == "__main__":
+    main()
