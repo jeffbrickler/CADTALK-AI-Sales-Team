@@ -119,7 +119,7 @@ Output JSON:
     {"generated_at": iso, "owner_id": N, "pipelines": [..],
      "deals": [ raw Pipedrive deal fields + "_annotations": {
          days_in_stage, days_dark, stuck, dark, commit_review } ],
-     "activities_due": [ raw open activities due today or overdue ]}
+     "activities_due": [ raw open activities ]}
 
 Annotations (deterministic pre-pass, spec Section 3):
     stuck         days_in_stage > 30
