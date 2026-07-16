@@ -11,7 +11,7 @@ Dedupe core: the Deal Desk `CLAUDE.md` drops from 948 lines to an ~80-line route
 ### Added
 - **`/ct-deal`** — deal-folder lifecycle: `new` (folder + Pipedrive record + enrich), `open` (sync state, refresh deal CLAUDE.md), `archive` (win/loss summary, CSM handoff on won, move to `_archive`). All Pipedrive writes route through the sales-crm single-writer contract.
 - **`references/brain-index.md`** — the Outline doc-ID grounding map (sales process, enablement, assets, per-persona email sequences), loaded on demand by ct-prep, ct-se, ct-proposal, ct-qualify, ct-competitors, and ct-outreach.
-- **`templates/deal-desk/deal-desk.local.md`** — per-user facts file (autonomy phase, pipelines, metrics baseline, team, pricing doc IDs, brand kit). Written by `/ct-setup`; never overwritten on upgrade.
+- **`templates/deal-desk/deal-desk.local.template.md`** — template for the per-user facts file (autonomy phase, pipelines, metrics baseline, team, pricing doc IDs, brand kit). `/ct-setup` copies it to the Deal Desk root as `deal-desk.local.md`; never overwritten on upgrade.
 
 ### Changed
 - **Deal Desk `CLAUDE.md` slimmed 948 → ~80 lines** — now a router: identity, skill-routing table, autonomy pointer, operating rules. Commands, Pipedrive reference, qualification framework, competitive positioning, writing standards, and doc-ID maps all moved to the owning skill, `references/brain-index.md`, or `deal-desk.local.md`.
