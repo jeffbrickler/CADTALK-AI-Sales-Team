@@ -674,3 +674,12 @@ CONFIDENTIAL
 ## CADTALK Voice (apply before output)
 
 Before returning any written copy (email, message, recap, script, proposal), apply the CADTALK voice: follow `references/cadtalk-voice-reference.md`, or run `/ct-voice` in REVIEW mode. Personal voice, no AI slop, Strunk & White clarity, CADTALK brand — one pass. Nothing goes out unvoiced.
+
+## Hygiene sweep (final step)
+
+After this skill's output is delivered, run the CRM hygiene sweep
+(`skills/ct-hygiene/SKILL.md`, Sweep mode) with this run's artifacts as the
+source — it pushes what this run learned (fields, contacts, participants) into
+Pipedrive through the sales-crm contract. Batch review table first; writes only
+after the rep confirms. If the deal/org can't be resolved in Pipedrive, skip
+silently.
