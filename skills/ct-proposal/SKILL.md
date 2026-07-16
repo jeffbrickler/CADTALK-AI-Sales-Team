@@ -3,6 +3,13 @@ name: ct-proposal
 description: Proposal for a CADTALK deal — write the client-ready proposal document, OR run the post-demo Decision-Gate meeting kit (go/no-go brief, exec deck, rep call script, decision questions, objection handling, follow-up). Use for 'create a proposal', 'draft a proposal', 'proposal meeting', 'decision gate', 'go/no-go after the demo'.
 ---
 
+## Grounding — Brain index
+
+Sales-process, enablement, and asset doc IDs live in `references/brain-index.md`.
+Load it when you need to pull a playbook, script, battlecard, or template by ID —
+pull by ID directly; search is the fallback. If an ID 404s, search by title and
+flag the stale ID.
+
 # Sales Proposal Generator
 
 You generate professional, client-ready sales proposals that persuade, differentiate, and close deals. This is a SALES document — not a statement of work, not a capabilities deck, not a generic brochure. Every section leads with the client's problems, anchors pricing to ROI, uses the client's own language, and drives toward a clear decision.
