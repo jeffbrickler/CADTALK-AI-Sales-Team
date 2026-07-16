@@ -70,6 +70,7 @@ ONBOARDING & TRAINING
 ---------------------
 /ct-train                       Training walkthrough (~20 min) — interactive mock-deal onboarding
 /ct-setup                       First-time plugin setup
+/ct-retro                       End-of-session retro — capture learnings, check drift
 
 Type /ct-help [skill] for full detail on any command above.
 ```
@@ -155,6 +156,32 @@ WHAT YOU'LL GET: A draft for your legal review — classification, redlines with
 COMMON MISTAKES:
 • Doing contract work before triaging an incoming NDA.
 • Treating the output as final — it is always a draft for legal review.
+```
+
+---
+
+### ct-retro
+
+```
+/ct-retro
+----------
+WHAT IT DOES:    The self-improvement loop. Harvests corrections from the session into
+                 the plugin LEARNINGS.md, promotes recurring ones to TODOS, and checks
+                 the plugin for registration drift (missing routing rows or ct-help
+                 blocks) and stale brain-index doc IDs.
+
+WHEN TO RUN IT:  At the end of a working session, or any time a correction is worth
+                 keeping so the skill does better next time.
+
+HOW TO USE IT:   /ct-retro
+
+WHAT YOU'LL GET: A retro summary — learnings written (and where each went: LEARNINGS.md
+                 for plugin-wide, MEMORY.md for rep/deal-specific), any TODOS promoted,
+                 and a drift report.
+
+COMMON MISTAKES:
+• Expecting it to fix skills directly — it proposes (LEARNINGS/TODOS); releases fold.
+• Putting deal-specific facts in LEARNINGS.md — those go to the workspace MEMORY.md.
 ```
 
 ---
