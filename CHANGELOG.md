@@ -10,7 +10,7 @@ Rep-focus release. The plugin serves reps, not the manager seat — every skill 
 
 ### Changed
 - **`/ct-qualify` Coach Mode** — reframed to rep self-coaching on the rep's own deal (upstream `cro-deal-coach` 1.1.0 rewritten from the CRO-coaching-an-AE persona; coaching modes, Rule of Two, debriefs, stuck-deal protocols unchanged in substance).
-- **`/ct-commit`** — rep self-gate: protects the number the rep calls; board/team-forecast framing removed (upstream `commit-gate-scorecard` 1.1.0). Sync also restored a truncated Reference block in the vendored copy.
+- **`/ct-commit`** — rep self-gate: protects the number the rep calls; board/team-forecast framing removed (upstream `commit-gate-scorecard` 1.1.0).
 - **`/ct-score`** — self-assessment only; manager-review path and manager-note output removed (upstream `discovery-review-scorecard` 1.1.0).
 - **`/ct-report` + `/ct-report-pdf`** — framed as the rep's own pipeline prep for a manager 1:1 or forecast call (leadership/investor framing removed).
 
@@ -19,6 +19,14 @@ Rep-focus release. The plugin serves reps, not the manager seat — every skill 
 
 ### Added
 - **`references/discovery-demo-structure.md`** — the rep-facing discovery structure, demo-script scaffold, and objection guide preserved from the retired enablement reference (consumed by `/ct-se`, `/ct-prep`, `/ct-objections`).
+
+---
+
+## v2.12.1 — 2026-07-16
+
+### Fixed
+- **`skills/ct-commit/SKILL.md`** — the final "## Reference" section had been truncated mid-line ("- Pipelines: Afterma") since the skill first shipped in v2.4.0, and the truncation was carried into the `commit-gate-scorecard` source repo when it was seeded from plugin v2.8.0. Reconstructed upstream (commit-gate-scorecard v1.0.1) — pipelines with IDs, commit-relevant Aftermarket stages, Forecast Category values, field-key pointer — then re-vendored via `scripts/sync-skills.sh`. The v2.12.0 hygiene-sweep section is preserved and queued for upstreaming (commit-gate-scorecard v1.0.2) so the next sync won't clobber it.
+>>>>>>> origin/main
 
 ---
 
