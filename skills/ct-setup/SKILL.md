@@ -276,6 +276,36 @@ Confirm the written file back to the rep in one line.
 
 ---
 
+## Section F: Participants API token (for /ct-hygiene)
+
+The connected Pipedrive MCP cannot attach deal participants, so
+`scripts/pipedrive_participants.py` calls the Pipedrive REST API directly. It
+needs two environment variables:
+
+1. Get the token: Pipedrive → click your avatar → **Personal preferences** →
+   **API** → copy the personal API token.
+2. Ask the rep for their Pipedrive domain (the browser URL host, e.g.
+   `cadtalk.pipedrive.com`).
+3. Have the rep set both, persisted for future sessions (PowerShell):
+
+       [Environment]::SetEnvironmentVariable("PIPEDRIVE_API_TOKEN", "<token>", "User")
+       [Environment]::SetEnvironmentVariable("PIPEDRIVE_DOMAIN", "cadtalk.pipedrive.com", "User")
+
+   (macOS/Linux: add `export PIPEDRIVE_API_TOKEN=...` and
+   `export PIPEDRIVE_DOMAIN=...` to the shell profile.)
+   **Never ask the rep to paste the token into chat** — they set it themselves;
+   the script reads it from the environment.
+4. Verify in a NEW terminal session against a real open deal ID:
+
+       python scripts/pipedrive_participants.py list <deal_id>
+
+   Expected: a JSON line with `participant_person_ids`. A CONFIG ERROR means
+   the env vars aren't visible; an API ERROR usually means a bad token/domain.
+5. If the rep can't get a token now, skip — `/ct-hygiene` falls back to a
+   pinned "Participants checklist" note on each deal until the token exists.
+
+---
+
 ## Section D: Confirmation
 
 Setup complete. Print:
