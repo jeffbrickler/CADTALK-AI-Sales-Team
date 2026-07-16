@@ -4,6 +4,13 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.11.1 — 2026-07-16
+
+### Fixed
+- **`skills/ct-commit/SKILL.md`** — the final "## Reference" section had been truncated mid-line ("- Pipelines: Afterma") since the skill first shipped in v2.4.0, and the truncation was carried into the `commit-gate-scorecard` source repo when it was seeded from plugin v2.8.0. Reconstructed upstream (commit-gate-scorecard v1.0.1) — pipelines with IDs, commit-relevant Aftermarket stages, Forecast Category values, field-key pointer — then re-vendored via `scripts/sync-skills.sh`.
+
+---
+
 ## v2.11.0 — 2026-07-14
 
 The Guided Create Flow: every new opportunity stamps three records (Deal + Organization incl. CAD/ERP systems + Person incl. Role) with zero silent blanks. Per-user pipeline profiles make the flow motion-aware for each rep. Design doc: `AzureAD+JeffBrickler-remove-ct-cro-design-20260714-164928.md` (office-hours + eng review, ENG CLEARED).
