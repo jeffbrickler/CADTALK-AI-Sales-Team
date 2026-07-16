@@ -4,6 +4,15 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.17.1 — 2026-07-16
+
+Marketplace metadata refresh so the install card advertises the full current surface.
+
+### Changed
+- `marketplace.json` plugin description updated to cover deal-folder lifecycle, contract prep, scheduled automation, CRM hygiene, and the self-improving learning loop (previously listed only research/qualify/prep/outreach/reports).
+
+---
+
 ## v2.17.0 — 2026-07-16
 
 Self-improving loop: the plugin now learns from its own use and heals its own CRM data. Spec: `docs/superpowers/specs/2026-07-16-self-contained-plugin-design.md`.

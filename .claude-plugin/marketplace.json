@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "cadtalk-sales-team",
-      "description": "CADTALK Deal Desk — Jeff Brickler's sales process, packaged for the team. Research, qualify, prep, outreach, pipeline reports.",
+      "description": "CADTALK Deal Desk — Jeff Brickler's sales process, packaged for the team. Deal-folder lifecycle, research, qualification, discovery/demo prep, outreach, proposals, contract prep, CRM single-writer + hygiene, scheduled automation, pipeline reports, and a self-improving learning loop.",
       "source": "./"
     }
   ]
