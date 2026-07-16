@@ -29,6 +29,17 @@ For a large or parallel batch of CRM operations, dispatch the sales-crm agent
 (`subagent_type: cadtalk-sales-team:sales-crm`) with a structured intent instead
 of running inline.
 
+## Front door — hygiene-shaped requests route to /ct-hygiene
+
+`/ct-crm` is the only CRM command a rep needs to remember. When the request is
+about **completeness rather than a single operation** — "is this deal
+complete", "audit Acme", "enrich the CRM from the calls", "new opportunity:
+[company] + contacts + partner", "attach participants", "what's missing before
+I move this to Contracts" — invoke `skills/ct-hygiene/SKILL.md` (Skill:
+`cadtalk-sales-team:ct-hygiene`) instead of running a raw operation. ct-hygiene
+delegates any record creation back to this skill's guided create flow, so the
+two never duplicate.
+
 ## Guided Create — `/ct-crm new` (v2.11.0)
 
 **Every opportunity create runs this flow** — including legacy minimal phrasings
