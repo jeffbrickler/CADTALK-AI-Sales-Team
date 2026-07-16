@@ -31,7 +31,6 @@ Required:
 Optional but useful:
 - Rep name (for pin attribution)
 - Call date (defaults to today if not provided)
-- Whether this is a self-assessment or manager review
 
 If the user pastes a transcript or notes, extract the evidence yourself — don't ask the user to score each dimension.
 
@@ -88,8 +87,8 @@ Score within 48 hours of the call. Evidence from the call must support every dim
 **Score interpretation:**
 - 16–20: Excellent. Advance to Prove. Tailored demo is ready.
 - 12–15: Adequate. Advance. Address gaps before demo. Any dim below 3 = coaching opportunity.
-- 8–11: Incomplete. Do NOT advance. Schedule follow-up Discovery or assign homework. Manager review.
-- 0–7: Failed. Deal at risk. Manager coaching required before next call.
+- 8–11: Incomplete. Do NOT advance. Schedule follow-up Discovery before advancing.
+- 0–7: Failed. Deal at risk. Run a structured self-debrief before the next call.
 
 **Pipeline-specific gates:**
 - New ERP: Partner SE attended technical discovery (Phase 3) or confirmed in writing. BANT+H Health Score updated.
@@ -109,7 +108,7 @@ Phase: [Phase 0: Intake & Research / Discover (Phase 2)]
 Deal: [Company name]
 Pipeline: [Aftermarket / New ERP / Expansion]
 Date: [Call date]
-Scorer: [Rep or manager name]
+Scorer: [Rep name]
 
 Dimension                    Score   Evidence / Flag
 ─────────────────────────────────────────────────────
@@ -158,9 +157,9 @@ COACHING FLAGS
 
 If score is 16+, skip coaching flags and note: "No material gaps. Review before the next Prove stage call to confirm MAP progress."
 
-If score is below 8, add a manager note:
+If score is below 8, add a flag:
 ```
-MANAGER NOTE: Score below threshold for advancement. This deal needs a structured debrief before the next customer interaction.
+DEBRIEF NEEDED: Score below threshold for advancement. Run a structured self-debrief before the next customer interaction.
 ```
 
 ---
