@@ -116,3 +116,4 @@ Many skills work together:
 - `/ct-objections` pairs with `/ct-competitors` for competitive objection handling
 - `/ct-qualify` Coach Mode helps a rep self-review their live deals (BANTED, cycle killers, multi-thread, Success Plan) via `references/deal-coach.md` — complements `/ct-commit` (forecast) and `/ct-score` (discovery)
 - `/ct-fulfill` closes the loop after Won — turns closed-won deals into per-order fulfillment emails (reads the CRM through the sales-crm contract; never writes)
+- `/ct-sweep` stages nightly findings (hygiene, commit integrity, stuck/dark) into the review queue; `/ct-inbox` is where the rep approves them — approved writes flow through the sales-crm contract

@@ -306,6 +306,29 @@ needs two environment variables:
 
 ---
 
+## Section G — Schedule the overnight sweep (optional but recommended)
+
+The sweep (`/ct-sweep`) can run nightly so the review queue is ready each
+morning. Requires Section F (API token env vars) to be complete first —
+verify with: `python scripts/pipedrive_read.py snapshot --owner-id <id> --pipelines <ids> --out %TEMP%\sweep-test.json` (expect a one-line success).
+
+**Primary — Claude Code scheduled task:** create a schedule that runs the
+prompt `/ct-sweep` weeknights at 5:00am local, working directory = the rep's
+Deal Desk folder. (In a Claude session: "schedule /ct-sweep weeknights 5am in
+this folder".)
+
+**Fallback — Windows Task Scheduler:**
+```powershell
+schtasks /Create /TN "CADTALK Sweep" /SC WEEKLY /D MON,TUE,WED,THU,FRI /ST 05:00 `
+  /TR "cmd /c cd /d \"<Deal Desk path>\" && claude -p \"/ct-sweep\""
+```
+
+**Verify:** next morning, `inbox/REVIEW-QUEUE-{date}.md` exists. First week is
+a watched pilot — the rep reviews every item; success = <5-min review, >70%
+items approved unedited, zero unapproved writes.
+
+---
+
 ## Section D: Confirmation
 
 Setup complete. Print:

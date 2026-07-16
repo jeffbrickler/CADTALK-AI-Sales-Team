@@ -59,6 +59,8 @@ PIPELINE
 /ct-report                      Pipeline summary (Markdown)
 /ct-report-pdf                  Pipeline summary (PDF)
 /ct-fulfill                     Order emails for closed-won deals (one per order → fulfillment)
+/ct-sweep                       Overnight pipeline sweep — stages the review queue (files only, no writes)
+/ct-inbox                       Morning review — approve/reject the sweep's staged findings
 
 ONBOARDING & TRAINING
 ---------------------
@@ -530,6 +532,68 @@ COMMON MISTAKES:
 
 NOTE: ct-fulfill only reads Pipedrive (through the sales-crm contract) and never
       writes it or sends the email — it produces the copy for you to send.
+```
+
+---
+
+### ct-sweep
+
+```
+/ct-sweep
+----------
+WHAT IT DOES:    Reads the rep's Pipedrive pipeline via REST (no interactive MCP
+                 needed), runs hygiene checks, commit-gate integrity, stuck/dark
+                 analysis, and due-activity flagging — then stages everything
+                 into a review queue (inbox/REVIEW-QUEUE-{date}.md + .json).
+                 Produces files only; never writes the CRM, never sends.
+
+WHEN TO RUN IT:  Runs automatically via nightly scheduled task (/ct-setup
+                 Section G). Also run manually: "run my sweep", "rebuild my
+                 inbox", or just /ct-sweep.
+
+HOW TO USE IT:   /ct-sweep
+                 (headless: claude -p "/ct-sweep" from your Deal Desk folder)
+
+WHAT YOU'LL GET: inbox/REVIEW-QUEUE-{date}.md — sectioned brief (① Hygiene
+                 ② Commit integrity ③ Stuck & dark ④ Today), plus the JSON
+                 sidecar /ct-inbox reads for approval.
+
+COMMON MISTAKES:
+• Expecting it to write the CRM — it stages only; approval happens in /ct-inbox.
+• Running without Section F env vars set — exit 2. Run /ct-setup first.
+• Editing the JSON sidecar by hand — use /ct-inbox edit <id> instead.
+```
+
+---
+
+### ct-inbox
+
+```
+/ct-inbox
+----------
+WHAT IT DOES:    The approval surface for /ct-sweep. Loads the latest review
+                 queue, renders a sectioned brief, and lets the rep approve all,
+                 approve per-item, edit-then-approve, or reject-with-reason.
+                 Approved writes flow through the sales-crm contract
+                 (batch-review-once — the queue review IS the confirm).
+
+WHEN TO RUN IT:  Each morning after the overnight sweep has run, or any time a
+                 queue exists — "inbox", "review my queue", "what did the sweep
+                 find".
+
+HOW TO USE IT:   /ct-inbox
+                 approve all
+                 approve 2026-07-16-42-hygiene-fill-1
+                 edit 2026-07-16-42-forecast-demote-1
+                 reject 2026-07-16-42-flag-only-1 "already handled offline"
+
+WHAT YOU'LL GET: CRM writes for approved items, feedback log entries for the
+                 learning loop, and unresolved items carried to tomorrow's queue.
+
+COMMON MISTAKES:
+• Re-confirming every write after approving — the queue review IS the confirm
+  (batch-review-once). No double-confirmation.
+• Ignoring carried-forward items — they age and reappear until addressed.
 ```
 
 ---
