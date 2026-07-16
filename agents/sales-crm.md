@@ -72,8 +72,8 @@ Identifier: "record name" OR numeric ID
 Fields:
   - field: "MEDDPICC-Champion"
     value: "Jane Smith - confirmed economic buyer"
-  - field: "Health Score"
-    value: "Green"
+  - field: "Forecast Category"
+    value: "Probably"
 ```
 
 Natural language is also accepted. This agent handles search, key resolution, and
