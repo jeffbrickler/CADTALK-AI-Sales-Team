@@ -360,3 +360,21 @@ Report: [full file path]
 - Pipedrive MCP unavailable: proceed with Deal Desk data only; note Pipedrive sync was skipped
 - File missing required fields: include in report with "[data unavailable]" and flag for refresh
 - Duplicate companies in Deal Desk: surface the most recent analysis; note the older one
+
+---
+
+## Mode: council — `/ct-report council`
+
+Weekly revenue-council prep. Instead of the standard per-deal report, produce the
+35-minute council agenda across all open revenue pipelines:
+
+1. **Pipeline coverage** (5 min) — coverage ratio vs. quota.
+2. **Win-rate trend** (5 min) — recent close rate by motion.
+3. **Stage conversion** (5 min) — conversion between stages.
+4. **Partner attach %** (5 min) — share of deals with a partner attached.
+5. **SDR productivity** (5 min) — SDR-sourced pipeline movement.
+6. **Contact capture rate** (5 min) — deals meeting the minimum-contacts bar.
+7. **Partner channel health** (5 min) — per-partner deal health.
+
+Flag the deals that need discussion and compute each metric against target. Output a
+single agenda-ready brief.
