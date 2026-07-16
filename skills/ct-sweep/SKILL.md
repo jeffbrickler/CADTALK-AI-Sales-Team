@@ -25,10 +25,17 @@ Runs unattended (nightly scheduled task) or on demand. Output: one review queue
 
 ## Step 2: Snapshot (deterministic)
 
-Run: `python <plugin>/scripts/pipedrive_read.py snapshot --owner-id <id> --pipelines <ids> --out <deal-desk>/inbox/.snapshot-{YYYY-MM-DD}.json`
+Run: `python ${CLAUDE_PLUGIN_ROOT}/scripts/pipedrive_read.py snapshot --owner-id <id> --pipelines <ids> --out <deal-desk>/inbox/.snapshot-{YYYY-MM-DD}.json`
 
-Exit 2 = env vars missing → write a one-line queue MD saying setup is incomplete
-(point at /ct-setup Section F) and stop. Exit 1 = API failure → same, retry note.
+On exit 1 (API failure) or exit 2 (env vars missing), do NOT leave the inbox
+empty — write BOTH:
+1. A minimal VALID queue JSON (`inbox/REVIEW-QUEUE-{YYYY-MM-DD}.json`) containing
+   a single `flag-only` item: id `{run_date}-0-flag-only-1`, deal `SWEEP`,
+   evidence = the exact error, risk_note = what to fix (exit 2 → point at
+   /ct-setup Section F; exit 1 → retry note). No payload.
+2. The matching MD note (`inbox/REVIEW-QUEUE-{YYYY-MM-DD}.md`).
+
+That way `/ct-inbox` surfaces the failure instead of showing "empty". Then stop.
 
 ## Step 3: Deterministic pre-pass
 
@@ -39,12 +46,17 @@ For every deal in the snapshot:
   value is knowable from CRM context/notes — otherwise `flag-only`).
 - `_annotations.stuck` / `.dark` → candidates for Section ③.
 - `_annotations.commit_review` → candidates for Section ②.
+- **Section ④ Today:** every snapshot `activities_due` entry with due date
+  <= today (local machine date) → one `flag-only` item (id, evidence,
+  risk_note; no payload). These go into the queue JSON like all other items.
 
 ## Step 4: Agent judgment (grounded in vendored references — no new methodology)
 
 - **Commit integrity:** run the `/ct-commit` gate criteria (skills/ct-commit) on
-  each commit_review deal using snapshot fields. Gate fail → `forecast-demote`
-  item with the exact Forecast Category change proposed + evidence per check.
+  each commit_review deal — apply the gate checks (Steps 2A/2B/3) to snapshot
+  fields only; skip ct-commit's interactive input and write-back steps. Gate
+  fail → `forecast-demote` item with the exact Forecast Category change
+  proposed + evidence per check.
 - **Stuck/dark:** apply `references/deal-coach.md` Section 7 protocols. Each deal
   gets the protocol step it is due for (Day-14 re-engage, Day-21 direct,
   Day-28 breakup, stalled-deal BANTED gap) as an `activity-create` or
@@ -54,20 +66,34 @@ For every deal in the snapshot:
 
 ## Step 5: Write the queue
 
-1. Carry forward: read the newest unprocessed `inbox/REVIEW-QUEUE-*.json` (if
-   any); items not superseded by today's findings are copied in with
-   `carried_from` set to their original run_date. Then move that older queue
-   pair to `inbox/processed/` (superseded).
+`{YYYY-MM-DD}` throughout = the local machine date.
+
+**Item ids and supersede rule:**
+- Item id = `{run_date}-{deal_id}-{type}-{n}`.
+- A carried item is superseded when today's findings contain the same
+  (deal_id, type).
+- Carried items keep their ORIGINAL id and their `carried_from` run_date.
+
+**Order matters — old queues are moved only AFTER the new queue validates,
+so a crash mid-run never loses queued items:**
+
+1. Carry forward: read carry-forward candidates from ALL unprocessed
+   `inbox/REVIEW-QUEUE-*.json` files (not just the newest). Dedup by
+   (deal_id, type), keeping the item with the oldest `carried_from`. Items not
+   superseded by today's findings are copied into today's queue with
+   `carried_from` set to their original run_date. Do NOT move anything yet.
 2. Write `inbox/REVIEW-QUEUE-{YYYY-MM-DD}.json` — schema per
    `scripts/validate_queue.py` docstring. Payloads use LOGICAL field names only.
-3. Run: `python <plugin>/scripts/validate_queue.py <queue.json>` — exit 0
-   required; on failure, fix and re-validate before writing the MD.
+3. Run: `python ${CLAUDE_PLUGIN_ROOT}/scripts/validate_queue.py <queue.json>` —
+   exit 0 required; on failure, fix and re-validate before writing the MD.
 4. Write `inbox/REVIEW-QUEUE-{YYYY-MM-DD}.md` — the human brief, Jeff-voice
    Register 4 (direct, numbered, short), sectioned:
    ① Hygiene gaps ② Commit integrity ③ Stuck & dark ④ Today (due activities).
    Each item shows: deal, finding, proposed action, evidence, item id.
    Header line: item counts per section + "open /ct-inbox to review".
-5. Delete the `.snapshot-*.json` scratch file.
+5. ONLY NOW move the older queue pairs (`.json` + `.md`) to `inbox/processed/`
+   (superseded by the validated new queue).
+6. Delete the `.snapshot-*.json` scratch file.
 
 ## Step 6: Sign off
 

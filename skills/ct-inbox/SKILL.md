@@ -19,7 +19,7 @@ The approval surface for `/ct-sweep`. Target: full review in under 5 minutes.
 
 1. Find the newest `inbox/REVIEW-QUEUE-*.json` at the Deal Desk root (not in
    `processed/`). None → "Inbox empty — run /ct-sweep or wait for tonight."
-2. Run `python <plugin>/scripts/validate_queue.py <queue.json>`; exit 0
+2. Run `python ${CLAUDE_PLUGIN_ROOT}/scripts/validate_queue.py <queue.json>`; exit 0
    required (else report the queue is corrupt and stop — never guess payloads).
 
 ## Step 2: Brief
@@ -32,7 +32,9 @@ End with: "approve all · approve <ids> · edit <id> · reject <id> <reason> · 
 
 - **approve all / approve <ids>** — collect the approved items' payloads.
 - **edit <id>** — show the payload, take the rep's changes, re-show, then treat
-  as approved-edited. Record what changed.
+  as approved-edited. Record what changed. After edits, re-run
+  `python ${CLAUDE_PLUGIN_ROOT}/scripts/validate_queue.py` on the updated queue
+  before write-back (keeps the hash-key guard on edited payloads).
 - **reject <id> <reason>** — no write; reason required (one line is fine).
 - **skip** (or unaddressed items) — stay queued; next sweep carries them forward.
 
@@ -40,8 +42,12 @@ End with: "approve all · approve <ids> · edit <id> · reject <id> <reason> · 
 
 Batch by deal. For each deal, apply the merged payload through the sales-crm
 contract (field updates, Forecast Category demotes, activity creates). The
-batch-review-once rule applies: the Step-3 approval was the review. Report
-per-deal write results; any write failure keeps that item queued and flags it.
+batch-review-once rule applies: the Step-3 approval was the review. Tell the
+sales-crm contract the Draft→Confirm requirement is already satisfied — the
+Step-3 batch review IS the Confirm; pass items as pre-approved so the contract
+does not re-prompt. Hygiene-gate warnings are reported in results, never
+re-prompted. Report per-deal write results; any write failure keeps that item
+queued and flags it.
 
 ## Step 5: Feedback log (learning-loop instrumentation, spec Section 8)
 
@@ -59,6 +65,12 @@ No analysis here — `/ct-improve` (v2.16) digests this file.
 
 ## Step 6: Close out
 
-Move the queue pair (`.json` + `.md`) to `inbox/processed/`. If items were
-skipped, note they'll reappear in tomorrow's queue. One-line summary:
-"N approved (M edited), K rejected, J carried forward."
+Remove DECIDED items (approved, approved-edited, rejected) from the queue JSON.
+Then:
+- **Unresolved items remain** (skipped or write-failed): rewrite the queue file
+  in place — still valid per `validate_queue.py` — and LEAVE it in `inbox/`;
+  the next sweep carries them forward.
+- **No unresolved items remain:** move the queue pair (`.json` + `.md`) to
+  `inbox/processed/`.
+
+One-line summary: "N approved (M edited), K rejected, J carried forward."
