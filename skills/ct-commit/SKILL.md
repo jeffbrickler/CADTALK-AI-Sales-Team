@@ -175,7 +175,10 @@ Never write silently. Offer: "Want me to update the forecast category and pin th
 
 ## Reference
 
-- Pipelines: Afterma
+- Pipelines: Aftermarket (1), New ERP/PLM Prospects (2), Partners (3), Expansions (4) — full stage tables in `references/pipedrive-stage-ids.md`
+- Commit-relevant Aftermarket stages: Propose (43), Contracts (6)
+- Forecast Category values: Definitely (13), Probably (14), Maybe (15), Probably Not (284), No (285)
+- Field keys: authoritative list in `references/pipedrive-custom-fields.md` (the table in Step 1 is the commit-gate subset)
 
 ## Hygiene sweep (final step)
 
