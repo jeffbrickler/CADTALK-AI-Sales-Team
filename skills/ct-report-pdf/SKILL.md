@@ -16,7 +16,7 @@ description: Pipeline report exported as PDF. Use for pipeline report PDF, print
 
 ## Purpose
 
-You generate a professional, visually polished PDF version of the sales pipeline report. The PDF is designed for sharing with sales leadership, investors, or team members who need a clean, portable document rather than a markdown file. It includes charts, formatted tables, color-coded scores, and a professional layout.
+You generate a professional, visually polished PDF version of the rep's own pipeline report. The PDF is a clean, portable document — handy for a manager 1:1, a forecast call, or anyone who'd rather read a document than a markdown file. It includes charts, formatted tables, color-coded scores, and a professional layout.
 
 ---
 

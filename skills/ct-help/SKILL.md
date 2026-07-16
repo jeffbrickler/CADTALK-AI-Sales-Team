@@ -31,7 +31,7 @@ CADTALK AI Sales Team — Skill Map
 WORKFLOW (run in this order for a new deal)
 -------------------------------------------
 /ct-research [Company]          Research a company before first contact
-/ct-qualify [Company]           BANT + MEDDIC qualification — or Coach Mode: review/coach a live deal
+/ct-qualify [Company]           BANT + MEDDIC qualification — or Coach Mode: self-review a live deal
 /ct-score [Deal]                WGLL discovery scorecard (0–20) + Pipedrive pin
 /ct-commit [Deal]               Commit gate — real-commit test + weighted forecast
 /ct-prep [Company + context]    Pre-call brief, agenda, and talk track
@@ -60,9 +60,9 @@ PIPELINE
 /ct-report-pdf                  Pipeline summary (PDF)
 /ct-fulfill                     Order emails for closed-won deals (one per order → fulfillment)
 
-ONBOARDING & ENABLEMENT
------------------------
-/ct-train                       Training walkthrough (~20 min) — or Enablement Mode: playbooks, ramp plans, battlecards, audits
+ONBOARDING & TRAINING
+---------------------
+/ct-train                       Training walkthrough (~20 min) — interactive mock-deal onboarding
 /ct-setup                       First-time plugin setup
 
 Type /ct-help [skill] for full detail on any command above.
@@ -105,21 +105,21 @@ COMMON MISTAKES:
 ---------------------------
 WHAT IT DOES:    Two modes. QUALIFY MODE (default): runs BANT + MEDDIC + WGLL
                  on a new/early prospect, routes the pipeline, creates Pipedrive
-                 records. COACH MODE: reviews a live deal the AE already owns —
+                 records. COACH MODE: self-review of a live deal you already own —
                  BANTED health check, 9 cycle killers, buying-committee mapping,
                  Success Plan, stuck-deal protocols, and a Deal Health Card.
 
 WHEN TO RUN IT:  Qualify Mode after research, before booking discovery. Coach
                  Mode when a deal is stuck, dark, single-threaded, or you're not
-                 sure it's real — "review this deal", "coach my AE", "why is it
-                 stuck", "build a success plan".
+                 sure it's real — "review my deal", "why is it stuck", "build
+                 a success plan".
 
 HOW TO USE IT:   /ct-qualify Acme Fabrication
                  /ct-qualify "review the Contoso deal — stuck 40 days, champion went quiet"
 
 WHAT YOU'LL GET: Qualify Mode — BANT scores, MEDDIC breakdown, WGLL, verdict.
                  Coach Mode — Deal Health Card, risk rating, next 48h / 7d
-                 actions, and the coaching question to ask the AE.
+                 actions, and the coaching question to sit with.
 
 COMMON MISTAKES:
 • Treating YELLOW as GREEN — budget and timeline unknown means you still have
@@ -539,26 +539,19 @@ NOTE: ct-fulfill only reads Pipedrive (through the sales-crm contract) and never
 ```
 /ct-train
 ----------
-WHAT IT DOES:    Two modes. TRAINING (default): interactive 7-stage mock-deal
-                 walkthrough of the full workflow (~20 min, no MCP needed).
-                 ENABLEMENT: builds team tools — sales playbook, 30/60/90 ramp
-                 plan, weekly sales-meeting agenda, competitive battlecard, or an
-                 enablement audit — via references/sales-enablement.md.
+WHAT IT DOES:    Interactive 7-stage mock-deal walkthrough of the full workflow
+                 (~20 min, no MCP needed).
 
-WHEN TO RUN IT:  Training on a new rep's first week. Enablement when a manager
-                 needs a playbook, ramp plan, meeting format, battlecard, or audit.
+WHEN TO RUN IT:  A new rep's first week, or any time you want a refresher on
+                 the end-to-end workflow.
 
 HOW TO USE IT:   /ct-train
-                 /ct-train "build a 30/60/90 ramp plan for a new AE"
-                 /ct-train "run an enablement audit"
+                 /ct-train "resume at stage 4"
 
-WHAT YOU'LL GET: Training — a guided walkthrough with check-ins per stage.
-                 Enablement — the requested deliverable, pulling CADTALK specifics
-                 from /ct-icp, /ct-qualify, /ct-objections, /ct-competitors and
-                 voiced via the voice reference.
+WHAT YOU'LL GET: A guided walkthrough with check-ins per stage.
 
 COMMON MISTAKES:
-• Reinventing CADTALK facts in an enablement build — pull them from the content
-  skills; the reference is structure, not content.
+• Using a real prospect for the walkthrough — the training runs on the mock
+  deal (Acme Fabrication) so nothing touches your live pipeline.
 ```
 

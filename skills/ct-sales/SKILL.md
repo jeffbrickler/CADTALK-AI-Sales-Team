@@ -114,6 +114,5 @@ Many skills work together:
 - `/ct-proposal` references qualification data and competitive intel if available
 - `/ct-report` and `/ct-report-pdf` compile all prospect analyses into pipeline view
 - `/ct-objections` pairs with `/ct-competitors` for competitive objection handling
-- `/ct-qualify` Coach Mode reviews live deals (BANTED, cycle killers, multi-thread, Success Plan) via `references/deal-coach.md` — complements `/ct-commit` (forecast) and `/ct-score` (discovery)
-- `/ct-train` Enablement Mode builds playbooks/ramp plans/battlecards/audits via `references/sales-enablement.md`, pulling specifics from the content skills
+- `/ct-qualify` Coach Mode helps a rep self-review their live deals (BANTED, cycle killers, multi-thread, Success Plan) via `references/deal-coach.md` — complements `/ct-commit` (forecast) and `/ct-score` (discovery)
 - `/ct-fulfill` closes the loop after Won — turns closed-won deals into per-order fulfillment emails (reads the CRM through the sales-crm contract; never writes)

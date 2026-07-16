@@ -32,7 +32,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Voice/tone review, "does this sound on-brand?", write/edit any copy, coaching | `/ct-voice` |
 | Company research | `/ct-research` |
 | Lead qualification, BANT, MEDDIC | `/ct-qualify` |
-| Coach a deal, "review this deal", "why is it stuck", multi-thread, dark deal, success plan | `/ct-qualify` (Coach Mode) |
+| Self-coach a deal, "review my deal", "why is it stuck", multi-thread, dark deal, success plan | `/ct-qualify` (Coach Mode) |
 | Score a discovery call, WGLL, "grade this call" | `/ct-score` |
 | Commit gate, "is this a real commit", forecast integrity, find fake commits | `/ct-commit` |
 | Post-demo go/no-go, proposal/decision meeting kit | `/ct-proposal` (decision-gate mode) |
@@ -48,7 +48,6 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | General sales orchestration | `/ct-sales` |
 | Help with commands, how do I use [skill] | `/ct-help` |
 | Training, new user onboarding, learn the workflow | `/ct-train` |
-| Build a playbook, ramp plan, weekly meeting, battlecard, enablement audit | `/ct-train` (Enablement Mode) |
 | Hand won deals to fulfillment, order emails, "process this order", billing/onboarding kickoff | `/ct-fulfill` |
 
 **`/ct-prep` vs `/ct-se`:** `/ct-prep` is AE business-discovery prep (who's meeting, what pain, talk track). `/ct-se` is SE technical demo prep (does our addin work with their CAD×ERP stack, what to demo). Run both for a technical demo — they're complementary, not overlapping.
