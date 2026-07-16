@@ -4,6 +4,24 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.13.0 — 2026-07-16
+
+Rep-focus release. The plugin serves reps, not the manager seat — every skill that carried CRO/manager framing is reframed to rep self-coaching or removed.
+
+### Changed
+- **`/ct-qualify` Coach Mode** — reframed to rep self-coaching on the rep's own deal (upstream `cro-deal-coach` 1.1.0 rewritten from the CRO-coaching-an-AE persona; coaching modes, Rule of Two, debriefs, stuck-deal protocols unchanged in substance).
+- **`/ct-commit`** — rep self-gate: protects the number the rep calls; board/team-forecast framing removed (upstream `commit-gate-scorecard` 1.1.0). Sync also restored a truncated Reference block in the vendored copy.
+- **`/ct-score`** — self-assessment only; manager-review path and manager-note output removed (upstream `discovery-review-scorecard` 1.1.0).
+- **`/ct-report` + `/ct-report-pdf`** — framed as the rep's own pipeline prep for a manager 1:1 or forecast call (leadership/investor framing removed).
+
+### Removed
+- **`/ct-train` Enablement Mode** and `references/sales-enablement.md` — playbook builder, 30/60/90 ramp plans, weekly sales-meeting format, enablement audits are manager tooling and out of scope. Training Mode (rep walkthrough) unchanged.
+
+### Added
+- **`references/discovery-demo-structure.md`** — the rep-facing discovery structure, demo-script scaffold, and objection guide preserved from the retired enablement reference (consumed by `/ct-se`, `/ct-prep`, `/ct-objections`).
+
+---
+
 ## v2.12.0 — 2026-07-15
 
 CRM Hygiene. Guarantees the required-by-close field set and participant attachment across every deal, closing the gap between a field existing in Pipedrive and it actually being filled in before close.
