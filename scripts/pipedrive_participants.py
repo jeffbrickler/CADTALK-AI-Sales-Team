@@ -53,6 +53,20 @@ def plan_adds(existing: list, wanted: list) -> list:
     return out
 
 
+def api_request(method: str, url: str, **kwargs):
+    """requests wrapper: clean exit on network failure, never echo the URL
+    (the api_token rides in the query string — a traceback would leak it)."""
+    try:
+        return requests.request(method, url, timeout=TIMEOUT, **kwargs)
+    except requests.exceptions.RequestException as exc:
+        print(
+            f"API ERROR: network failure ({type(exc).__name__}) — check the "
+            "connection and PIPEDRIVE_DOMAIN, then retry.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+
 def parse_args(argv: list) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="pipedrive_participants.py",
@@ -91,10 +105,10 @@ def get_config() -> tuple:
 
 
 def api_get_participants(url_base: str, token: str, deal_id: int) -> list:
-    resp = requests.get(
+    resp = api_request(
+        "GET",
         f"{url_base}/deals/{deal_id}/participants",
         params={"api_token": token, "limit": 500},
-        timeout=TIMEOUT,
     )
     if resp.status_code != 200:
         print(f"API ERROR: GET participants -> HTTP {resp.status_code}: {resp.text[:300]}", file=sys.stderr)
@@ -105,11 +119,11 @@ def api_get_participants(url_base: str, token: str, deal_id: int) -> list:
 
 
 def api_add_participant(url_base: str, token: str, deal_id: int, person_id: int) -> None:
-    resp = requests.post(
+    resp = api_request(
+        "POST",
         f"{url_base}/deals/{deal_id}/participants",
         params={"api_token": token},
         json={"person_id": person_id},
-        timeout=TIMEOUT,
     )
     if resp.status_code not in (200, 201):
         print(f"API ERROR: POST participant {person_id} -> HTTP {resp.status_code}: {resp.text[:300]}", file=sys.stderr)

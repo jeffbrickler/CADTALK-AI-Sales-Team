@@ -57,3 +57,22 @@ def test_parse_args_add_with_dry_run():
 def test_parse_args_add_requires_person(capsys):
     with pytest.raises(SystemExit):
         pp.parse_args(["add", "42"])
+
+
+def test_api_request_network_failure_exits_clean_without_token(monkeypatch, capsys):
+    import requests as real_requests
+
+    def boom(method, url, **kwargs):
+        raise real_requests.exceptions.ConnectionError(
+            "HTTPSConnectionPool(host='x', port=443): Max retries exceeded "
+            "with url: /api/v1/deals/1/participants?api_token=SECRET123"
+        )
+
+    monkeypatch.setattr(pp.requests, "request", boom)
+    with pytest.raises(SystemExit) as excinfo:
+        pp.api_request("GET", "https://x/api/v1/deals/1/participants",
+                       params={"api_token": "SECRET123"})
+    assert excinfo.value.code == 1
+    err = capsys.readouterr().err
+    assert "API ERROR: network failure" in err
+    assert "SECRET123" not in err
