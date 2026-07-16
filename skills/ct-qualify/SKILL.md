@@ -497,3 +497,12 @@ Report:     [full file path]
 - Company has no LinkedIn presence: note the gap; score Research Depth at 1 maximum
 - No contacts found: skip Person creation; set CRM Readiness to 2 or below; note in output
 - Deal Desk folder doesn't exist: create it before saving the file
+
+## Hygiene sweep (final step)
+
+After this skill's output is delivered, run the CRM hygiene sweep
+(`skills/ct-hygiene/SKILL.md`, Sweep mode) with this run's artifacts as the
+source — it pushes what this run learned (fields, contacts, participants) into
+Pipedrive through the sales-crm contract. Batch review table first; writes only
+after the rep confirms. If the deal/org can't be resolved in Pipedrive, skip
+silently.

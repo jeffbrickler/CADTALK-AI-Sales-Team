@@ -28,6 +28,7 @@ When the user's request matches a skill below, invoke it via the Skill tool.
 | Technical demo prep, sales engineering, "will it work with their stack" | `/ct-se` |
 | Update Pipedrive, log a call, set MEDDPICC, move stage, pipeline query | `/ct-crm` |
 | Create a new opportunity/deal — guided, all fields, no blanks | `/ct-crm new` |
+| CRM hygiene, audit deal completeness, enrich CRM, attach participants, new opportunity intake | `/ct-hygiene` |
 | Voice/tone review, "does this sound on-brand?", write/edit any copy, coaching | `/ct-voice` |
 | Company research | `/ct-research` |
 | Lead qualification, BANT, MEDDIC | `/ct-qualify` |
@@ -66,6 +67,8 @@ makes every rep's CRM updates identical.
   and `references/pipedrive-stage-ids.md`.** Never fabricate a key.
 - Each pipeline stage leaves the standard update payload defined in the sales-crm
   per-stage contract, so a deal looks the same no matter which rep worked it.
+
+**One sanctioned exception:** deal participants are impossible via the connected MCP, so `scripts/pipedrive_participants.py` (invoked by `/ct-hygiene`) calls the Pipedrive REST API directly — participants only, nothing else; every other write stays in the sales-crm contract.
 
 ## Voice — single standard
 

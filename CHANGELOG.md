@@ -4,6 +4,22 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.12.0 — 2026-07-15
+
+CRM Hygiene. Guarantees the required-by-close field set and participant attachment across every deal, closing the gap between a field existing in Pipedrive and it actually being filled in before close.
+
+### Added
+- **`/ct-hygiene`** skill — intake / sweep / audit / gate modes; guarantees the required-by-close field set and participant attachment. `/ct-crm` fronts hygiene-shaped requests.
+- **`sales-hygiene` agent** — read-only gatherer (Pipedrive state, Deal Desk files, Fireflies transcripts, live web) producing sourced fill proposals.
+- **`scripts/hygiene-contract.json`** + **`scripts/validate_hygiene.py`** (+tests) — machine-readable required-by-close spec and stage-dueness gap computer.
+- **`scripts/pipedrive_participants.py`** (+tests) — deal participants via REST (the connected MCP has no participant tools); idempotent, dry-run, checklist-note fallback when no token. `/ct-setup` Section F sets it up.
+
+### Changed
+- **`agents/sales-crm.md`** — STAGE MOVE now runs the hygiene gate (warn + confirm, never hard-block); PARTICIPANTS operation documented; Tier + Health Score moved to CS ownership (removed from the per-stage rep contract).
+- 8 producing skills (research/contacts/se/prep/proposal/commit/followup/qualify) end with a hygiene sweep so run intel lands in Pipedrive.
+
+---
+
 ## v2.11.0 — 2026-07-14
 
 The Guided Create Flow: every new opportunity stamps three records (Deal + Organization incl. CAD/ERP systems + Person incl. Role) with zero silent blanks. Per-user pipeline profiles make the flow motion-aware for each rep. Design doc: `AzureAD+JeffBrickler-remove-ct-cro-design-20260714-164928.md` (office-hours + eng review, ENG CLEARED).
