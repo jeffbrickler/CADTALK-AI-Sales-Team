@@ -39,8 +39,6 @@ def full_payload(motion="new_erp", stage="Qualify"):
         "Person": "Jane Smith",
         "ACV": 60000,
         "Forecast Category": "Pipeline",
-        "Tier": "Tier 1",
-        "Health Score": "Green",
         "Source channel": "Partner referral",
         "Compelling Event": "ERP go-live Q4",
         "Compelling Event Date": "2026-10-01",
@@ -162,12 +160,12 @@ def test_hard_required_cannot_be_flagged_unknown():
 
 def test_all_missing_fields_reported_not_just_first():
     payload = full_payload()
-    payload["deal"].pop("Tier", None)
+    payload["deal"].pop("Source channel", None)
     payload["organization"].pop("Source System", None)
     payload["person"].pop("Role", None)
     res = run(payload)
     assert res.returncode == 1
-    assert "deal.Tier" in res.stderr
+    assert "deal.Source channel" in res.stderr
     assert "organization.Source System" in res.stderr
     assert "person.Role" in res.stderr
 
@@ -230,18 +228,18 @@ def test_no_compelling_event_no_date_required():
 
 def test_unknown_flagged_field_passes():
     payload = full_payload()
-    payload["deal"].pop("Tier", None)
-    payload["deal"]["_unknown"] = ["Tier"]
+    payload["deal"].pop("Source channel", None)
+    payload["deal"]["_unknown"] = ["Source channel"]
     res = run(payload)
     assert res.returncode == 0
 
 
 def test_silent_blank_still_fails():
     payload = full_payload()
-    payload["deal"]["Tier"] = "   "  # whitespace ≠ filled
+    payload["deal"]["Source channel"] = "   "  # whitespace ≠ filled
     res = run(payload)
     assert res.returncode == 1
-    assert "deal.Tier" in res.stderr
+    assert "deal.Source channel" in res.stderr
 
 
 # --- valid payload per motion ---------------------------------------------------

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "_comment": "Single source of truth for the opportunity CREATE contract (design doc 2026-07-14, eng review 3A). Logical field NAMES only — hash API keys and option IDs live exclusively in the vendored references (references/pipedrive-custom-fields.md, pipedrive-stage-ids.md; upstream repo jeffbrickler/pipedrive-update). agents/sales-crm.md and skills/ct-crm point here instead of restating the list. Changing this file requires updating the Pipedrive-side native required-fields configuration to match (eng review T1-A sync rule).",
+  "_comment": "Single source of truth for the opportunity CREATE contract (design doc 2026-07-14, eng review 3A). Logical field NAMES only — hash API keys and option IDs live exclusively in the vendored references (references/pipedrive-custom-fields.md, pipedrive-stage-ids.md; upstream repo jeffbrickler/pipedrive-update). agents/sales-crm.md and skills/ct-crm point here instead of restating the list. Changing this file requires updating the Pipedrive-side native required-fields configuration to match (eng review T1-A sync rule). Tier and Health Score are CS-owned (confirmed 2026-07-15/16): excluded_at_create, never gated, never written by any rep-loop skill.",
 
   "hard_required": {
     "_comment": "Create blocks without these — no unknown-flag escape.",
@@ -12,7 +12,7 @@
       "required": [
         "Title", "Pipeline", "Stage", "Value", "Currency",
         "Expected close date", "Owner", "Organization", "Person", "ACV",
-        "Forecast Category", "Tier", "Health Score", "Source channel",
+        "Forecast Category", "Source channel",
         "Compelling Event"
       ],
       "conditional": [
@@ -34,7 +34,8 @@
         "MEDDPICC-Champion", "MEDDPICC-Competition", "MEDDPICC-Coach",
         "Feedback on Proposal", "Feedback on Demonstration", "SQO Date",
         "EB Last Direct Touch", "Latest web visit", "Lost reason",
-        "Probability", "ARR", "MRR", "Status", "Visible to", "Score"
+        "Probability", "ARR", "MRR", "Status", "Visible to", "Score",
+        "Tier", "Health Score"
       ]
     },
     "organization": {
