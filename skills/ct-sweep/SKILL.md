@@ -16,16 +16,31 @@ Runs unattended (nightly scheduled task) or on demand. Output: one review queue
    connected, still use the script (one code path).
 4. NEVER edit plugin or reference files.
 
-## Step 1: Locate context
+## Step 1: Locate context + resolve pipelines
 
 1. Deal Desk root: the current working folder if it contains `crm-profile.md`,
    else ask (interactive) or abort with a clear log line (headless).
-2. Read `crm-profile.md` → rep's pipeline IDs + Pipedrive Owner ID.
-3. Ensure `inbox/` and `inbox/processed/` folders exist at the Deal Desk root.
+2. Read `crm-profile.md` → rep's pipeline IDs (full profile set) + Pipedrive Owner ID.
+3. **Pipeline resolution — determine which pipelines to sweep this run:**
+   - **Argument given** (`/ct-sweep New ERP` or `/ct-sweep 1,2` or a mix of
+     names and IDs): resolve names to IDs via `crm-profile.md` first, then
+     `references/pipedrive-stage-ids.md`. Use only the resolved IDs.
+     - Interactive: if any name/ID cannot be resolved, list the valid pipelines
+       from `crm-profile.md` and ask the rep to pick — do not abort.
+     - Headless: if any name/ID cannot be resolved, fall back to the full
+       `crm-profile.md` set and record the fallback in the queue MD header
+       (e.g. "⚠ pipeline arg unresolvable — swept full profile set").
+   - **No argument, interactive**: list the rep's pipelines from `crm-profile.md`
+     (names + IDs) and ask which to sweep. The full profile set is the default
+     answer (rep hits Enter to accept).
+   - **No argument, headless/nightly**: use the full `crm-profile.md` set. No
+     behavior change from the prior spec.
+4. Ensure `inbox/` and `inbox/processed/` folders exist at the Deal Desk root.
 
 ## Step 2: Snapshot (deterministic)
 
 Run: `python ${CLAUDE_PLUGIN_ROOT}/scripts/pipedrive_read.py snapshot --owner-id <id> --pipelines <ids> --out <deal-desk>/inbox/.snapshot-{YYYY-MM-DD}.json`
+(use the resolved pipeline IDs from Step 1 — never the raw crm-profile set if an argument was given)
 
 On exit 1 (API failure) or exit 2 (env vars missing), do NOT leave the inbox
 empty — write BOTH:
@@ -118,7 +133,9 @@ so a crash mid-run never loses queued items:**
    pre-filled where context knew the value, ask-the-rep otherwise; approving
    writes the field through the sales-crm contract).
    Each item shows: deal, finding, proposed action, evidence, item id.
-   Header line: item counts per section + "open /ct-inbox to review".
+   Header line: item counts per section + "open /ct-inbox to review" +
+   pipelines swept (names + IDs, e.g. "Pipelines: Aftermarket (1), New ERP/PLM Prospects (2)").
+   If a fallback occurred (unresolvable arg, headless), note it here too.
 5. ONLY NOW move the older queue pairs (`.json` + `.md`) to `inbox/processed/`
    (superseded by the validated new queue).
 6. Delete the `.snapshot-*.json` scratch file.
