@@ -14,7 +14,7 @@ Payload shape (logical field NAMES as keys — never hash API keys):
     {
       "motion": "partner_sourced",
       "deal":         {"Title": "...", "Pipeline": "Partners", ...,
-                       "_unknown": ["Tier"]},
+                       "_unknown": ["Source channel"]},
       "organization": {"Name": "...", ..., "_unknown": []},
       "person":       {"Name": "...", ..., "_unknown": ["Phone"]}
     }
