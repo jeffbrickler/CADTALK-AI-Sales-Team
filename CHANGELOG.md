@@ -4,6 +4,24 @@ All notable changes to CADTALK AI Sales Team are documented here.
 
 ---
 
+## v2.18.0 — 2026-07-16
+
+CS-owned fields (Tier, Health Score) removed from the CREATE contract; sweep gains pipeline scope control.
+
+### Changed
+- **`scripts/create-contract.json`** — Tier and Health Score moved from `records.deal.required` to `excluded_at_create` (CS-owned, confirmed 2026-07-15/16). Fixes `/ct-sweep` Approach C reconciliation falsely flagging them as missing on every deal; also stops `/ct-crm new` Guided Create Flow from prompting reps for CS fields. Reads (sales-crm read path, ct-commit Health Score cross-check) are unaffected.
+- **`/ct-sweep`** — Step 1 gains pipeline resolution: `/ct-sweep New ERP` or `/ct-sweep 1,2` overrides the profile; no-arg interactive mode lists your pipelines and asks which to sweep (full profile = default); no-arg headless uses the full profile unchanged. Unresolvable arg: interactive re-asks, headless falls back to profile and notes it in the queue header. Queue MD header now shows pipelines swept (names + IDs) and any fallback.
+
+### Fixed
+- `scripts/test_validate_create_payload.py` — fixture and 4 tests re-anchored from Tier (now excluded) to Source channel (still required). All 24 tests pass.
+- `scripts/validate_create_payload.py` — docstring example updated to use `"_unknown": ["Source channel"]`.
+
+### Action required (operator)
+- Verify Pipedrive web UI does not have Tier or Health Score set as native required fields at deal creation (contract sync rule T1-A).
+- Run `/ct-setup pipelines` in your Deal Desk once to trim `crm-profile.md` to sales pipelines only — fixes nightly sweep scope immediately.
+
+---
+
 ## v2.17.1 — 2026-07-16
 
 Marketplace metadata refresh so the install card advertises the full current surface.
